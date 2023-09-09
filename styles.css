@@ -16,22 +16,61 @@ a:hover , button:hover {
 
 /* Apply styles to the canvas element */
 canvas {
-  border: 6px solid #0074D9; /* Blue border with a width of 2 pixels */
+  border: 2px solid #12055b; /* Blue border with a width of 2 pixels */
   background-color: #F0F0F0; /* Light gray background color */
-  box-shadow: 0 0 16px rgba(0, 0, 0, 0.8); /* Retro shadow effect */
+  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.8); /* Retro shadow effect */
   border-radius: 0px; /* Rounded corners */
 }
 
-.cornerButton {
+:root {
+  --button-background:#a1b5ff;
+}
+
+.xButton {
   width: 15px;
   height: 15px;
   padding-bottom: 5px;
+  font-family: Arial, sans-serif;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+  background-color: var(--button-background);
+  border-color: var(--button-background);
+}
+
+.maxButton {
+  width: 15px;
+  height: 15px;
+  padding-bottom: 3px;
+  font-family: Arial, sans-serif;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+  background-color: var(--button-background);
+  border-color: var(--button-background);
+}
+
+.minButton {
+  width: 15px;
+  height: 15px;
+  padding-bottom: 10px;
+  font-family: Arial, sans-serif;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+  background-color: var(--button-background);
+  border-color: var(--button-background);
+  
 }
 
 .topBar {
-  background-color:rgb(190, 28, 185)
+  background: linear-gradient(to right, rgb(8, 2, 40), rgb(41, 12, 205));
+  box-shadow: 0 0px 0px rgba(18, 5, 91, 0.8);
+  border: 1px solid #300ef1;
+}
+
+.leftBarText {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  padding-left: 5px;
+  color:rgb(255, 255, 255)
 }
 
 .oldWindow {
-  border: 1.5px solid rgb(155, 155, 155)
+  border: 2px solid #300ef1;
+  box-shadow: 0 0px 0px rgba(18, 5, 91, 0.8);
 }
