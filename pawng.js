@@ -21,11 +21,10 @@ function resetGame() {
 
 function pauseGame() {
     ball.pause()
-
 }
 
 function playGame() {
-
+    ball.play()
 }
 
 
@@ -39,14 +38,13 @@ const ball = {
     x: canvas.width / 2,
     y: canvas.height / 2,
     speed: getRandomSpeed(3, 5),
-    //get rid of me
     vy: getRandomSpeed(3, 5),
-    getVelocity(){
-        return this.direction * this.speed
-    },
     direction:1,
     radius: 5,
     color: "red",
+    getVelocity(){
+        return this.direction * this.speed
+    },
     draw() {
         ctx.beginPath()
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true)
@@ -64,6 +62,11 @@ const ball = {
         this.speed = 0 
         this.savedVY = this.vy
         this.vy = 0
+    },
+
+    play (){
+        this.speed = this.savedSpeed
+        this.vy = this.savedVY
     }
 }
 
@@ -120,7 +123,7 @@ const paddleR = {
     color: "rgb(255, 255, 255)",
     speed: paddleRSpeed,
     moveTowards(ballY) {
-        const randomNum = Math.floor(Math.random() * 6 )
+        const randomNum = Math.floor(Math.random() * 10 )
 
         if (randomNum !== 0) {
             if (this.y + this.height / 2 < ballY) {
