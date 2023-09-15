@@ -2,22 +2,138 @@
 <html>
 
 <head>
-    <script src="script.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kafka.dev/index</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
 </head>
 
 <body>
-    <div class="container p-5 d-flex flex-column align-items-center">
-        <h1>Hello World</h1>
-        <p>This is Kafka's website</p>
-        <p>I worked on it with my own two paws</p>
-        <button class="btn btn-primary" id="clickMeButton" type="button">Click Me!</button>
-        <p class="p-5">
-            <a class="" href="about.html">About Meow</a>
-            <a class="" href="Pawng.html">Pawng</a>
-        </p>
+    <div class="container p-4 d-flex justify-content-left">
+
+        <div class="d-flex flex-column">
+            <!--Start AboutMEow button code-->
+            <div class="p-3">
+                <div class="navWindow card flex-column d-flex" style="width: 17rem; height: 8rem;">
+                    <div class="card-bodytext-center">
+                        <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">
+                            <div class="d-flex align-items-center">
+                                <img src="images/Logos/xsmTopBarLogo.png" alt="logo" width="16" height="12">
+                                <div class="d-flex m-1 my-0">kafka.dev/aboutMEow</div>
+                            </div>
+                            <div class="align-items-right">
+                                <!--x Button on the About Box Window-->
+                                <button id="xAboutButton"
+                                    class="xAboutButton d-flex align-items-center justify-content-center">x</button>
+                            </div>
+                        </h5>
+                        <p class="window-bodyText">As a human-model, I have extensive life experience. Learn more?</p>
+                    </div>
+                    <div class="d-flex flex-column align-items-center justify-content-center">
+                        <button id="aboutButton" class="aboutButton" onclick="navAbout('about.html')">OK</button>
+                    </div>
+                </div>
+            </div>
+            <!--Start of pawNG button code-->
+            <div class="p-3">
+                <div class="navWindow card flex-column" style="width: 17rem; height: 8rem;">
+                    <div class="card-bodytext-center">
+                        <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">
+                            <div class="d-flex align-items-center">
+                                <img src="images/Logos/xsmTopBarLogo.png" alt="logo" width="16" height="12">
+                                <div class="d-flex m-1 my-0">kafka.dev/pawNG</div>
+                            </div>
+
+                            <div class="align-items-right">
+                                <!--X Button on pawNG Box Window-->
+                                <button id="xpawNGButton"
+                                    class="xpawNGButton d-flex align-items-center justify-content-center"
+                                    onclick="closepawNG()">x</button>
+                            </div>
+                        </h5>
+                        <p class="window-bodyText"> <b>pawNG</b> is a simple game with unnecessary possibilities. Want
+                            to
+                            play?</p>
+                    </div>
+                    <div class="d-flex flex-column align-items-center justify-content-center">
+                        <button id="pawNGButton" class="pawNGButton" onclick="navpawNG('pawNG.html')">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Welcome Text Box-->
+        <div class="d-flex flex-column p-3 align-items-right">
+            <div class="navWindow card flex-column" style="width: 20rem; height: 25rem;">
+                <div class="card-bodytext-center">
+                    <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">
+                        <div class="d-flex align-items-center">
+                            <img src="images/Logos/xsmTopBarLogo.png" alt="logo" width="16" height="12">
+                            <div class="d-flex m-1 my-0">kafka.dev/welcome</div>
+                        </div>
+                        <div class="d-flex">
+
+                            <!--Click Min Button-->
+                            <button id="minWelcomeButton"
+                                class="minWelcomeButton d-flex my-0 mx-0 align-items-center justify-content-center"
+                                onclick="minWelcome()">&#95;</button>
+
+                            <!--Click Max Button-->
+                            <button id="maxWelcomeButton"
+                                class="maxWelcomeButton d-flex m-1 my-0 align-items-center justify-content-center"
+                                onclick="maxWelcome()">&square;</button>
+
+                            <!--Click Close Button-->
+                            <button id="xWelcomeButton"
+                                class="xWelcomeButton d-flex my-0 mx-0 align-items-center justify-content-center"
+                                onclick="closeWelcome()">x</button>
+
+
+                        </div>
+                    </h5>
+                    <div class="d-flex pt-3 align-items-center justify-content-center">
+                        <div class="text-card p-1 align-items-center justify-content-center"
+                            style="width: 19rem; height: 21.5rem; overflow-y: scroll;">
+                            <div class="window-welcomeText">
+                                <p>This is a website. Does a website ever really belong to anyone? It is my website when
+                                    I am working on it. It is your website when you are using it. It is our website. It
+                                    belongs to everyone. <i>Except for you, Eric.</i></p>
+                                <p>More content.</p>
+                                <p>More content.</p>
+                                <p>More content.</p>
+                                <p>More content.</p>
+                                <p>More content.</p>
+                                <p>More content.</p>
+                                <p>More content.</p>
+                                <p>More content.</p>
+                                <p>More content.</p>
+                                <p>More content.</p>
+                                <p>More content.</p>
+                                <p>More content.</p>
+                                <p>More content.</p>
+                                <p>More content.</p>
+                                <p>More content.</p>
+
+                            </div>
+                        </div>
+                    </div>
+        
+                    <!--Pop Up for xAbout-->
+                    <div class="popup" id="popup">
+                        <div class="popup-content">
+                            <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">kafka.dev/aboutMeow
+                            <button class="close d-flex m-0 my-0 align-items-center justify-content-center" id="closePopupButton">&times;</button>
+                        </h5>
+                            <p class="window-bodyText">I'll try not to take that personally.</p>
+                        </div>
+                    </div>
+                    <!--end test pop up-->
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>

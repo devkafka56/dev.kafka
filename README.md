@@ -1,5 +1,9 @@
 # devkafka
 
+Discarded: 
+
+About Link: <a class="" href="about.html">About MEow</a>
+
 Nao Test Stuffs
 
 const a = "something";
