@@ -26,8 +26,8 @@
                             </div>
                             <div class="align-items-right">
                                 <!--x Button on the About Box Window-->
-                                <button id="xAboutButton"
-                                    class="xButton d-flex align-items-center justify-content-center">x</button>
+                                <button data-popup-id="xAboutPopup"
+                                    class="open-popup xButton d-flex align-items-center justify-content-center">x</button>
                             </div>
                         </h5>
                         <p class="window-bodyText">As a human-model, I have extensive life experience. Learn more?</p>
@@ -49,8 +49,8 @@
 
                             <div class="align-items-right">
                                 <!--X Button on pawNG Box Window-->
-                                <button id="xpawNGButton"
-                                    class="xButton d-flex align-items-center justify-content-center">x</button>
+                                <button data-popup-id="xpawNGPopup"
+                                    class="open-popup xButton d-flex align-items-center justify-content-center">x</button>
                             </div>
                         </h5>
                         <p class="window-bodyText"> <b>pawNG</b> is a simple game with unnecessary possibilities. Want
@@ -74,8 +74,8 @@
                             </div>
                             <div class="align-items-right">
                                 <!--x Button on the Portfolio Box Window-->
-                                <button id="xPortfolioButton"
-                                    class="xButton d-flex align-items-center justify-content-center">x</button>
+                                <button data-popup-id="xPortfolioPopup"
+                                    class="open-popup xButton d-flex align-items-center justify-content-center">x</button>
                             </div>
                         </h5>
                         <p class="window-bodyText">I am a professional and accordindly I have <s>proof</s> a portfolio. I'd be happy to show you...</p>
@@ -100,19 +100,16 @@
                         <div class="d-flex">
 
                             <!--Click Min Button-->
-                            <button id="minWelcomeButton"
-                                class="minButton d-flex my-0 mx-0 align-items-center justify-content-center">&#95;</button>
-                                <!--HELLO KAYLA PLEASE PAY ATTENTION TO THIS Change class of button for x, min and max to all be the same-->
+                            <button data-popup-id="minWelcomePopup"
+                                class="open-popup minButton d-flex my-0 mx-0 align-items-center justify-content-center">&#95;</button>
 
                             <!--Click Max Button-->
-                            <button id="maxWelcomeButton"
-                                class="maxButton d-flex m-1 my-0 align-items-center justify-content-center">&square;</button>
+                            <button data-popup-id="maxWelcomePopup"
+                                class="open-popup maxButton d-flex m-1 my-0 align-items-center justify-content-center">&square;</button>
 
                             <!--Click Close Button-->
-                            <button id="xWelcomeButton"
-                                class="xButton d-flex my-0 mx-0 align-items-center justify-content-center">x</button>
-
-
+                            <button data-popup-id="xWelcomePopup"
+                                class="open-popup xButton d-flex my-0 mx-0 align-items-center justify-content-center">x</button>
                         </div>
                     </h5>
                     <div class="d-flex pt-3 align-items-center justify-content-center">
@@ -127,48 +124,48 @@
                             </div>
                         </div>
                     </div>
-        
+                <!--POPUPS-->
                     <!--Pop Up for xAbout-->
-                    <div class="popup" id="xAboutPopup">
+                    <div class="popup close-popup" id="xAboutPopup" data-popup-id="xAboutPopup">
                         <div class="popup-content">
                             <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">kafka.dev/aboutMEow/alert
-                            <button class="close d-flex m-0 my-0 align-items-center justify-content-center" id="closexAboutPopupButton">&times;</button>
+                            <button class="close close-popup d-flex m-0 my-0 align-items-center justify-content-center" data-popup-id="xAboutPopup" id="closexAboutPopupButton">&times;</button>
                         </h5>
                             <p class="window-bodyText">I'll try not to take that personally.</p>
                         </div>
                     </div>
                     <!--Popup for xpawNG-->
-                    <div class="popup" id="xpawNGPopup">
+                    <div class="popup close-popup" id="xpawNGPopup" data-popup-id="xpawNGPopup">
                         <div class="popup-content">
                             <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">kafka.dev/pawNG/alter
-                            <button class="close d-flex m-0 my-0 align-items-center justify-content-center" id="closexpawNGPopupButton">&times;</button>
+                            <button data-popup-id="xpawNGPopup" class="close close-popup d-flex m-0 my-0 align-items-center justify-content-center" id="closexpawNGPopupButton">&times;</button>
                         </h5>
                             <p class="window-bodyText">You will learn nothing from this.</p>
                         </div>
                     </div>
                     <!--Pop-up for xWelcome-->
-                    <div class="popup" id="xWelcomePopup">
+                    <div class="popup close-popup" id="xWelcomePopup" data-popup-id="xWelcomePopup">
                         <div class="popup-content">
                             <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">kafka.dev/welcome/alert
-                            <button class="close d-flex m-0 my-0 align-items-center justify-content-center" id="closexWelcomePopupButton">&times;</button>
+                            <button data-popup-id="xWelcomePopup" class="close close-popup d-flex m-0 my-0 align-items-center justify-content-center" id="closexWelcomePopupButton">&times;</button>
                         </h5>
                             <p class="window-bodyText">This button does nothing but talk. It is considering a career in politics.</p>
                         </div>
                     </div>
                      <!--Pop-up for minWelcome-->
-                     <div class="popup" id="minWelcomePopup">
+                     <div class="popup close-popup" id="minWelcomePopup" data-popup-id="minWelcomePopup">
                         <div class="popup-content">
                             <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">kafka.dev/welcome/alert
-                            <button class="close d-flex m-0 my-0 align-items-center justify-content-center" id="closeminWelcomePopupButton">&times;</button>
+                            <button data-popup-id="minWelcomePopup" class="close close-popup d-flex m-0 my-0 align-items-center justify-content-center" id="closeminWelcomePopupButton">&times;</button>
                         </h5>
                             <p class="window-bodyText">When you light a match, do you expect it to rain?</p>
                         </div>
                     </div>
                        <!--Pop-up for maxWelcome-->
-                       <div class="popup" id="maxWelcomePopup">
+                       <div class="popup close-popup" id="maxWelcomePopup" data-popup-id="maxWelcomePopup">
                         <div class="popup-content">
                             <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">kafka.dev/welcome/alert
-                            <button class="close d-flex m-0 my-0 align-items-center justify-content-center" id="closemaxWelcomePopupButton">&times;</button>
+                            <button data-popup-id="maxWelcomePopup" class="close close-popup  d-flex m-0 my-0 align-items-center justify-content-center" id="closemaxWelcomePopupButton">&times;</button>
                         </h5>
                             <p class="window-bodyText">You may be disappointed, but you'll never be as disappointed as my father.</p>
                         </div>
