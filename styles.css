@@ -203,6 +203,60 @@ canvas {
   transform: translateY(2px); /* Example downward shift when pressed */
 }
 
+/*Index - Portfolio box & buttons*/
+.portfolioButton {
+  width: 50px;
+  height: 20px;
+  font-size: 12px;
+  padding-bottom: 0px;
+  font-family: sans-serif;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+  background-color: var(--button-background);
+  border: 2px outset var(--button-border);
+}
+
+.xPortfolioButton {
+  width: 15px;
+  height: 15px;
+  padding-bottom: 2px;
+  padding-right: 2px;
+  padding-top: 2px;
+  padding-left: 2px;
+  font-size: 12px;
+  font-family: sans-serif;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+  background-color: var(--button-background);
+  border-color: var(--button-background);
+}
+
+.portfolioButton:active, .xPortfolioButton:active {
+  /* Add pressed effect styles here */
+  background-color: #b7c6fd; /* Example background color when pressed */
+  transform: translateY(2px); /* Example downward shift when pressed */
+}
+
+/*Portfolio X Button on Portfolio Page*/
+
+.xPortfolioButton2 {
+  width: 15px;
+  height: 15px;
+  padding-bottom: 2px;
+  padding-right: 2px;
+  padding-top: 2px;
+  padding-left: 2px;
+  font-size: 12px;
+  font-family: sans-serif;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+  background-color: var(--button-background);
+  border-color: var(--button-background);
+}
+
+.portfolioButton2:active, .xPortfolioButton2:active {
+  /* Add pressed effect styles here */
+  background-color: #b7c6fd; /* Example background color when pressed */
+  transform: translateY(2px); /* Example downward shift when pressed */
+}
+
 /*Index - Welcome box & buttons */
 
 /*This is the white box that the main text appears in.*/
@@ -256,7 +310,7 @@ canvas {
 /* Style the scrollbar thumb (the draggable part) */
 .text-card::-webkit-scrollbar-thumb {
   background-color: #7595ff; 
-  border: outset 2px var(--button-border)
+  border: outset 2px var(--button-border);
 }
 
 /* Style the scrollbar track (the non-draggable part) */

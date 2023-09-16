@@ -15,7 +15,7 @@
     <div class="container p-4 d-flex justify-content-left">
 
         <div class="d-flex flex-column">
-            <!--Start AboutMEow button code-->
+            <!--Start AboutMEow window/link code-->
             <div class="p-3">
                 <div class="navWindow card flex-column d-flex" style="width: 17rem; height: 8rem;">
                     <div class="card-bodytext-center">
@@ -33,11 +33,11 @@
                         <p class="window-bodyText">As a human-model, I have extensive life experience. Learn more?</p>
                     </div>
                     <div class="d-flex flex-column align-items-center justify-content-center">
-                        <button id="aboutButton" class="aboutButton" onclick="navAbout('about.html')">OK</button>
+                        <button id="aboutButton" class="aboutButton" onclick="navLink('about.html')">OK</button>
                     </div>
                 </div>
             </div>
-            <!--Start of pawNG button code-->
+            <!--Start of pawNG window/link code-->
             <div class="p-3">
                 <div class="navWindow card flex-column" style="width: 17rem; height: 8rem;">
                     <div class="card-bodytext-center">
@@ -58,12 +58,36 @@
                             play?</p>
                     </div>
                     <div class="d-flex flex-column align-items-center justify-content-center">
-                        <button id="pawNGButton" class="pawNGButton" onclick="navpawNG('pawNG.html')">OK</button>
+                        <button id="pawNGButton" class="pawNGButton" onclick="navLink('pawNG.html')">OK</button>
                     </div>
                 </div>
             </div>
+               <!--Start of portfolio window/link code-->
+               <!--CREATE POPUP FOR x BUTTON HERE-->
+            <div class="p-3">
+                <div class="navWindow card flex-column d-flex" style="width: 17rem; height: 8rem;">
+                    <div class="card-bodytext-center">
+                        <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">
+                            <div class="d-flex align-items-center">
+                                <!-- <img src="images/Logos/xsmTopBarLogo.png" alt="logo" width="16" height="12"> -->
+                                <div class="d-flex m-1 my-0">kafka.dev/portfolio</div>
+                            </div>
+                            <div class="align-items-right">
+                                <!--x Button on the Portfolio Box Window-->
+                                <button id="xPortfolioButton"
+                                    class="xPortfolioButton d-flex align-items-center justify-content-center">x</button>
+                            </div>
+                        </h5>
+                        <p class="window-bodyText">I am a professional and accordindly I have <s>proof</s> a portfolio. I'd be happy to show you...</p>
+                    </div>
+                    <div class="d-flex flex-column align-items-center justify-content-center">
+                        <button id="portfolioButton" class="portfolioButton" onclick="navLink('portfolio.html')">OK</button>
+                    </div>
+                </div>
+            </div>
+    
         </div>
-
+       
         <!--Welcome Text Box-->
         <div class="d-flex flex-column p-3 align-items-right">
             <div class="navWindow card flex-column" style="width: 20rem; height: 25rem;">
@@ -78,6 +102,7 @@
                             <!--Click Min Button-->
                             <button id="minWelcomeButton"
                                 class="minWelcomeButton d-flex my-0 mx-0 align-items-center justify-content-center">&#95;</button>
+                                <!--HELLO KAYLA PLEASE PAY ATTENTION TO THIS Change class of button for x, min and max to all be the same-->
 
                             <!--Click Max Button-->
                             <button id="maxWelcomeButton"
@@ -106,7 +131,7 @@
                     <!--Pop Up for xAbout-->
                     <div class="popup" id="xAboutPopup">
                         <div class="popup-content">
-                            <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">kafka.dev/aboutMEow/alter
+                            <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">kafka.dev/aboutMEow/alert
                             <button class="close d-flex m-0 my-0 align-items-center justify-content-center" id="closexAboutPopupButton">&times;</button>
                         </h5>
                             <p class="window-bodyText">I'll try not to take that personally.</p>
