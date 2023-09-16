@@ -1,3 +1,10 @@
+/*Container that makes entire page scrollable*/
+
+.scroll-container {
+  max-height: 100vh; /* Set a maximum height (100% of the viewport height) */
+  overflow-y: auto; /* Enable vertical scrolling when content overflows */
+}
+
 /*Custom Text for Headings, Paragraphs, etc*/
 h1 {
   color: rgba(255, 255, 255, 0.8);
@@ -54,15 +61,33 @@ canvas {
   --button-border: #91abff;
 }
 
+/*'98 Buttons*/
+
+.okButton {
+  width: 50px;
+  height: 20px;
+  font-size: 12px;
+  padding-bottom: 0px;
+  font-family: sans-serif;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+  background-color: var(--button-background);
+  border: 2px outset var(--button-border);
+}
+
 .xButton {
   width: 15px;
   height: 15px;
-  padding-bottom: 1px;
+  padding-bottom: 2px;
+  padding-right: 2px;
+  padding-top: 2px;
+  padding-left: 2px;
+  font-size: 12px;
   font-family: sans-serif;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
   background-color: var(--button-background);
   border-color: var(--button-background);
 }
+
 
 .maxButton {
   width: 15px;
@@ -85,6 +110,14 @@ canvas {
 
 }
 
+.okButton:active, .xButton:active, maxButton:active, minButton:active {
+  /* Add pressed effect styles here */
+  background-color: #b7c6fd; /* Example background color when pressed */
+  transform: translateY(2px); /* Example downward shift when pressed */
+}
+
+/*'98 Window Design*/
+
 .topBar {
   background: linear-gradient(to right, rgb(8, 2, 40), rgb(41, 12, 205));
   box-shadow: 0 0px 0px rgba(18, 5, 91, 0.8);
@@ -102,8 +135,6 @@ canvas {
   border: 2px solid #300ef1;
   box-shadow: 0 0px 0px rgba(18, 5, 91, 0.8);
 }
-
-/*'98 Window Design*/
 
 .navWindow {
   border: 2px outset #5d82fc;
@@ -136,129 +167,6 @@ canvas {
   padding-top: 3px;
 }
 
-/*INDEX NAVIGATION & buttons*/
-
-/*Index - aboutMEow buttons*/
-.aboutButton {
-  width: 50px;
-  height: 20px;
-  font-size: 12px;
-  padding-bottom: 0px;
-  font-family: sans-serif;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
-  background-color: var(--button-background);
-  border: 2px outset var(--button-border);
-}
-
-.xAboutButton {
-  width: 15px;
-  height: 15px;
-  padding-bottom: 2px;
-  padding-right: 2px;
-  padding-top: 2px;
-  padding-left: 2px;
-  font-size: 12px;
-  font-family: sans-serif;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
-  background-color: var(--button-background);
-  border-color: var(--button-background);
-}
-
-.aboutButton:active, .xAboutButton:active {
-  /* Add pressed effect styles here */
-  background-color: #b7c6fd; /* Example background color when pressed */
-  transform: translateY(2px); /* Example downward shift when pressed */
-}
-
-/*Index - pawNG buttons*/
-
-.pawNGButton {
-  width: 50px;
-  height: 20px;
-  font-size: 12px;
-  padding-bottom: 0px;
-  font-family: sans-serif;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
-  background-color: var(--button-background);
-  border: 2px outset var(--button-border);
-}
-
-.xpawNGButton {
-  width: 15px;
-  height: 15px;
-  padding-bottom: 2px;
-  padding-right: 2px;
-  padding-top: 2px;
-  padding-left: 2px;
-  font-size: 12px;
-  font-family: sans-serif;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
-  background-color: var(--button-background);
-  border-color: var(--button-background);
-}
-
-.pawNGButton:active, .xpawNGButton:active {
-  /* Add pressed effect styles here */
-  background-color: #b7c6fd; /* Example background color when pressed */
-  transform: translateY(2px); /* Example downward shift when pressed */
-}
-
-/*Index - Portfolio box & buttons*/
-.portfolioButton {
-  width: 50px;
-  height: 20px;
-  font-size: 12px;
-  padding-bottom: 0px;
-  font-family: sans-serif;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
-  background-color: var(--button-background);
-  border: 2px outset var(--button-border);
-}
-
-.xPortfolioButton {
-  width: 15px;
-  height: 15px;
-  padding-bottom: 2px;
-  padding-right: 2px;
-  padding-top: 2px;
-  padding-left: 2px;
-  font-size: 12px;
-  font-family: sans-serif;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
-  background-color: var(--button-background);
-  border-color: var(--button-background);
-}
-
-.portfolioButton:active, .xPortfolioButton:active {
-  /* Add pressed effect styles here */
-  background-color: #b7c6fd; /* Example background color when pressed */
-  transform: translateY(2px); /* Example downward shift when pressed */
-}
-
-/*Portfolio X Button on Portfolio Page*/
-
-.xPortfolioButton2 {
-  width: 15px;
-  height: 15px;
-  padding-bottom: 2px;
-  padding-right: 2px;
-  padding-top: 2px;
-  padding-left: 2px;
-  font-size: 12px;
-  font-family: sans-serif;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
-  background-color: var(--button-background);
-  border-color: var(--button-background);
-}
-
-.portfolioButton2:active, .xPortfolioButton2:active {
-  /* Add pressed effect styles here */
-  background-color: #b7c6fd; /* Example background color when pressed */
-  transform: translateY(2px); /* Example downward shift when pressed */
-}
-
-/*Index - Welcome box & buttons */
-
 /*This is the white box that the main text appears in.*/
 .text-card {
   background-color: #b7c6fd;
@@ -268,28 +176,7 @@ canvas {
 
 }
 
-.navWindow {
-  border: 2px outset #5d82fc;
-  border-radius: 0px; 
-  box-shadow: 7px 7px 7px rgba(5, 1, 28, 0.5);
-  background-color: #3060ff;
-  
-}
-
-.topBar {
-  background: linear-gradient(to right, rgb(8, 2, 40), rgb(41, 12, 205));
-  box-shadow: 0 0px 0px rgba(18, 5, 91, 0.8);
-  border: 1px solid #300ef1;
-}
-
-.custom-windowTitle {
-  font-size: 13px;
-  font-family: sans-serif;
-  color: rgba(255, 255, 255, 0.6);
-  padding-left: 5px;
-  padding-top: 0px;
-}
-
+/*This is for the text in the white box*/
 .window-welcomeText {
   font-size: 12px;
   font-family: 'Courier New', Courier, monospace;
@@ -302,54 +189,23 @@ canvas {
 /*Scroll bar within text box*/
 
 /* Target the container with the scrollbar */
-.text-card::-webkit-scrollbar {
+.text-card::-webkit-scrollbar, .scroll-container::-webkit-scrollbar {
   width: 15px; 
   border-radius: 0px;
 }
 
 /* Style the scrollbar thumb (the draggable part) */
-.text-card::-webkit-scrollbar-thumb {
+.text-card::-webkit-scrollbar-thumb, .scroll-container::-webkit-scrollbar-thumb {
   background-color: #7595ff; 
   border: outset 2px var(--button-border);
 }
 
 /* Style the scrollbar track (the non-draggable part) */
-.text-card::-webkit-scrollbar-track {
+.text-card::-webkit-scrollbar-track, .scroll-container::-webkit-scrollbar-track  {
   background-color: #99b1ff; 
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
-/*Buttons*/
-
-.xWelcomeButton {
-  width: 15px;
-  height: 15px;
-  font-size: 12px;
-  font-family: sans-serif;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
-  background-color: var(--button-background);
-  border-color: var(--button-background);
-}
-
-.maxWelcomeButton {
-  width: 15px;
-  height: 15px;
-  font-size: 12px;
-  font-family: sans-serif;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
-  background-color: var(--button-background);
-  border-color: var(--button-background);
-}
-
-.minWelcomeButton {
-  width: 15px;
-  height: 15px;
-  font-size: 12px;
-  font-family: sans-serif;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
-  background-color: var(--button-background);
-  border-color: var(--button-background);
-}
 
 /*Pop Up Styles*/
 

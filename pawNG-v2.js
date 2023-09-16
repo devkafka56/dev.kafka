@@ -4,15 +4,15 @@ const ctx = canvas.getContext("2d")
 let raf
 let leftPaddle
 let rightPaddle
-let startBall
+let ball
 
 // Buttons & Controls 
 addEventListener("DOMContentLoaded", (event) => {
 
     // Buttons
     document.getElementById("resetButton").onclick = startGame
-    document.getElementById("pauseButton").onclick = pauseGame
-    document.getElementById("playButton").onclick = playGame
+    // document.getElementById("pauseButton").onclick = pauseGame
+    // document.getElementById("playButton").onclick = playGame
 
     // Controls 
     document.addEventListener("keydown", (e) => {
@@ -83,7 +83,7 @@ class MoveThing {
 }
 
 // *Sets the colour and start position of Objects that appear on the canvas. Objects within this class can either be static or eventually move with the MoveThing class. 
-class DrawThing {
+class Shape {
     constructor(color) {
         this.color = color
     }
@@ -97,10 +97,10 @@ class DrawThing {
     }
 }
 
-// *Allows for the creation of Objects that will appear in the game loop. Connects MoveThing and DrawThing by passing tge position that's stored in MoveThing to the instance of DrawThing. 
+// *Allows for the creation of Objects that will appear in the game loop. Connects MoveThing and Shapeby passing tge position that's stored in MoveThing to the instance of Shape. 
 class GameObject {
-    constructor(drawThing, moveThing) {
-        this.drawThing = drawThing
+    constructor(shape, moveThing) {
+        this.shape = shape
         this.moveThing = moveThing
     }
 
@@ -114,8 +114,8 @@ class GameObject {
 
     draw() {
         let startPos = this.moveThing.position
-        this.drawThing.setStartPos(startPos)
-        this.drawThing.draw()
+        this.shape.setStartPos(startPos)
+        this.shape.draw()
     }
 }
 
@@ -131,7 +131,7 @@ class Line {
 }
 
 // *Used to create Objects that are rectangles or squares, gives color, width and height. 
-class RectThing extends DrawThing {
+class RectThing extends Shape {
     constructor(color, width, height) {
         super(color)
         this.width = width
@@ -145,15 +145,17 @@ class RectThing extends DrawThing {
 }
 
 // * Same as RectThing, but makes a circle :3. 
-class CircleThing extends DrawThing {
+class CircleThing extends Shape {
     constructor(color, radius) {
         super(color)
         this.radius = radius
     }
 
     draw() {
+        ctx.beginPath()
         super.draw()
         ctx.arc(this.startPos.x, this.startPos.y, this.radius, Math.PI * 2, 0)
+        ctx.closePath()
         ctx.fill()
     }
 }
@@ -193,7 +195,7 @@ class Ball extends GameObject {
 function startGame() {
     leftPaddle = new Paddle("white", 1, canvas.height / 2, 0, 0)
     rightPaddle = new Paddle("white", 595, canvas.height / 2, 0, 0) // variables for canvas width and height in middle of canvas
-    startBall = new Ball("red", canvas.width / 2, canvas.height / 2, 0, 0)
+    ball = new Ball("red", canvas.width / 2, canvas.height / 2, 2, 0)
 
     gameLoop()
 }
@@ -211,7 +213,8 @@ function gameLoop() {
 
     leftPaddle.draw()
     rightPaddle.draw() 
-    startBall.draw()
+    ball.draw()
+    ball.moveThing.move()
 
     // registerCollision(leftPaddle,top)
 
