@@ -21,7 +21,7 @@
                     <div class="card-bodytext-center">
                         <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">
                             <div class="d-flex align-items-center">
-                                <img src="images/Logos/xsmTopBarLogo.png" alt="logo" width="16" height="12">
+                                <!-- <img src="images/Logos/xsmTopBarLogo.png" alt="logo" width="16" height="12"> -->
                                 <div class="d-flex m-1 my-0">kafka.dev/aboutMEow</div>
                             </div>
                             <div class="align-items-right">
@@ -43,15 +43,14 @@
                     <div class="card-bodytext-center">
                         <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">
                             <div class="d-flex align-items-center">
-                                <img src="images/Logos/xsmTopBarLogo.png" alt="logo" width="16" height="12">
+                                <!-- <img src="images/Logos/xsmTopBarLogo.png" alt="logo" width="16" height="12"> -->
                                 <div class="d-flex m-1 my-0">kafka.dev/pawNG</div>
                             </div>
 
                             <div class="align-items-right">
                                 <!--X Button on pawNG Box Window-->
                                 <button id="xpawNGButton"
-                                    class="xpawNGButton d-flex align-items-center justify-content-center"
-                                    onclick="closepawNG()">x</button>
+                                    class="xpawNGButton d-flex align-items-center justify-content-center">x</button>
                             </div>
                         </h5>
                         <p class="window-bodyText"> <b>pawNG</b> is a simple game with unnecessary possibilities. Want
@@ -71,25 +70,22 @@
                 <div class="card-bodytext-center">
                     <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">
                         <div class="d-flex align-items-center">
-                            <img src="images/Logos/xsmTopBarLogo.png" alt="logo" width="16" height="12">
+                            <!-- <img src="images/Logos/xsmTopBarLogo.png" alt="logo" width="16" height="12"> -->
                             <div class="d-flex m-1 my-0">kafka.dev/welcome</div>
                         </div>
                         <div class="d-flex">
 
                             <!--Click Min Button-->
                             <button id="minWelcomeButton"
-                                class="minWelcomeButton d-flex my-0 mx-0 align-items-center justify-content-center"
-                                onclick="minWelcome()">&#95;</button>
+                                class="minWelcomeButton d-flex my-0 mx-0 align-items-center justify-content-center">&#95;</button>
 
                             <!--Click Max Button-->
                             <button id="maxWelcomeButton"
-                                class="maxWelcomeButton d-flex m-1 my-0 align-items-center justify-content-center"
-                                onclick="maxWelcome()">&square;</button>
+                                class="maxWelcomeButton d-flex m-1 my-0 align-items-center justify-content-center">&square;</button>
 
                             <!--Click Close Button-->
                             <button id="xWelcomeButton"
-                                class="xWelcomeButton d-flex my-0 mx-0 align-items-center justify-content-center"
-                                onclick="closeWelcome()">x</button>
+                                class="xWelcomeButton d-flex my-0 mx-0 align-items-center justify-content-center">x</button>
 
 
                         </div>
@@ -101,36 +97,57 @@
                                 <p>This is a website. Does a website ever really belong to anyone? It is my website when
                                     I am working on it. It is your website when you are using it. It is our website. It
                                     belongs to everyone. <i>Except for you, Eric.</i></p>
-                                <p>More content.</p>
-                                <p>More content.</p>
-                                <p>More content.</p>
-                                <p>More content.</p>
-                                <p>More content.</p>
-                                <p>More content.</p>
-                                <p>More content.</p>
-                                <p>More content.</p>
-                                <p>More content.</p>
-                                <p>More content.</p>
-                                <p>More content.</p>
-                                <p>More content.</p>
-                                <p>More content.</p>
-                                <p>More content.</p>
-                                <p>More content.</p>
+                                <p>If you're not using Firefox or Edge to view this website, you'll notice a nifty (and custom scrollbar beside this text that perfectly suits the overall aesthetic of this page. I slaved over this scrollbar for hours. It would be rude of you not to change your browser to view it and have the complete experience of this page. It's not that I have anything against Firefox (I actually really like Firefox and was disappointed to learn about this compatibilty issue). I am mostly Edge-neutral, although I imagine it as the Safari equivalent, which only sours my feelings toward it slighty. I try to avoid cognitive bias when I can, and at least notice it when I can't. Are you doing the same? Or are you insisting on using Firefox? (I assume no one uses Edge).</p>
 
                             </div>
                         </div>
                     </div>
         
                     <!--Pop Up for xAbout-->
-                    <div class="popup" id="popup">
+                    <div class="popup" id="xAboutPopup">
                         <div class="popup-content">
-                            <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">kafka.dev/aboutMeow
-                            <button class="close d-flex m-0 my-0 align-items-center justify-content-center" id="closePopupButton">&times;</button>
+                            <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">kafka.dev/aboutMEow/alter
+                            <button class="close d-flex m-0 my-0 align-items-center justify-content-center" id="closexAboutPopupButton">&times;</button>
                         </h5>
                             <p class="window-bodyText">I'll try not to take that personally.</p>
                         </div>
                     </div>
-                    <!--end test pop up-->
+                    <!--Popup for xpawNG-->
+                    <div class="popup" id="xpawNGPopup">
+                        <div class="popup-content">
+                            <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">kafka.dev/pawNG/alter
+                            <button class="close d-flex m-0 my-0 align-items-center justify-content-center" id="closexpawNGPopupButton">&times;</button>
+                        </h5>
+                            <p class="window-bodyText">You will learn nothing from this.</p>
+                        </div>
+                    </div>
+                    <!--Pop-up for xWelcome-->
+                    <div class="popup" id="xWelcomePopup">
+                        <div class="popup-content">
+                            <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">kafka.dev/welcome/alert
+                            <button class="close d-flex m-0 my-0 align-items-center justify-content-center" id="closexWelcomePopupButton">&times;</button>
+                        </h5>
+                            <p class="window-bodyText">This button does nothing but talk. It is considering a career in politics.</p>
+                        </div>
+                    </div>
+                     <!--Pop-up for minWelcome-->
+                     <div class="popup" id="minWelcomePopup">
+                        <div class="popup-content">
+                            <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">kafka.dev/welcome/alert
+                            <button class="close d-flex m-0 my-0 align-items-center justify-content-center" id="closeminWelcomePopupButton">&times;</button>
+                        </h5>
+                            <p class="window-bodyText">When you light a match, do you expect it to rain?</p>
+                        </div>
+                    </div>
+                       <!--Pop-up for maxWelcome-->
+                       <div class="popup" id="maxWelcomePopup">
+                        <div class="popup-content">
+                            <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">kafka.dev/welcome/alert
+                            <button class="close d-flex m-0 my-0 align-items-center justify-content-center" id="closemaxWelcomePopupButton">&times;</button>
+                        </h5>
+                            <p class="window-bodyText">You may be disappointed, but you'll never be as disappointed as my father.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
