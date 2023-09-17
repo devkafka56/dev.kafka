@@ -42,6 +42,15 @@ html, body {
   background: linear-gradient(to bottom,#1f0b8d 0%, #190974 15%, #12055b 25%, #0e0446 35%, #080228 55%, #05011C 65%, #05011C 100%);
 }
 
+.clouds-background {
+  background-image: url(images/BackgroundClouds/1Cloud.png), url(images/BackgroundClouds/2Cloud.png), url(images/BackgroundClouds/4Cloud.png), url(images/BackgroundClouds/3Cloud.png), url(images/BackgroundClouds/5Cloud.png), url(images/BackgroundClouds/6Cloud.png), url(images/BackgroundClouds/7Cloud.png), url(images/BackgroundClouds/8Cloud.png);
+ background-position: bottom 2% left 2%, bottom 45% left 60%, bottom 25% left 30%, bottom 1% right 0%, bottom 95% left 1%, top 15% right 3%, top 5% right 38%, bottom 55% left 5%;
+ background-size: 370px 170px, 270px 170px, 300px 150px, 750px 200px, 500px 150px, 200px 100px, 150px 70px, 80px 50px;
+ background-repeat: no-repeat;
+ background-attachment: local;
+ padding: 10px;
+ }
+
 
 /* Canvas Styles */
 canvas {

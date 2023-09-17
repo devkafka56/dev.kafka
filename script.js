@@ -13,6 +13,21 @@ addEventListener("DOMContentLoaded", (event) => {
   })
 });
 
+// list of images  ] [
+//   T-star.png
+//   ...
+// ]
+ 
+// funcrio make star{
+//   list
+//   image = document.createElement('img') <img><>
+//   image.src = random.choice(list_of_images)
+//   image.style.top = random y 
+//   image.style.left = random y
+//  body =  document.getElementsByName('body')
+//  body.appendElement(image)
+// }
+
 //Function that allows button to be clicked to bring user to a new page
 function navLink(link) {
   window.location.href = link
