@@ -1,8 +1,8 @@
 /*Container that makes entire page scrollable*/
 
 .scroll-container {
-  max-height: 100vh; /* Set a maximum height (100% of the viewport height) */
   overflow-y: auto; /* Enable vertical scrolling when content overflows */
+  overflow-x: hidden;
 }
 
 /*Custom Text for Headings, Paragraphs, etc*/
@@ -34,22 +34,35 @@ button:hover {
 /* Background Design */
 
 html, body {
-  height: 100%; /* Ensure the HTML and body elements occupy the full viewport height */
-  margin: 0; /* Remove default margin */
-  padding: 0; /* Remove default padding */
-  overflow: hidden; /* Prevent scrolling (if needed) */
-
+  height: 110%; /* Ensure the HTML and body elements occupy the full viewport height */
+  margin: 0!important; /* Remove default margin */
+  padding: 0!important; /* Remove default padding */
   background: linear-gradient(to bottom,#1f0b8d 0%, #190974 15%, #12055b 25%, #0e0446 35%, #080228 55%, #05011C 65%, #05011C 100%);
+  background-attachment: fixed;
+  background-repeat:no-repeat;
+  background-size: cover;
+  min-height: 100%;
+  overscroll-behavior: none;
+
 }
+
 
 .clouds-background {
   background-image: url(images/BackgroundClouds/1Cloud.png), url(images/BackgroundClouds/2Cloud.png), url(images/BackgroundClouds/4Cloud.png), url(images/BackgroundClouds/3Cloud.png), url(images/BackgroundClouds/5Cloud.png), url(images/BackgroundClouds/6Cloud.png), url(images/BackgroundClouds/7Cloud.png), url(images/BackgroundClouds/8Cloud.png);
- background-position: bottom 2% left 2%, bottom 45% left 60%, bottom 25% left 30%, bottom 1% right 0%, bottom 95% left 1%, top 15% right 3%, top 5% right 38%, bottom 55% left 5%;
+ background-position: bottom 0% left 2%, bottom 45% left 65%, bottom 25% left 30%, bottom 0% right 0%, bottom 95% left 1%, top 15% right 3%, top 5% right 38%, bottom 55% left 5%;
  background-size: 370px 170px, 270px 170px, 300px 150px, 750px 200px, 500px 150px, 200px 100px, 150px 70px, 80px 50px;
  background-repeat: no-repeat;
- background-attachment: local;
+ background-attachment:scroll;
  padding: 10px;
+ height: max-content;
  }
+
+ /* .stars-background {
+  background-image: url(images/BackgroundStars/AsyX-Star.png), url(images/BackgroundStars/Dot-Star.png), url(images/BackgroundStars/sX-Star.png), url(images/BackgroundStars/T-Star.png), url(images/BackgroundStars/X-Star.png), url(images/BackgroundStars/XT-Star.png);
+  background-size: 15px 15px, 1px 1px, 8px 8px, 8px 8px, 10px 10px, 16px 16px; 
+  background-attachment: local; 
+  padding: 1px; 
+ } */
 
 
 /* Canvas Styles */
@@ -194,12 +207,13 @@ canvas {
   padding-top: 3px;
 }
 
+
 /*Scroll bar within text box*/
 
 /*Target the container with the scrollbar*/
 .text-card::-webkit-scrollbar, .scroll-container::-webkit-scrollbar {
-  width: 15px; 
-  border-radius: 0px;
+  width: 15px !important; 
+  border-radius: 0px !important;
 }
 
 /* Style the scrollbar thumb (the draggable part) */
@@ -217,7 +231,7 @@ canvas {
 /* Create an up arrow above the scrollbar thumb */
 .text-card::-webkit-scrollbar-thumb::before, .scroll-container::-webkit-scrollbar-thumb::before{
   content: "";
-  position: absolute;
+  position: absolute !important;
   top: -10px; /* Adjust the position as needed */
   left: 3px; /* Adjust the position as needed */
   width: 8px;

@@ -1,8 +1,12 @@
 addEventListener("DOMContentLoaded", (event) => {
   //assigned anonymous function directly to event handler
-  document.getElementById("aboutButton").onclick = function () { navLink("about.html") }
-  document.getElementById("pawNGButton").onclick = function () { navLink("pawNG.html") }
-  document.getElementById("portfolioButton").onclick = function () { navLink("portfolio.html") }
+  let aboutButton = document.getElementById("aboutButton");
+  if (aboutButton){
+    aboutButton.onclick = function () { navLink("about.html") }
+  }
+  
+  // document.getElementById("pawNGButton").onclick = function () { navLink("pawNG.html") }
+  // document.getElementById("portfolioButton").onclick = function () { navLink("portfolio.html") }
   //Popup Stuff
 
   registerPopup("open-popup",function (event){
@@ -11,22 +15,40 @@ addEventListener("DOMContentLoaded", (event) => {
   registerPopup("close-popup",function(event){
     showPopup(event,false)
   })
+
+  createStars();
+
 });
 
-// list of images  ] [
-//   T-star.png
-//   ...
-// ]
- 
-// funcrio make star{
-//   list
-//   image = document.createElement('img') <img><>
-//   image.src = random.choice(list_of_images)
-//   image.style.top = random y 
-//   image.style.left = random y
-//  body =  document.getElementsByName('body')
-//  body.appendElement(image)
-// }
+function createStars() {
+  
+  function createStar(imgSrc, count,width, height) {
+    for (let i = 0; i < count; i++) {
+      const star = document.createElement("img")
+      star.src = imgSrc
+      
+      const left = Math.random() * 100 // Random left position
+      const top = (Math.random()* Math.random()) * 100 // Random top position
+      star.style.left = `${left}%`
+      star.style.top = `${top}%`
+      star.style.position = "absolute"
+      star.style.zIndex = -1
+      star.style.width = width 
+      star.style.height = height 
+      
+      document.body.appendChild(star)
+    }
+  }
+
+  createStar("images/BackgroundStars/Dot-Star.png", 120, "5px", "5px");
+  createStar("images/BackgroundStars/AsyX-Star.png", 10, "15px", "15px");
+  createStar("images/BackgroundStars/sX-Star.png", 10, "10px", "10px");
+  createStar("images/BackgroundStars/T-Star.png", 10, "10px", "10px");
+  createStar("images/BackgroundStars/X-Star.png", 7, "15px", "15px");
+  createStar("images/BackgroundStars/XT-Star.png", 7, "20px", "20px");
+}
+
+
 
 //Function that allows button to be clicked to bring user to a new page
 function navLink(link) {
