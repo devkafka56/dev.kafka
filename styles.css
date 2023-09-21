@@ -1,7 +1,8 @@
 /*Container that makes entire page scrollable*/
 
-.scroll-container {
-  overflow-y: auto; /* Enable vertical scrolling when content overflows */
+.main-scroll-container {
+  overflow-y: auto;
+  /* Enable vertical scrolling when content overflows */
   overflow-x: hidden;
 }
 
@@ -33,13 +34,17 @@ button:hover {
 
 /* Background Design */
 
-html, body {
-  height: 110%; /* Ensure the HTML and body elements occupy the full viewport height */
-  margin: 0!important; /* Remove default margin */
-  padding: 0!important; /* Remove default padding */
-  background: linear-gradient(to bottom,#1f0b8d 0%, #190974 15%, #12055b 25%, #0e0446 35%, #080228 55%, #05011C 65%, #05011C 100%);
+html,
+body {
+  height: 110%;
+  /* Ensure the HTML and body elements occupy the full viewport height */
+  margin: 0 !important;
+  /* Remove default margin */
+  padding: 0 !important;
+  /* Remove default padding */
+  background: linear-gradient(to bottom, #1f0b8d 0%, #190974 15%, #12055b 25%, #0e0446 35%, #080228 55%, #05011C 65%, #05011C 100%);
   background-attachment: fixed;
-  background-repeat:no-repeat;
+  background-repeat: no-repeat;
   background-size: cover;
   min-height: 100%;
   overscroll-behavior: none;
@@ -49,20 +54,87 @@ html, body {
 
 .clouds-background {
   background-image: url(images/BackgroundClouds/1Cloud.png), url(images/BackgroundClouds/2Cloud.png), url(images/BackgroundClouds/4Cloud.png), url(images/BackgroundClouds/3Cloud.png), url(images/BackgroundClouds/5Cloud.png), url(images/BackgroundClouds/6Cloud.png), url(images/BackgroundClouds/7Cloud.png), url(images/BackgroundClouds/8Cloud.png);
- background-position: bottom 0% left 2%, bottom 45% left 65%, bottom 25% left 30%, bottom 0% right 0%, bottom 95% left 1%, top 15% right 3%, top 5% right 38%, bottom 55% left 5%;
- background-size: 370px 170px, 270px 170px, 300px 150px, 750px 200px, 500px 150px, 200px 100px, 150px 70px, 80px 50px;
- background-repeat: no-repeat;
- background-attachment:scroll;
- padding: 10px;
- height: max-content;
- }
+  background-position: bottom 0% left 2%, bottom 45% left 65%, bottom 25% left 30%, bottom 0% right 0%, bottom 95% left 1%, top 15% right 3%, top 5% right 38%, bottom 55% left 5%;
+  background-size: 370px 170px, 270px 170px, 300px 150px, 750px 200px, 500px 150px, 200px 100px, 150px 70px, 80px 50px;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  padding: 10px;
+  height: max-content;
+}
 
- /* .stars-background {
-  background-image: url(images/BackgroundStars/AsyX-Star.png), url(images/BackgroundStars/Dot-Star.png), url(images/BackgroundStars/sX-Star.png), url(images/BackgroundStars/T-Star.png), url(images/BackgroundStars/X-Star.png), url(images/BackgroundStars/XT-Star.png);
-  background-size: 15px 15px, 1px 1px, 8px 8px, 8px 8px, 10px 10px, 16px 16px; 
-  background-attachment: local; 
-  padding: 1px; 
- } */
+/*Container for Fixed Content on jsprojects*/
+
+.fixed-container {
+  position: fixed;
+}
+
+/*Dropdown Menu Styles (will be put elsewhere eventually, only here while testing*/
+.menuBar {
+  box-shadow: 0 0px 0px rgba(18, 5, 91, 0.8);
+  border-top: 1px solid #300ef1;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-button {
+  width: 50px;
+  height: 20px;
+  font-size: 12px;
+  padding-bottom: 0px;
+  padding-left: 3px;
+  font-family: Arial, sans-serif;
+  background-color: #3060ff;
+  border-color: var(--button-background);
+  color: #000000;
+  cursor: pointer;
+
+}
+
+.dropdown-button:hover {
+  background-color: #3060ff;
+  border-left: inset 2px rgba(28, 81, 255, 0.5);
+  border-top: inset 2px rgba(28, 81, 255, 0.5);
+  border-right: inset 2px rgba(161, 168, 236, 0.5);
+  border-bottom: inset 2px rgba(161, 168, 236, 0.5);
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #3060ff;
+  min-width: 100px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 1px 1px;
+  text-decoration: none;
+  font-size: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  display: block;
+  transition: color 0.2s;
+  background-color: #3060ff;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropdown-button,
+.dropdown-content a:hover {
+  background-color: #12055b;
+  border-left: inset 2px rgba(0, 0, 0, 0.5);
+  border-top: inset 2px rgba(0, 0, 0, 0.5);
+  border-right: inset 2px rgba(31, 11, 141, 0.5);
+  border-bottom: inset 2px rgba(31, 11, 141, 0.5);
+  color: #ffffff;
+  cursor: pointer;
+}
 
 
 /* Canvas Styles */
@@ -131,10 +203,15 @@ canvas {
 
 }
 
-.okButton:active, .xButton:active, maxButton:active, minButton:active {
+.okButton:active,
+.xButton:active,
+maxButton:active,
+minButton:active, .scroll-button:active, .scroll-down-button:active, .scoll-up-button:active {
   /* Add pressed effect styles here */
-  background-color: #b7c6fd; /* Example background color when pressed */
-  transform: translateY(2px); /* Example downward shift when pressed */
+  background-color: #b7c6fd;
+  /* Example background color when pressed */
+  transform: translateY(2px);
+  /* Example downward shift when pressed */
 }
 
 /*'98 Window Design*/
@@ -159,10 +236,10 @@ canvas {
 
 .navWindow {
   border: 2px outset #5d82fc;
-  border-radius: 0px; 
+  border-radius: 0px;
   box-shadow: 7px 7px 7px rgba(5, 1, 28, 0.5);
   background-color: #3060ff;
-  
+
 }
 
 .custom-windowSubtitle {
@@ -190,7 +267,7 @@ canvas {
 
 /*This is the white box that the main text appears in.*/
 .text-card {
-  background-color: #b7c6fd;
+  background-color: #abbdff;
   font-size: 13px;
   font-family: sans-serif;
   border: 2px inset #5d82fc;
@@ -208,55 +285,97 @@ canvas {
 }
 
 
-/*Scroll bar within text box*/
+/*Scrollbars*/
 
 /*Target the container with the scrollbar*/
-.text-card::-webkit-scrollbar, .scroll-container::-webkit-scrollbar {
-  width: 15px !important; 
-  border-radius: 0px !important;
+
+.scroll-container {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
 }
 
-/* Style the scrollbar thumb (the draggable part) */
-.text-card::-webkit-scrollbar-thumb, .scroll-container::-webkit-scrollbar-thumb {
-  background-color: #7595ff; 
-  border: outset 2px var(--button-border);
-}
-
-/* Style the scrollbar track (the non-draggable part) */
-.text-card::-webkit-scrollbar-track, .scroll-container::-webkit-scrollbar-track  {
-  background-color: #99b1ff; 
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-
-/* Create an up arrow above the scrollbar thumb */
-.text-card::-webkit-scrollbar-thumb::before, .scroll-container::-webkit-scrollbar-thumb::before{
-  content: "";
-  position: absolute !important;
-  top: -10px; /* Adjust the position as needed */
-  left: 3px; /* Adjust the position as needed */
-  width: 8px;
-  height: 8px;
-  border-left: 2px solid transparent;
-  border-right: 2px solid transparent;
-  border-bottom: 2px solid #7595ff;
-  background-color: #7595ff;
-}
-
-
-/* Create a down arrow below the scrollbar thumb */
-.text-card::-webkit-scrollbar-thumb::after, .scroll-container::-webkit-scrollbar-thumb::after {
-  content: "";
+/* Content styles */
+.scroll-content {
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  overflow: hidden;
   position: absolute;
-  bottom: -10px; /* Adjust the position as needed */
-  left: 3px; /* Adjust the position as needed */
-  width: 8px;
-  height: 8px;
-  border-left: 2px solid transparent;
-  border-right: 2px solid transparent;
-  border-top: 2px solid #7595ff;
-  background-color: #7595ff;
 }
 
+/* Custom scrollbar styles (background/behind thumb */
+
+.custom-scrollbar {
+  width: 15px;
+  background-color: transparent; /* Set background-color to transparent */
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%; /* Set a fixed height of 100% */
+  transition: background-color 0.2s ease; /* Add a transition for smooth resizing */
+}
+
+/* Set a fixed height for the scrollbar background */
+.custom-scrollbar::before {
+  content: "";
+  height: 150%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #99b1ff; /* Match the background color */
+
+  transition: background-color 0.2s ease; /* Add a transition for smooth resizing */
+}
+
+
+
+.custom-scrollbar-thumb {
+  background-color: var(--button-background);
+  border-color: var(--button-background);
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  min-height: 200px; /* Minimum height for the thumb */
+}
+
+/* Scroll buttons styles */
+.scroll-button {
+  width: 15px;
+  height: 15px;
+  background-color: var(--button-background);
+  border-color: var(--button-background);
+  color: #000000;
+  font-size: 8px;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.scroll-up-button {
+  top: 12.95%;
+  left: 92.8%;
+  padding-left: 1px;
+  padding-top: -7px;
+  
+}
+
+.scroll-down-button {
+  bottom: 1.4%;
+  left: 92.8%;
+  padding-left: 1px;
+  padding-bottom: -7px;
+
+}
 
 /*Pop Up Styles*/
 
@@ -278,7 +397,7 @@ canvas {
   transform: translate(-50%, -50%);
   padding: 2px;
   border: 2px outset #5d82fc;
-  border-radius: 0px; 
+  border-radius: 0px;
   box-shadow: 7px 7px 7px rgba(5, 1, 28, 0.5);
   background-color: #3060ff;
 }
