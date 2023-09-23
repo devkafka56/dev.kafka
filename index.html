@@ -15,7 +15,7 @@
     <div class="container p-4 d-flex flex-column flex-md-row justify-content-left">
 
         <div class="d-flex flex-column">
-            <!--Start AboutMEow window/link code-->
+            <!--Start AboutMEow window/link-->
             <div class="p-3">
                 <div class="navWindow card flex-column d-flex" style="width: 17rem; height: 8rem;">
                     <div class="card-bodytext-center">
@@ -37,7 +37,7 @@
                     </div>
                 </div>
             </div>
-            <!--Start of pawNG window/link code-->
+            <!--Start of pawNG window/link-->
             <div class="p-3">
                 <div class="navWindow card flex-column" style="width: 17rem; height: 8rem;">
                     <div class="card-bodytext-center">
@@ -62,8 +62,7 @@
                     </div>
                 </div>
             </div>
-            <!--Start of portfolio window/link code-->
-            <!--CREATE POPUP FOR x BUTTON HERE-->
+            <!--Start of portfolio window/link-->
             <div class="p-3">
                 <div class="navWindow card flex-column d-flex" style="width: 17rem; height: 8rem;">
                     <div class="card-bodytext-center">
@@ -86,7 +85,7 @@
                     </div>
                 </div>
             </div>
-            <!--CREATE POPUP FOR x BUTTON HERE-->
+            <!--Start of projects window/link-->
             <div class="p-3">
                 <div class="navWindow card flex-column d-flex" style="width: 17rem; height: 8.5rem;">
                     <div class="card-bodytext-center">
@@ -101,7 +100,7 @@
                                     class="open-popup xButton d-flex align-items-center justify-content-center">x</button>
                             </div>
                         </h5>
-                        <p class="window-bodyText">Press OK to view javascript projects that caused significantly less tears than the custom scrollbar on this page.</p>
+                        <p class="window-bodyText">Press OK to view javascript projects that caused significantly less tears than the custom scrollbar you see on this page.</p>
                     </div>
                     <div class="d-flex flex-column align-items-center justify-content-center">
                         <button id="projectsButton" class="okButton" onclick="navLink('jsprojects.html')">OK</button>
@@ -186,7 +185,7 @@
                         class="close close-popup d-flex m-0 my-0 align-items-center justify-content-center"
                         id="closexpawNGPopupButton">&times;</button>
                 </h5>
-                <p class="window-bodyText">You will learn nothing from this.</p>
+                <p class="window-bodyText">It's okay, we all make mistakes.</p>
             </div>
         </div>
         <!--Pop-up for xWelcome-->
@@ -211,7 +210,7 @@
                         class="close close-popup d-flex m-0 my-0 align-items-center justify-content-center"
                         id="closeminWelcomePopupButton">&times;</button>
                 </h5>
-                <p class="window-bodyText">When you light a match, do you expect it to rain?</p>
+                <p class="window-bodyText">Oh wow! Another pop-up!</p>
             </div>
         </div>
         <!--Pop-up for maxWelcome-->
@@ -223,12 +222,33 @@
                         class="close close-popup  d-flex m-0 my-0 align-items-center justify-content-center"
                         id="closemaxWelcomePopupButton">&times;</button>
                 </h5>
-                <p class="window-bodyText">You may be disappointed, but you'll never be as disappointed as
-                    my father.</p>
+                <p class="window-bodyText">This pop-up is disappointing and so is my website.</p>
             </div>
         </div>
-        <!--CREATE POPUP FOR xPortfolio BUTTON HERE-->
-        <!--CREATE POPUP FOR xProjects BUTTON HERE-->
+        <!--Pop-up for xPortfolio-->
+        <div class="popup close-popup" id="xPortfolioPopup" data-popup-id="xPortfolioPopup">
+            <div class="popup-content">
+                <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">
+                    kafka.dev/welcome/alert
+                    <button data-popup-id="xPortfolioPopup"
+                        class="close close-popup  d-flex m-0 my-0 align-items-center justify-content-center"
+                        id="closexPortfolioPopupButton">&times;</button>
+                </h5>
+                <p class="window-bodyText">Not a fan of puns? You must be fun at parties.</p>
+            </div>
+        </div>
+        <!--Pop-up for xProjects-->
+        <div class="popup close-popup" id="xProjectsPopup" data-popup-id="xProjectsPopup">
+            <div class="popup-content">
+                <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">
+                    kafka.dev/welcome/alert
+                    <button data-popup-id="xProjectsPopup"
+                        class="close close-popup  d-flex m-0 my-0 align-items-center justify-content-center"
+                        id="closexProjectsPopupButton">&times;</button>
+                </h5>
+                <p class="window-bodyText">Emotions can be overwhelming.</p>
+            </div>
+        </div>
     </div>
     </div>
     </div>
