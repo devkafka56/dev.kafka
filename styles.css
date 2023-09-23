@@ -80,7 +80,7 @@ body {
 }
 
 .dropdown-button {
-  width: 50px;
+  width: 40px;
   height: 20px;
   font-size: 12px;
   padding-bottom: 0px;
@@ -284,6 +284,36 @@ minButton:active, .scroll-button:active, .scroll-down-button:active, .scoll-up-b
   padding-top: 3px;
 }
 
+/*Selectors for large textbox*/
+
+.large-box-body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.large-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  overflow-y: scroll;
+  display: flex; /* Use flexbox to control alignment */
+  justify-content: flex-start;
+}
+
+.nav-container {
+  width: 20rem;
+  padding: 1rem;
+  margin-right: 1rem;
+}
+
+.large-box-container {
+  width: 40rem;
+  padding: 1rem;
+  margin-left: 3rem; /* Make room for nav container */
+  overflow-y: scroll;
+}
 
 /*Scrollbars*/
 

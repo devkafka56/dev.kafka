@@ -1,0 +1,165 @@
+.project-title {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 13px;
+    color: black;
+}
+
+
+/*Project Containers*/
+
+.p1-stopwatch-container {
+    position: absolute;
+    width: 39rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.topBar {
+    background: linear-gradient(to right, rgb(8, 2, 40), rgb(41, 12, 205));
+    box-shadow: 0 0px 0px rgba(18, 5, 91, 0.8);
+    border: 1px solid #300ef1;
+}
+
+.smallWindow {
+    border: 2px outset #5d82fc;
+    border-radius: 0px;
+    box-shadow: 7px 7px 7px rgba(5, 1, 28, 0.5);
+    background-color: #3060ff;
+    width: 20rem; 
+    height: 8rem;
+}
+
+.window-headText {
+    font-size: 16px;
+    font-family: sans-serif;
+    color: rgba(6, 1, 33, 0.848);
+    text-align: center;
+    padding-left: 5px;
+    padding-top: 3px;
+}
+
+/*Stop Watch Buttons*/
+.button-s-s-r {
+    width: 50px;
+    height: 20px;
+    font-size: 12px;
+    padding-bottom: 0px;
+    font-family: sans-serif;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+    background-color: var(--button-background);
+    border: 2px outset var(--button-border);
+}
+
+.button-s-s-r:active {
+    background-color: #b7c6fd;
+    transform: translateY(2px);
+}
+
+/*Clock*/
+
+.clock {
+    color: rgb(0, 0, 0);
+    font-size: 20px; 
+    font-family:'Courier New', Courier, monospace;
+    text-align: center;
+    padding-top: 10px; 
+}
+
+.clockWindow {
+    border: 2px outset #5d82fc;
+    border-radius: 0px;
+    box-shadow: 7px 7px 7px rgba(5, 1, 28, 0.5);
+    background-color: #3060ff;
+    width: 12rem; 
+    height: 5rem;
+}
+
+.clock-window-text {
+    color: rgb(0, 0, 0);
+    font-size: 8px; 
+    font-family:'Courier New', Courier, monospace;
+    text-align: left;
+    padding-left: 3px;
+}
+
+.window-menu-text {
+    font-size: 12px;
+    font-family: 'Courier New', Courier, monospace;
+    color: rgba(6, 1, 33, 0.848);
+    text-align: left;
+    padding-left: 5px;
+    padding-top: 3px;
+    padding-right: 7px;
+    padding-bottom: 5px;
+}
+
+/* Custom scrollbar styles (background/behind thumb */
+
+.pm-custom-scrollbar {
+    width: 15px;
+    background-color: transparent; /* Set background-color to transparent */
+    position: absolute;
+    top: 22%;
+    right: 2.5%;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    height: 71%; /* Set a fixed height of 100% */
+    /* transition: background-color 0.2s ease;  */
+  }
+  
+  /* Set a fixed height for the scrollbar background */
+  .pm-custom-scrollbar::before {
+    content: "";
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #99b1ff; /* Match the background color */
+    /* transition: background-color 0.2s ease;  */
+  }
+  
+  .pm-custom-scrollbar-thumb {
+    background-color: var(--button-background);
+    border-color: var(--button-background);
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    min-height: 100px; /* Minimum height for the thumb */
+  }
+
+/* Scroll buttons styles */
+.pm-scroll-button {
+    width: 15px;
+    height: 15px;
+    background-color: var(--button-background);
+    border-color: var(--button-background);
+    color: #000000;
+    font-size: 8px;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+  
+  .pm-scroll-up-button {
+    top: 17.8%;
+    left: 92.8%;
+    padding-left: 1px;
+    padding-top: -7px;
+    
+  }
+  
+  .pm-scroll-down-button {
+    bottom: 2.4%;
+    left: 92.8%;
+    padding-left: 1px;
+    padding-bottom: -7px;
+  
+  }

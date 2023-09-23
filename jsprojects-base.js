@@ -14,6 +14,81 @@ addEventListener("DOMContentLoaded", (event) => {
     if (portfolioButton) {
       portfolioButton.onclick = function () { navLink("portfolio.html") }
     }
+
+    // Scrollbar with arrow buttons
+const scrollContainer = document.querySelector(".pm-scroll-container");
+const scrollContent = document.querySelector(".pm-scroll-content");
+const scrollbarThumb = document.querySelector(".pm-custom-scrollbar-thumb");
+const scrollUpButton = document.querySelector(".pm-scroll-up-button");
+const scrollDownButton = document.querySelector(".pm-scroll-down-button");
+const scrollbarBackground = document.querySelector(".pm-custom-scrollbar::before");
+
+// Constants for scroll step and button height
+const scrollStep = 30;
+const buttonHeight = scrollUpButton.offsetHeight;
+
+// Add click event listeners to scroll buttons
+scrollUpButton.addEventListener("click", () => {
+  scrollContainer.scrollTop -= scrollStep; // Adjust the scroll step as needed
+});
+
+scrollDownButton.addEventListener("click", () => {
+  scrollContainer.scrollTop += scrollStep; // Adjust the scroll step as needed
+});
+
+// Update the scrollbar thumb position when scrolling
+scrollContainer.addEventListener("scroll", () => {
+  const scrollPercentage = (scrollContainer.scrollTop / (scrollContent.clientHeight - scrollContainer.clientHeight)) * 50;
+  scrollbarThumb.style.top = `${scrollPercentage}%`;
+  scrollbarBackground.style.height = `${scrollPercentage}%`; // Adjust the background height
+});
+
+// Handle scrollbar thumb dragging
+let isDragging = false;
+let startY, startThumbPosition;
+
+scrollbarThumb.addEventListener("mousedown", (e) => {
+  e.preventDefault();
+  isDragging = true;
+  startY = e.clientY;
+  startThumbPosition = parseFloat(scrollbarThumb.style.top) || 0;
+});
+
+window.addEventListener("mousemove", (e) => {
+  if (isDragging) {
+    const deltaY = e.clientY - startY;
+    const newThumbPosition = startThumbPosition + (deltaY / scrollContainer.clientHeight) * 100;
+
+    // Calculate the maximum and minimum positions for the thumb
+    const minThumbPosition = 0; // The minimum position is always 0 (top of the scrollbar)
+    const maxThumbPosition = 59 - (buttonHeight / scrollContainer.clientHeight) * 59;
+
+    const clampedPosition = Math.min(Math.max(newThumbPosition, minThumbPosition), maxThumbPosition);
+    scrollbarThumb.style.top = `${clampedPosition}%`;
+
+    const newScrollPosition = (clampedPosition / 100) * (scrollContent.clientHeight - scrollContainer.clientHeight);
+    scrollContainer.scrollTop = newScrollPosition;
+  }
+});
+
+window.addEventListener("mouseup", () => {
+  isDragging = false;
+});
+
+// for scrolling with trackpad/mouse 
+scrollContainer.addEventListener("wheel", (e) => {
+  e.preventDefault(); // Prevent the default scrolling behavior
+  const deltaY = e.deltaY;
+  const currentScroll = scrollContainer.scrollTop;
+  const newScrollPosition = currentScroll + deltaY;
+
+  // Ensure the new scroll position stays within bounds
+  const maxScroll = scrollContent.clientHeight - scrollContainer.clientHeight;
+  const clampedScroll = Math.min(Math.max(newScrollPosition, 0), maxScroll);
+
+  // Update the scroll position
+  scrollContainer.scrollTop = clampedScroll;
+});
   
   
   
