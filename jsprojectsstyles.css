@@ -61,10 +61,10 @@
 
 .clock {
     color: rgb(0, 0, 0);
-    font-size: 20px; 
+    font-size: 16px; 
     font-family:'Courier New', Courier, monospace;
     text-align: center;
-    padding-top: 10px; 
+    padding-top: 5px; 
 }
 
 .clockWindow {
@@ -93,6 +93,14 @@
     padding-top: 3px;
     padding-right: 7px;
     padding-bottom: 5px;
+}
+
+.date {
+    color: rgb(0, 0, 0);
+    font-size: 12px; 
+    font-family:'Courier New', Courier, monospace;
+    text-align: center;
+   
 }
 
 /* Custom scrollbar styles (background/behind thumb */

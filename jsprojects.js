@@ -97,9 +97,24 @@ addEventListener("DOMContentLoaded", (event) => {
         
                 setTimeout(displayTime, 1000) //displays the time and updates it every second 
             }
-        
+
+            function displayDate(){
+                let currentDate = new Date()
+                let d = currentDate.getDay()
+                let m = currentDate.getMonth() +1;
+                let y = currentDate.getFullYear()
+
+                d = (d < 10) ? "0" + d : d
+                m = (m < 10) ? "0" + m : m 
+
+                let date = d + "/" + m + "/" + y
+
+                document.getElementById("currentDateDisplay").textContent = date 
+            }
+
             window.onload = function() {
-            displayTime()
+                displayTime()
+                displayDate()
             }
 
 });
