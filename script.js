@@ -34,7 +34,7 @@ const scrollContent = document.querySelector(".scroll-content");
 const scrollbarThumb = document.querySelector(".custom-scrollbar-thumb");
 const scrollUpButton = document.querySelector(".scroll-up-button");
 const scrollDownButton = document.querySelector(".scroll-down-button");
-const scrollbarBackground = document.querySelector(".custom-scrollbar::before");
+// const scrollbarBackground = document.querySelector(".custom-scrollbar::before"); //querySelector does not work on ::before (pseudo-elements
 
 // Constants for scroll step and button height
 const scrollStep = 30;
@@ -51,9 +51,9 @@ scrollDownButton.addEventListener("click", () => {
 
 // Update the scrollbar thumb position when scrolling
 scrollContainer.addEventListener("scroll", () => {
-  const scrollPercentage = (scrollContainer.scrollTop / (scrollContent.clientHeight - scrollContainer.clientHeight)) * 100;
+  const scrollPercentage = (scrollContainer.scrollTop / (scrollContent.clientHeight - scrollContainer.clientHeight)) * 95;
   scrollbarThumb.style.top = `${scrollPercentage}%`;
-  scrollbarBackground.style.height = `${scrollPercentage}%`; // Adjust the background height
+  // scrollbarBackground.style.height = `${scrollPercentage}%`; // Adjust the background height
 });
 
 // Handle scrollbar thumb dragging

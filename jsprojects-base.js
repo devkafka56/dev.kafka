@@ -21,7 +21,7 @@ const scrollContent = document.querySelector(".pm-scroll-content");
 const scrollbarThumb = document.querySelector(".pm-custom-scrollbar-thumb");
 const scrollUpButton = document.querySelector(".pm-scroll-up-button");
 const scrollDownButton = document.querySelector(".pm-scroll-down-button");
-const scrollbarBackground = document.querySelector(".pm-custom-scrollbar::before");
+// const scrollbarBackground = document.querySelector(".pm-custom-scrollbar::before");
 
 // Constants for scroll step and button height
 const scrollStep = 30;
@@ -40,7 +40,7 @@ scrollDownButton.addEventListener("click", () => {
 scrollContainer.addEventListener("scroll", () => {
   const scrollPercentage = (scrollContainer.scrollTop / (scrollContent.clientHeight - scrollContainer.clientHeight)) * 50;
   scrollbarThumb.style.top = `${scrollPercentage}%`;
-  scrollbarBackground.style.height = `${scrollPercentage}%`; // Adjust the background height
+  // scrollbarBackground.style.height = `${scrollPercentage}%`; // Adjust the background height
 });
 
 // Handle scrollbar thumb dragging

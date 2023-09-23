@@ -363,8 +363,6 @@ minButton:active, .scroll-button:active, .scroll-down-button:active, .scoll-up-b
   transition: background-color 0.2s ease; /* Add a transition for smooth resizing */
 }
 
-
-
 .custom-scrollbar-thumb {
   background-color: var(--button-background);
   border-color: var(--button-background);
