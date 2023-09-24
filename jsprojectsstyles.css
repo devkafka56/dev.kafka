@@ -103,6 +103,37 @@
    
 }
 
+/*Fish Tank*/
+
+.p3-fishtank-container {
+    position: relative;
+    width: 39rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: left;
+    top: 10rem;
+}
+
+.p3-fishtank-card {
+    border: 2px outset #5d82fc;
+    border-radius: 0px;
+    box-shadow: 7px 7px 7px rgba(5, 1, 28, 0.5);
+    background-color: #3060ff;
+    width: 20rem; 
+    height: 20rem;
+    margin-left: 2.4rem;
+}
+
+#p3-fishtank-canvas {
+    border: 2px solid #300ef1;
+    background-color: #080039e0;
+    box-shadow: 0 0px 0px rgba(0, 0, 0, 0.8);
+    border-radius: 0px;
+    justify-content: center;
+    align-items: center;
+}
+
 /* Custom scrollbar styles (background/behind thumb */
 
 .pm-custom-scrollbar {

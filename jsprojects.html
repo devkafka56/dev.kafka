@@ -61,7 +61,7 @@
                             </div>
                             <div class="d-flex pt-0 align-items-center justify-content-center">
                                 <div class="pm-scroll-container text-card p-1 align-items-center justify-content-center"
-                                    style="width: 19rem; height: 16rem; overflow-y: hidden;">
+                                    style="width: 19rem; height: 16rem; overflow-y: hidden; overflow-x: hidden;">
                                     <div class="pm-scroll-content window-menu-text">
                                         <p>The purpose of this page is to serve as a spot where all the projects I
                                             created
@@ -112,7 +112,7 @@
                             </h5>
                             <div class="d-flex pt-4 align-items-center justify-content-center">
                                 <div class="text-card p-1 align-items-center justify-content-center"
-                                    style="width: 39rem; height: 38.5rem; overflow-y: scroll;">
+                                    style="width: 39rem; height: 38.5rem; overflow-y: hidden; overflow-x: hidden;">
                                     <!--P1: Stop Watch-->
                                     <div class="p1-stopwatch-container flex-row justify-content-evenly align-items-evenly pt-3"
                                         id="stopwatch">
@@ -151,8 +151,27 @@
                                                 </div>
                                             </h5>
                                             <div id="digitalClockDisplay" class="clock"></div>
-                                            <div id="currentDateDisplay" class="date"></div> 
+                                            <div id="currentDateDisplay" class="date"></div>
                                             <!--(for popup) Note: the lack of AM/PM is not on account of laziness or any particular positive feelings toward Quebec, but rather perference.-->
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="p3-fishtank-container d-flex flex-column">
+                                        <div class="p3-fishtank-card">
+                                            <h5
+                                                class="topBar custom-windowTitle d-flex justify-content-between p-1 m-0">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="d-flex m-1 my-0">kafka.dev/jsprojects/fishtank</div>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <!--Click Close Button-->
+                                                    <button
+                                                        class="xButton d-flex my-0 mx-0 align-items-center justify-content-center">x</button>
+                                                </div>
+                                            </h5>
+                                            <div class="mx-2 my-1">
+                                                <canvas id="p3-fishtank-canvas" width="297px" height="280px"></canvas>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -162,7 +181,6 @@
                 </div>
             </div>
         </div>
-    </div>
 </body>
 
 </html>

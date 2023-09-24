@@ -95,7 +95,7 @@ addEventListener("DOMContentLoaded", (event) => {
 
     function displayDate() {
         let currentDate = new Date()
-        let d = currentDate.getDay()
+        let d = currentDate.getDate()
         let m = currentDate.getMonth() + 1;
         let y = currentDate.getFullYear()
 
@@ -112,11 +112,99 @@ addEventListener("DOMContentLoaded", (event) => {
         displayDate()
     }
 
-    //P3 Checklist 
+    //P3 Fish Tank
 
-    
+    const canvas = document.getElementById("p3-fishtank-canvas")
+    const ctx = canvas.getContext("2d")
 
-    //P4 Calendar 
+    class Body {
+        constructor(radiusX, radiusY, rotation, startAngle, endAngle) {
+            // this.x = x 
+            // this.y = y
+            this.radiusX = radiusX
+            this.radiusY = radiusY
+            this.rotation = rotation
+            this.startAngle = startAngle
+            this.endAngle = endAngle
+        }
+
+        drawBody(x, y) {
+
+            ctx.beginPath()
+            ctx.ellipse(x, y, this.radiusX, this.radiusY, this.rotation, this.startAngle, this.endAngle)
+            ctx.closePath()
+            ctx.fill()
+        }
+    }
+
+    class Fin {
+        constructor(finWidth, finOffsetX, finOffsetY) {
+            this.finWidth = finWidth
+            this.finOffsetX = finOffsetX
+            this.finOffsetY = finOffsetY
+        }
+
+        drawFin(fishX, fishY, fishBodyRadiusX) {
+            let p1X = fishX + fishBodyRadiusX
+            let p1Y = fishY
+            let p2X = p1X + this.finOffsetX
+            let p2Y = p1Y - (this.finWidth/2) - this.finOffsetY
+            let p3X = p2X
+            let p3Y = p2Y + this.finWidth
+            ctx.beginPath()
+            
+            ctx.moveTo(p1X, p1Y)
+            ctx.lineTo(p2X, p2Y)
+            ctx.lineTo(p3X, p3Y)
+            ctx.closePath()            
+            ctx.fill()
+            
+
+       
+          
+        }
+
+    }
+
+    class Fish {
+        constructor(colour, speed, direction, startX, startY, finWidth) {
+            this.colour = colour
+            this.speed = speed
+            this.direction = direction
+            this.x = startX
+            this.y = startY
+            this.body = new Body(15,10,0,0,2*Math.PI)
+            this.fin = new Fin(finWidth,15,0)
+
+
+        }
+
+        drawFish() {
+            ctx.fillStyle = this.colour
+            this.body.drawBody(this.x, this.y)
+            this.fin.drawFin(this.x, this.y,this.body.radiusX - 5)
+
+        }
+
+    }
+
+    f1 = new Fish("red",0,0,50,50,20)
+    f2 = new Fish ("green",0,0,70,70,10)
+    for(i=0;i<35;i++){
+        new Fish(getRandomColor(i*17),Math.random()*100,Math.random()*100,Math.random()*290,Math.random()*290,(Math.random()+5)*5).drawFish()
+    }
+
+    f1.drawFish()
+    f2.drawFish()
+
 
 });
 
+function getRandomColor(number) {
+    var letters = '123456789ABCEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor( number%16 )];
+    }
+    return color;
+  }
