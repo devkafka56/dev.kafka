@@ -13,11 +13,6 @@ addEventListener("DOMContentLoaded", (event) => {
 
     //Start Button Function 
 
-    //Notes 
-    //Parameters represent values passed as arguments***
-    //Ternary condition: [condition] ? [value_if_true] : [value_if_false]
-    //innerText: pulls from element and includes styles v. textContent: only pulls text without considering styles 
-
     buttonStart.onclick = function () {
         clearInterval(Interval) //clears any previous intervals on timer 
         Interval = setInterval(startTimer, 10) //starts timer at 10 milliseconds (setInterval expects second argument in milliseconds)
@@ -78,44 +73,50 @@ addEventListener("DOMContentLoaded", (event) => {
 
     }
 
-            //P2: Clock 
+    //P2: Clock 
 
-            function displayTime() {
-                let date = new Date()
-                let h = date.getHours()
-                let m = date.getMinutes()
-                let s = date.getSeconds()
-             
-                h = (h < 10) ? "0" + h : h
-                m = (m < 10) ? "0" + m : m 
-                s = (s < 10) ? "0" + s : s 
-        
-                let time = h + ":" + m + ":" + s
-        
-                document.getElementById("digitalClockDisplay").textContent = time
-                
-        
-                setTimeout(displayTime, 1000) //displays the time and updates it every second 
-            }
+    function displayTime() {
+        let date = new Date()
+        let h = date.getHours()
+        let m = date.getMinutes()
+        let s = date.getSeconds()
 
-            function displayDate(){
-                let currentDate = new Date()
-                let d = currentDate.getDay()
-                let m = currentDate.getMonth() +1;
-                let y = currentDate.getFullYear()
+        h = (h < 10) ? "0" + h : h
+        m = (m < 10) ? "0" + m : m
+        s = (s < 10) ? "0" + s : s
 
-                d = (d < 10) ? "0" + d : d
-                m = (m < 10) ? "0" + m : m 
+        let time = h + ":" + m + ":" + s
 
-                let date = d + "/" + m + "/" + y
+        document.getElementById("digitalClockDisplay").textContent = time
 
-                document.getElementById("currentDateDisplay").textContent = date 
-            }
 
-            window.onload = function() {
-                displayTime()
-                displayDate()
-            }
+        setTimeout(displayTime, 1000) //displays the time and updates it every second 
+    }
+
+    function displayDate() {
+        let currentDate = new Date()
+        let d = currentDate.getDay()
+        let m = currentDate.getMonth() + 1;
+        let y = currentDate.getFullYear()
+
+        d = (d < 10) ? "0" + d : d
+        m = (m < 10) ? "0" + m : m
+
+        let date = d + "/" + m + "/" + y
+
+        document.getElementById("currentDateDisplay").textContent = date
+    }
+
+    window.onload = function () {
+        displayTime()
+        displayDate()
+    }
+
+    //P3 Checklist 
+
+    
+
+    //P4 Calendar 
 
 });
 

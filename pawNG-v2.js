@@ -119,6 +119,19 @@ class GameObject {
     }
 }
 
+function registerCollision(gameObject1, gameObject2, collisionCallBack) {
+    //check if gameObject1 and gameObject2 are touching 
+    //call the 
+    //how do we check that go1 and go2 are touching? that has to happen before the collisionCallBack :3 
+
+    let boundingBox1 = gameObject1.shape.getBoundingBox()
+    let boundingBox2 = gameObject2.shape.getBoundingBox()
+
+    if (boundingBox1.inBounds(boundingBox2) || boundingBox2.inBounds(boundingBox1)) {
+        collisionCallBack(gameObject1, gameObject2)
+    }
+}
+
 // Paint
 
 // This is the class for all lines that appear on the screen, like the arena line, and the underline of the word "SCORE". 
@@ -127,6 +140,31 @@ class Line {
 
     }
 
+
+}
+
+class BoundingBox {
+    constructor(maxX, maxY, minX, minY) {
+        this.maxX = maxX
+        this.maxY = maxY
+        this.minX = minX
+        this.minY = minY
+    }
+
+    inBounds(boundingBox) {
+        if ((this.maxY > boundingBox.minY &&
+            this.maxY < boundingBox.maxY &&
+            this.minY > boundingBox.minY &&
+            this.minY < boundingBox.maxY
+        ) || (
+                this.maxX > boundingBox.minX &&
+                this.maxX < boundingBox.maxX &&
+                this.minX > boundingBox.minX &&
+                this.minX < boundingBox.maxX)) {
+            return true
+        }
+        return true
+    }
 
 }
 
@@ -142,6 +180,18 @@ class RectThing extends Shape {
         super.draw()
         ctx.fillRect(this.startPos.x, this.startPos.y, this.width, this.height)
     }
+
+    getBoundingBox() {
+        let startPos = this.startPos
+        let maxX = startPos.x + this.width
+        let maxY = startPos.y
+        let minX = startPos.x
+        let minY = startPos.y - this.height
+
+        return new BoundingBox(maxX, maxY, minX, minY)
+
+    }
+
 }
 
 // * Same as RectThing, but makes a circle :3. 
@@ -158,10 +208,22 @@ class CircleThing extends Shape {
         ctx.closePath()
         ctx.fill()
     }
+
+    getBoundingBox() {
+        let startPos = this.startPos
+        let maxX = startPos.x + this.radius
+        let maxY = startPos.y + this.radius
+        let minX = startPos.x - this.radius
+        let minY = startPos.y - this.radius
+
+        return new BoundingBox(maxX, maxY, minX, minY)
+
+    }
+
 }
 
 // Game Objects
- 
+
 class Paddle extends GameObject {
     constructor(color, x, y, speed, directionInRad) {
         super(new RectThing(color, 5, 40), new MoveThing(new Position(x, y), new Velocity(speed, directionInRad)))
@@ -182,11 +244,11 @@ class Paddle extends GameObject {
 }
 
 // Class for the ball. 
-    // **FOLLOW UP: Since we have a whole class for ball, maybe we should make a CHAOS mode which includes faster paddles and more balls?**
+// **FOLLOW UP: Since we have a whole class for ball, maybe we should make a CHAOS mode which includes faster paddles and more balls?**
 
 class Ball extends GameObject {
-    constructor(color, x, y, speed, directionInRad) {
-        super(new CircleThing(color, 5), new MoveThing(new Position(x, y), new Velocity(speed, directionInRad)))
+    constructor(color, radius, x, y, speed, directionInRad) {
+        super(new CircleThing(color, radius), new MoveThing(new Position(x, y), new Velocity(speed, directionInRad)))
     }
 }
 
@@ -194,8 +256,10 @@ class Ball extends GameObject {
 
 function startGame() {
     leftPaddle = new Paddle("white", 1, canvas.height / 2, 0, 0)
-    rightPaddle = new Paddle("white", 595, canvas.height / 2, 0, 0) // variables for canvas width and height in middle of canvas
-    ball = new Ball("red", canvas.width / 2, canvas.height / 2, 2, 0)
+    rightPaddle = new Paddle("white", canvas.width - 5, canvas.height / 2, 0, 0) // variables for canvas width and height in middle of canvas
+    ball = new Ball("red", 5, canvas.width / 2, canvas.height / 2, 2, 3.1)
+
+
 
     gameLoop()
 }
@@ -212,15 +276,13 @@ function gameLoop() {
     drawArena()
 
     leftPaddle.draw()
-    rightPaddle.draw() 
+    rightPaddle.draw()
     ball.draw()
     ball.moveThing.move()
+    registerCollision(ball, leftPaddle, () => {
+        console.log("BALL TOUCHING LEFT PADDLE")
+    })
 
-    // registerCollision(leftPaddle,top)
-
-    // registerCollision(leftPaddle,bottom,(){
-
-    // })
 
     raf = window.requestAnimationFrame(gameLoop)
 }
