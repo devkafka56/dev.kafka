@@ -5,6 +5,8 @@ let raf
 let leftPaddle
 let rightPaddle
 let ball
+let gameBoundary
+const SHOW_BOUNDING_BOXES = true
 
 // Buttons & Controls 
 addEventListener("DOMContentLoaded", (event) => {
@@ -63,8 +65,8 @@ class Velocity {
         this.setVelocity()
     }
 
-    setDirection(direction) {
-        this.directionInRad = this.direction
+    changeDirection(direction) {
+        this.directionInRad += direction
         this.setVelocity()
     }
 
@@ -104,12 +106,12 @@ class GameObject {
         this.moveThing = moveThing
     }
 
-    setDirection(direction) {
-        this.moveThing.velocity.setDirection(direction)
+    changeDirection(direction) {
+        this.moveThing.velocity.changeDirection(direction)
     }
 
     setSpeed(speed) {
-        this.moveThing.speed
+        this.moveThing.speed = speed
     }
 
     draw() {
@@ -126,10 +128,12 @@ function registerCollision(gameObject1, gameObject2, collisionCallBack) {
 
     let boundingBox1 = gameObject1.shape.getBoundingBox()
     let boundingBox2 = gameObject2.shape.getBoundingBox()
-
+    boundingBox1.drawBoundingBox()
+    boundingBox2.drawBoundingBox()
     if (boundingBox1.inBounds(boundingBox2) || boundingBox2.inBounds(boundingBox1)) {
-        collisionCallBack(gameObject1, gameObject2)
+        collisionCallBack(true)
     }
+    collisionCallBack(false)
 }
 
 // Paint
@@ -151,21 +155,29 @@ class BoundingBox {
         this.minY = minY
     }
 
-    inBounds(boundingBox) {
-        if ((this.maxY > boundingBox.minY &&
-            this.maxY < boundingBox.maxY &&
-            this.minY > boundingBox.minY &&
-            this.minY < boundingBox.maxY
-        ) || (
-                this.maxX > boundingBox.minX &&
-                this.maxX < boundingBox.maxX &&
-                this.minX > boundingBox.minX &&
-                this.minX < boundingBox.maxX)) {
-            return true
+    drawBoundingBox() {
+        if (SHOW_BOUNDING_BOXES){
+            ctx.fillStyle = "rgba(9, 176, 63, 0.5)"
+            ctx.fillRect(this.minX, this.minY, this.maxX - this.minX, this.maxY - this.minY)
         }
-        return true
+
+
     }
 
+    inBounds(boundingBox) {
+
+
+        // if any two perpendicular lines (out of 4) are in between the bounding box lines then there is a collision.
+
+        // Having an x collision is when the min y or max y lines are in between the max and min of the bounding box.
+
+        // Check min line ( if the lines is less than the max and greater than the min)
+        return (((this.minY < boundingBox.maxY && this.minY > boundingBox.minY) ||
+         (this.maxY < boundingBox.maxY && this.maxY > boundingBox.minY)) &&
+         ((this.minX < boundingBox.maxX && this.minX > boundingBox.minX) ||
+          (this.maxX < boundingBox.maxX && this.maxX > boundingBox.minX)))
+
+    }
 }
 
 // *Used to create Objects that are rectangles or squares, gives color, width and height. 
@@ -184,9 +196,9 @@ class RectThing extends Shape {
     getBoundingBox() {
         let startPos = this.startPos
         let maxX = startPos.x + this.width
-        let maxY = startPos.y
+        let maxY = startPos.y + this.height
         let minX = startPos.x
-        let minY = startPos.y - this.height
+        let minY = startPos.y
 
         return new BoundingBox(maxX, maxY, minX, minY)
 
@@ -256,9 +268,9 @@ class Ball extends GameObject {
 
 function startGame() {
     leftPaddle = new Paddle("white", 1, canvas.height / 2, 0, 0)
-    rightPaddle = new Paddle("white", canvas.width - 5, canvas.height / 2, 0, 0) // variables for canvas width and height in middle of canvas
+    rightPaddle = new Paddle("white", canvas.width - 5, canvas.height / 2 - 20, 0, 0) // variables for canvas width and height in middle of canvas
     ball = new Ball("red", 5, canvas.width / 2, canvas.height / 2, 2, 3.1)
-
+    gameBoundary = new BoundingBox(canvas.width,canvas.height,0,0)
 
 
     gameLoop()
@@ -271,6 +283,14 @@ function drawArena() {
 
 // Game Play
 
+function ballBounce(isColliding) {
+    if(isColliding){
+        ball.changeDirection(Math.PI*Math.random())
+
+    }
+    console.log('ball bounce')
+}
+
 function gameLoop() {
 
     drawArena()
@@ -279,10 +299,13 @@ function gameLoop() {
     rightPaddle.draw()
     ball.draw()
     ball.moveThing.move()
-    registerCollision(ball, leftPaddle, () => {
-        console.log("BALL TOUCHING LEFT PADDLE")
+    registerCollision(ball, leftPaddle,ballBounce)
+    registerCollision(ball, rightPaddle,ballBounce)
+    registerCollision(ball,gameBoundary,(isColliding)=>{
+        if (!isColliding){
+            alert("ball left boundary")
+        }
     })
-
 
     raf = window.requestAnimationFrame(gameLoop)
 }

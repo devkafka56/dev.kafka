@@ -162,8 +162,8 @@ addEventListener("DOMContentLoaded", (event) => {
     }
 
     class Fin {
-        constructor(finWidth, finOffsetX, finOffsetY) {
-            this.finWidth = finWidth
+        constructor(finOffsetX, finOffsetY) {
+            this.finWidth = Math.floor(Math.random() * (50 - 10 + 1)) + 10
             this.finOffsetX = finOffsetX
             this.finOffsetY = finOffsetY
         }
@@ -186,103 +186,75 @@ addEventListener("DOMContentLoaded", (event) => {
 
     }
 
-    // function getRandomSpeed(min, max) {
-    //     return Math.floor(Math.random() * (max - min + 1)) + min
-    // }
-
     class Fish {
-        constructor(colour, speed, direction, startX, startY, finWidth) {
+        constructor(colour, direction) {
             this.colour = colour
-            this.speed = speed
+            this.speed = Math.floor(Math.random() * (3 - 1 + 1)) + 1
             this.direction = direction
-            this.x = startX
-            this.y = startY
+            this.x = Math.floor(Math.random() * (285 - 30 + 1)) + 30
+            this.y = Math.floor(Math.random() * (260 - 30 + 1)) + 30
             this.body = new Body(Math.floor(Math.random() * (30 - 10 + 1)) + 10, Math.floor(Math.random() * (20 - 10 + 1)) + 10, 0, 0, 2 * Math.PI)
-            this.fin = new Fin(finWidth, Math.floor(Math.random() * (30 - 10 + 1)) + 10, Math.floor(Math.random() * 11) - 5)
+            this.fin = new Fin(Math.floor(Math.random() * (30 - 10 + 1)) + 10, Math.floor(Math.random() * 11) - 5)
         }
 
         drawFish() {
-            ctx.fillStyle = this.colour
-            this.body.drawBody(this.colour, this.x, this.y)
-            this.fin.drawFin(this.colour, this.x, this.y, this.body.radiusX - 5)
-
+            ctx.fillStyle = this.colour;
+            if (this.direction === -1) {
+                // Draw left-facing fish
+                this.body.drawBody(this.colour, this.x, this.y)
+                this.fin.drawFin(this.colour, this.x, this.y, this.body.radiusX - 5)
+            } else {
+                // Draw right-facing fish
+                ctx.save() //saves current canvas state (color fill, default transformation matrix)
+                ctx.translate(this.x, this.y) //moves canvas drawing to new x and y pos 
+                ctx.scale(-1, 1) // flips canvas content 
+                this.body.drawBody(this.colour, 0, 0) //draws the new body given new pos 
+                this.fin.drawFin(this.colour, 0, 0, this.body.radiusX - 5) //draws new fin given new pos
+                ctx.restore() //puts canvas back to original state (color fill, default transformation matrix)
+            }
         }
-
     }
 
     let fishList = []
 
-
-    fishList.push(new Fish("rgb(180, 150, 270)", 1, 0, 50, 50, 20))
-    fishList.push(new Fish("hotpink", 1, 0, 70, 70, 10))
+    fishList.push(new Fish("#B2FFFF", -1))
+    fishList.push(new Fish("#46E8E8", 1))
+    fishList.push(new Fish("#72ABFF", 1))
+    fishList.push(new Fish("#1064E1", -1))
+    fishList.push(new Fish("#003CFF", -1))
+    fishList.push(new Fish("#7A96F3", 1))
+    fishList.push(new Fish("#7A7EF3", 1))
+    fishList.push(new Fish("#5320BA", 1))
+    fishList.push(new Fish("#A77AFF", -1))
+    fishList.push(new Fish("#4A2EFF", -1))
+    fishList.push(new Fish("#8A7AF3", -1))
 
     function fishLoop() {
-
-
-
         ctx.clearRect(0, 0, canvas.width, canvas.height) //clear canvas to make fish appear to move rather than dragging effect
-
         for (let index = 0; index < fishList.length; index++) {
             const fish = fishList[index]
-            fish.x = fish.x - 1;
-            fish.drawFish();
+            if (fish.x > canvas.width) {
+                fish.direction = -1
+            } else if (fish.x < -10) {
+                fish.direction = 1
+            }
+            fish.y += fish.speed * fish.direction
+            fish.x += fish.speed * fish.direction
+            
 
+            fish.drawFish()
         }
-
-
-
-
-
         raf = window.requestAnimationFrame(fishLoop)
-
-
-
-
-
     }
-
     fishLoop()
-
-    // var fishList = []
-
-    // for (let i = 0; i < 10; i++) {
-    //     let fish = new Fish(getRandomColor(), Math.random() * 100, Math.random() * 100, Math.random() * 290, Math.random() * 290, (Math.random() + 5) * 5)
-    //     fishList.push(fish)
-    // }
-
-    // function fishLoop() {
-
-    //     ctx.clearRect(0, 0, canvas.width, canvas.height) //clear canvas to make fish appear to move rather than dragging effect
-
-    //     let fishDirection = -1
-
-    //     for (let index = 0; index < fishList.length; index++) {
-    //         const fish = fishList[index];
-
-    //         fish.x += fishDirection
-
-    //         if (fish.x += fishDirection = canvas.width - 270) {
-    //             fish.x -= fishDirection
-    //         }
-
-
-    //         fish.drawFish()
-
-    //     }
-
-    //     raf = window.requestAnimationFrame(fishLoop)
-    // }
-
-    // fishLoop()
-
 });
 
 function getRandomColor() {
-    let letters = '0123456789ABCDEF';
-    let color = '#';
+    let letters = '0123456789ABCDEF'
+    let color = '#'
     for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
+        color += letters[Math.floor(Math.random() * 16)]
     }
-    return color;
+    return color
 }
 
