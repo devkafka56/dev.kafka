@@ -4,7 +4,7 @@ const ctx = canvas.getContext("2d")
 let raf
 let leftPaddle
 let rightPaddle
-let ball
+let ball1
 let gameBoundary
 const SHOW_BOUNDING_BOXES = true
 
@@ -121,19 +121,20 @@ class GameObject {
     }
 }
 
-function registerCollision(gameObject1, gameObject2, collisionCallBack) {
+function registerCollision(object1, object2, collisionCallBack) {
     //check if gameObject1 and gameObject2 are touching 
     //call the 
-    //how do we check that go1 and go2 are touching? that has to happen before the collisionCallBack :3 
+    //how do we check that go1 and go2 are touching? that has to happen before the collisionCallBack :3
 
-    let boundingBox1 = gameObject1.shape.getBoundingBox()
-    let boundingBox2 = gameObject2.shape.getBoundingBox()
-    boundingBox1.drawBoundingBox()
-    boundingBox2.drawBoundingBox()
+    let boundingBox1 = object1 instanceof GameObject  ? object1.shape.getBoundingBox(): object1
+    let boundingBox2 = object2 instanceof GameObject ? object2.shape.getBoundingBox():object2
+    //boundingBox1.drawBoundingBox()
+    //boundingBox2.drawBoundingBox()
     if (boundingBox1.inBounds(boundingBox2) || boundingBox2.inBounds(boundingBox1)) {
-        collisionCallBack(true)
+        collisionCallBack(true,object1,object2)
+    }else{
+        collisionCallBack(false,object1,object2)
     }
-    collisionCallBack(false)
 }
 
 // Paint
@@ -269,8 +270,12 @@ class Ball extends GameObject {
 function startGame() {
     leftPaddle = new Paddle("white", 1, canvas.height / 2, 0, 0)
     rightPaddle = new Paddle("white", canvas.width - 5, canvas.height / 2 - 20, 0, 0) // variables for canvas width and height in middle of canvas
-    ball = new Ball("red", 5, canvas.width / 2, canvas.height / 2, 2, 3.1)
-    gameBoundary = new BoundingBox(canvas.width,canvas.height,0,0)
+    ball1 = new Ball("red", 5, canvas.width / 2, canvas.height / 2, 6, 3.2)
+    ball2 = new Ball("green", 5, canvas.width / 2, canvas.height / 2, 6, 3.3)
+    ball3 = new Ball("yellow", 5, canvas.width / 2, canvas.height / 2, 6, 3.4)
+
+
+    gameBoundary = new BoundingBox(canvas.width-5,canvas.height-5,5,5)
 
 
     gameLoop()
@@ -283,12 +288,20 @@ function drawArena() {
 
 // Game Play
 
-function ballBounce(isColliding) {
+function ballBounce(isColliding,ball) {
     if(isColliding){
+        ball.moveThing.velocity
         ball.changeDirection(Math.PI*Math.random())
+        console.log('ball bounce')
 
     }
-    console.log('ball bounce')
+}
+
+function leavingBoundary(isColliding,ball){
+        if (!isColliding){
+            ball.changeDirection(Math.PI/4)
+
+        }
 }
 
 function gameLoop() {
@@ -297,15 +310,20 @@ function gameLoop() {
 
     leftPaddle.draw()
     rightPaddle.draw()
-    ball.draw()
-    ball.moveThing.move()
-    registerCollision(ball, leftPaddle,ballBounce)
-    registerCollision(ball, rightPaddle,ballBounce)
-    registerCollision(ball,gameBoundary,(isColliding)=>{
-        if (!isColliding){
-            alert("ball left boundary")
-        }
-    })
+    ball1.draw()
+    ball2.draw()
+    ball3.draw()
+    ball2.moveThing.move()
+    ball3.moveThing.move()
+    ball1.moveThing.move()
+
+    registerCollision(ball1, leftPaddle,ballBounce)
+    registerCollision(ball1, rightPaddle,ballBounce)
+    registerCollision(ball1,gameBoundary,leavingBoundary)
+    registerCollision(ball2,gameBoundary,leavingBoundary)
+    registerCollision(ball3,gameBoundary,leavingBoundary)
+
+
 
     raf = window.requestAnimationFrame(gameLoop)
 }

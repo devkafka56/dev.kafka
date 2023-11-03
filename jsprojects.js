@@ -189,7 +189,7 @@ addEventListener("DOMContentLoaded", (event) => {
     class Fish {
         constructor(colour, direction) {
             this.colour = colour
-            this.speed = Math.floor(Math.random() * (3 - 1 + 1)) + 1
+            this.speed = Math.floor(Math.random() * (2 - 1 + 1)) + 1
             this.direction = direction
             this.x = Math.floor(Math.random() * (285 - 30 + 1)) + 30
             this.y = Math.floor(Math.random() * (260 - 30 + 1)) + 30
@@ -229,8 +229,12 @@ addEventListener("DOMContentLoaded", (event) => {
     fishList.push(new Fish("#4A2EFF", -1))
     fishList.push(new Fish("#8A7AF3", -1))
 
+
+
     function fishLoop() {
         ctx.clearRect(0, 0, canvas.width, canvas.height) //clear canvas to make fish appear to move rather than dragging effect
+        
+
         for (let index = 0; index < fishList.length; index++) {
             const fish = fishList[index]
             if (fish.x > canvas.width) {
@@ -238,8 +242,10 @@ addEventListener("DOMContentLoaded", (event) => {
             } else if (fish.x < -10) {
                 fish.direction = 1
             }
-            fish.y += fish.speed * fish.direction
+            //fish.y += fish.speed * fish.direction
             fish.x += fish.speed * fish.direction
+
+            
             
 
             fish.drawFish()
