@@ -37,7 +37,7 @@ const scrollDownButton = document.querySelector(".scroll-down-button");
 // const scrollbarBackground = document.querySelector(".custom-scrollbar::before"); //querySelector does not work on ::before (pseudo-elements
 
 // Constants for scroll step and button height
-const scrollStep = 30;
+const scrollStep = 20;
 const buttonHeight = scrollUpButton.offsetHeight;
 
 // Add click event listeners to scroll buttons

@@ -2,28 +2,69 @@
 <html lang="en">
 
 <head>
-    <script src="script.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>kafka.dev/aboutMEow</title>
+    <script src="about.js"></script>
 </head>
 
-<body>
-    <div class="container p-5 d-flex flex-column align-items-center">
-        <h5><u>ABOUT MEOW</u></h5>
-        <p class="custom-paragraph">I am a handsome little guy who has decided to exhaust one of my many lives as a software developer. When I am
-            not busy ensuring there is enough <span style="color:sienna">food</span> in my dish, or napping in the <span
-                style="color:gold">sun</span>, I build websites.</p>
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title text-center">An <i>Impressive</i> Box</h5>
-                <p class="card-text">Inserting this box was an incredible feat of software engineering.</p>
-                <a href="index.html" class="btn btn-primary ">Cowboy, Take me Away(Home)</a>
+<body class="clouds-background">
+    <div class="container p-5 d-flex flex-column align-items-left">
+        <div class="navWindow card flex-column" style="width: 28rem; height: 26rem;">
+            <div class="card-bodytext-center">
+                <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">
+                    <div class="d-flex align-items-center">
+                        <div class="d-flex m-1 my-0">kafka.dev/welcome</div>
+                    </div>
+                    <div class="d-flex">
+
+                        <!--Click Min Button-->
+                        <button data-popup-id="minAboutPopup"
+                            class="open-popup minButton d-flex my-0 mx-0 align-items-center justify-content-center">&#95;</button>
+
+                        <!--Click Max Button-->
+                        <button data-popup-id="maxAboutPopup"
+                            class="open-popup maxButton d-flex m-1 my-0 align-items-center justify-content-center">&square;</button>
+
+                        <!--Click Close Button-->
+                        <button data-popup-id="xAboutPopup"
+                            class="xButton d-flex my-0 mx-0 align-items-center justify-content-center"
+                            onclick="navLink('index.html')">x</button>
+                    </div>
+                </h5>
+                <div class="d-flex flex-column pt-3 ps-2 align-items-left justify-content-evenly">
+                    <div class="text-card scroll-container-about mb-3 align-items-center"
+                        style="width: 20.5rem; height: 14.5rem; position: relative;">
+                        <div class="scroll-content-about window-welcomeText">
+                            <p>Kafka says:</p>
+                            <p> This is more example text that comes first but that I wrote second. <i>This text is
+                                    italicized that kindly requests you avoid using the scrollbar when there is no
+                                    scrollable content so that you do not see the bugs as they are shy.</i> <i>This text is
+                                        italicized that kindly requests you avoid using the scrollbar when there is no
+                                        scrollable content so that you do not see the bugs as they are shy.</i><i>This text is
+                                            italicized that kindly requests you avoid using the scrollbar when there is no
+                                            scrollable content so that you do not see the bugs as they are shy.</i></p>
+                        </div>
+                        <div class="custom-scrollbar-about">
+                            <button class="custom-scrollbar-thumb-about"></button>
+                        </div>
+                    </div>
+                    <button class="scroll-button scroll-up-button-about">▲</button>
+                    <button class="scroll-button scroll-down-button-about">▼</button>
+
+                    <div class="d-flex text-card" style="width:20.5rem; height:5.5rem">
+                        <div class="window-welcomeText">
+                            <p>...</p>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
+
     </div>
 </body>
 

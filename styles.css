@@ -274,6 +274,8 @@ minButton:active, .scroll-button:active, .scroll-down-button:active, .scoll-up-b
 
 }
 
+
+
 /*This is for the text in the white box*/
 .window-welcomeText {
   font-size: 12px;
@@ -404,6 +406,63 @@ minButton:active, .scroll-button:active, .scroll-down-button:active, .scoll-up-b
   padding-bottom: -7px;
 
 }
+
+.scroll-up-button-about {
+  top: 12.75%;
+  left: 71.8%;
+  padding-left: 1px;
+  padding-top: -7px;
+  
+}
+
+.scroll-down-button-about {
+  bottom: 32.3%;
+  left: 71.8%;
+  padding-left: 1px;
+  padding-bottom: -7px;
+
+}
+
+.custom-scrollbar-thumb-about {
+  background-color: var(--button-background);
+  border-color: var(--button-background);
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  min-height: 99px; 
+  /* Minimum height for the thumb */
+}
+.custom-scrollbar-about {
+  width: 15px;
+  background-color: transparent; /* Set background-color to transparent */
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%; /* Set a fixed height of 100% */
+  transition: background-color 0.2s ease; /* Add a transition for smooth resizing */
+}
+
+.scroll-container-about {
+  width: 200px;
+  height: auto;
+  overflow: hidden;
+  position: relative;
+} 
+
+/* Content styles */
+.scroll-content-about {
+  width: 100%;
+  height: auto;
+  padding-right: 20px;
+  overflow: hidden;
+  position: absolute;
+}
+
 
 /*Pop Up Styles*/
 

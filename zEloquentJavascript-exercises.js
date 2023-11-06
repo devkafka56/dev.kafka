@@ -701,7 +701,7 @@ console.log(reduce(arrays, (a, b) => [a + b], []))
 
 //5.1 Flatten - review session: 
 
-console.log(arrays.reduce((a, b) => {return a.concat(b)}))
+console.log(arrays.reduce((a, b) => { return a.concat(b) }))
 
 //5.2 Higher order loop
 
@@ -757,14 +757,14 @@ console.log(dominantDirection("Hey, مساء الخير"));
 
 function dominantDirection(text) {
     let scripts = countBy(text, char => {
-    let script = characterScript(char.codePointAt(0))
-    return script ? script.direction : "none"
-     }).filter(({name}) => name != "none")
-     
-   let domDirection = scripts.reduce((a, b) => {return a > b ? a : b})
-   
-   return domDirection.name
-   }
+        let script = characterScript(char.codePointAt(0))
+        return script ? script.direction : "none"
+    }).filter(({ name }) => name != "none")
+
+    let domDirection = scripts.reduce((a, b) => { return a > b ? a : b })
+
+    return domDirection.name
+}
 
 // → rtl
 
@@ -892,54 +892,54 @@ class GroupIterator {
 
 class Group {
     constructor() {
-    this.group = [] 
+        this.group = []
     }
-    
+
     static from(array) {
-     let newGroup = new Group()
-     for (let element of array) {
-      newGroup.add(element)
-     } 
-     return newGroup
+        let newGroup = new Group()
+        for (let element of array) {
+            newGroup.add(element)
+        }
+        return newGroup
     }
-    
+
     has(value) {
-     for (let element of this.group) {
-      if (element == value) {
-       return true
-      }
-     }
-      return false 
+        for (let element of this.group) {
+            if (element == value) {
+                return true
+            }
+        }
+        return false
     }
-    
+
     add(value) {
-     if (!this.has(value)) {
-      this.group.push(value)
-     }
+        if (!this.has(value)) {
+            this.group.push(value)
+        }
     }
-    
+
     delete(value) {
-      this.group = this.group.filter((e) => e !== value)
+        this.group = this.group.filter((e) => e !== value)
     }
-    
-   [Symbol.iterator]() {
-          return this.group[Symbol.iterator]();
-      } 
-    
-  }
-  
-  class GroupIterator {
-   constructor(group) {
-     this.group = group 
-   }
-    
+
+    [Symbol.iterator]() {
+        return this.group[Symbol.iterator]();
+    }
+
+}
+
+class GroupIterator {
+    constructor(group) {
+        this.group = group
+    }
+
     next() {
-      let counter = 0
-      if (counter >= this.group.length) return {done: true}
-      if (counter < this.group.length) return {hello: this.group[counter], done: false}
-      counter++
+        let counter = 0
+        if (counter >= this.group.length) return { done: true }
+        if (counter < this.group.length) return { hello: this.group[counter], done: false }
+        counter++
     }
-  }
+}
 
 // --- 
 
@@ -1114,3 +1114,66 @@ class PGroup {
         return this.array
     }
 }
+
+/*CHAPTER 8: EXERCISES*/
+
+//8.1 Retry 
+//uses try and catch on intentionally bad multiply function to make it reliable 
+
+class MultiplicatorUnitFailure extends Error { }
+
+function primitiveMultiply(a, b) {
+    if (Math.random() < 0.2) {
+        return a * b;
+    } else {
+        throw new MultiplicatorUnitFailure("Klunk");
+    }
+}
+
+function reliableMultiply(a, b) {
+    for (; ;) {
+        try {
+            return primitiveMultiply(a, b)
+        } catch (error) { }
+    }
+}
+
+//8.2 The Locked Box
+
+const box = {
+    locked: true,
+    unlock() { this.locked = false; },
+    lock() { this.locked = true; },
+    _content: [],
+    get content() {
+        if (this.locked) throw new Error("Locked!");
+        return this._content;
+    }
+};
+
+function withBoxUnlocked(body) {
+    let progress = 0
+    box.unlock()
+    progress = 1
+    try {
+        body()
+        progress = 2
+    } finally {
+        if (progress == 1) { box.lock() }
+    }
+}
+
+withBoxUnlocked(function () {
+    box.content.push("gold piece");
+});
+
+try {
+    withBoxUnlocked(function () {
+        throw new Error("Pirates on the horizon! Abort!");
+    });
+} catch (e) {
+    console.log("Error raised: " + e);
+}
+console.log(box.locked);
+  // → true
+

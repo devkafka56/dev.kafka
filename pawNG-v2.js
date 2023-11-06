@@ -17,7 +17,9 @@ addEventListener("DOMContentLoaded", (event) => {
     // document.getElementById("playButton").onclick = playGame
 
     // Controls 
+
     document.addEventListener("keydown", (e) => {
+        console.log(`this is e.key :3 ${e.key}`)
         if (e.key === "ArrowUp") {
             leftPaddle.moveUp()
         } else if (e.key === "ArrowDown") {
@@ -31,8 +33,8 @@ addEventListener("DOMContentLoaded", (event) => {
 })
 
 // Physics (The mechanisms working behind the scenes to set up the possibilities for how objects can function and interact with one another, generally the possibilities and rules for the pawNG world)
-const UP = Math.PI / 2
-const DOWN = 3 * Math.PI / 2
+const DOWN = Math.PI / 2
+const UP = 3 * Math.PI / 2
 
 // *Sets Position of Objects, incl function to change that position by adding velocity to the x and y coordinates 
 class Position {
@@ -65,9 +67,16 @@ class Velocity {
         this.setVelocity()
     }
 
-    changeDirection(direction) {
-        this.directionInRad += direction
-        this.setVelocity()
+    changeDirection(xChange, yChange) {
+        // does not work!
+        if (xChange) {
+            this.vx *= -1
+        }
+
+        if (yChange) {
+            this.vy *= -1
+        }
+
     }
 
 }
@@ -106,8 +115,8 @@ class GameObject {
         this.moveThing = moveThing
     }
 
-    changeDirection(direction) {
-        this.moveThing.velocity.changeDirection(direction)
+    changeDirection(xChange, yChange) {
+        this.moveThing.velocity.changeDirection(xChange, yChange)
     }
 
     setSpeed(speed) {
@@ -126,14 +135,14 @@ function registerCollision(object1, object2, collisionCallBack) {
     //call the 
     //how do we check that go1 and go2 are touching? that has to happen before the collisionCallBack :3
 
-    let boundingBox1 = object1 instanceof GameObject  ? object1.shape.getBoundingBox(): object1
-    let boundingBox2 = object2 instanceof GameObject ? object2.shape.getBoundingBox():object2
+    let boundingBox1 = object1 instanceof GameObject ? object1.shape.getBoundingBox() : object1
+    let boundingBox2 = object2 instanceof GameObject ? object2.shape.getBoundingBox() : object2
     //boundingBox1.drawBoundingBox()
     //boundingBox2.drawBoundingBox()
     if (boundingBox1.inBounds(boundingBox2) || boundingBox2.inBounds(boundingBox1)) {
-        collisionCallBack(true,object1,object2)
-    }else{
-        collisionCallBack(false,object1,object2)
+        collisionCallBack(true, object1, object2)
+    } else {
+        collisionCallBack(false, object1, object2)
     }
 }
 
@@ -157,7 +166,7 @@ class BoundingBox {
     }
 
     drawBoundingBox() {
-        if (SHOW_BOUNDING_BOXES){
+        if (SHOW_BOUNDING_BOXES) {
             ctx.fillStyle = "rgba(9, 176, 63, 0.5)"
             ctx.fillRect(this.minX, this.minY, this.maxX - this.minX, this.maxY - this.minY)
         }
@@ -174,9 +183,9 @@ class BoundingBox {
 
         // Check min line ( if the lines is less than the max and greater than the min)
         return (((this.minY < boundingBox.maxY && this.minY > boundingBox.minY) ||
-         (this.maxY < boundingBox.maxY && this.maxY > boundingBox.minY)) &&
-         ((this.minX < boundingBox.maxX && this.minX > boundingBox.minX) ||
-          (this.maxX < boundingBox.maxX && this.maxX > boundingBox.minX)))
+            (this.maxY < boundingBox.maxY && this.maxY > boundingBox.minY)) &&
+            ((this.minX < boundingBox.maxX && this.minX > boundingBox.minX) ||
+                (this.maxX < boundingBox.maxX && this.maxX > boundingBox.minX)))
 
     }
 }
@@ -243,15 +252,19 @@ class Paddle extends GameObject {
     }
 
     moveUp() {
-        this.moveThing.velocity = UP
+        console.log('Move up')
+        this.moveThing.velocity.directionInRad = UP
+        this.moveThing.velocity.setSpeed(5)
     }
 
     moveDown() {
         this.moveThing.velocity.directionInRad = DOWN
+        this.moveThing.velocity.setSpeed(5)
+
     }
 
     stop() {
-        this.moveThing.velocity.directionInRad = 0
+        this.moveThing.velocity.setSpeed(0)
     }
 
 }
@@ -275,7 +288,7 @@ function startGame() {
     ball3 = new Ball("yellow", 5, canvas.width / 2, canvas.height / 2, 6, 3.4)
 
 
-    gameBoundary = new BoundingBox(canvas.width-5,canvas.height-5,5,5)
+    gameBoundary = new BoundingBox(canvas.width, canvas.height, 0, 0)
 
 
     gameLoop()
@@ -288,20 +301,24 @@ function drawArena() {
 
 // Game Play
 
-function ballBounce(isColliding,ball) {
-    if(isColliding){
+function ballBounce(isColliding, ball) {
+    if (isColliding) {
         ball.moveThing.velocity
-        ball.changeDirection(Math.PI*Math.random())
-        console.log('ball bounce')
+        ball.changeDirection(true,false)
 
     }
 }
 
-function leavingBoundary(isColliding,ball){
-        if (!isColliding){
-            ball.changeDirection(Math.PI/4)
+function leavingBoundary(isColliding, ball) {
+    if (!isColliding) {
+        console.log("is outside bounds")
 
-        }
+        let changeX = (ball.moveThing.position.x <= 0 )
+        changeX  = ball.moveThing.position.x >= canvas.width //test
+
+        ball.changeDirection(changeX,(ball.moveThing.position.y <= 0 || ball.moveThing.position.y >= canvas.height))
+
+    }
 }
 
 function gameLoop() {
@@ -317,11 +334,24 @@ function gameLoop() {
     ball3.moveThing.move()
     ball1.moveThing.move()
 
-    registerCollision(ball1, leftPaddle,ballBounce)
-    registerCollision(ball1, rightPaddle,ballBounce)
-    registerCollision(ball1,gameBoundary,leavingBoundary)
-    registerCollision(ball2,gameBoundary,leavingBoundary)
-    registerCollision(ball3,gameBoundary,leavingBoundary)
+    leftPaddle.moveThing.move()
+    rightPaddle.moveThing.move()
+
+    registerCollision(ball1, leftPaddle, ballBounce)
+    registerCollision(ball1, rightPaddle, ballBounce)
+
+    registerCollision(ball2, leftPaddle, ballBounce)
+    registerCollision(ball2, rightPaddle, ballBounce)
+
+    registerCollision(ball3, leftPaddle, ballBounce)
+    registerCollision(ball3, rightPaddle, ballBounce)
+
+
+
+    
+    registerCollision(ball1, gameBoundary, leavingBoundary)
+    registerCollision(ball2, gameBoundary, leavingBoundary)
+    registerCollision(ball3, gameBoundary, leavingBoundary)
 
 
 
