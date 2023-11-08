@@ -500,3 +500,28 @@ minButton:active, .scroll-button:active, .scroll-down-button:active, .scoll-up-b
   border-color: var(--button-background);
   /* cursor: url('images/pw-hover-cursor.png'), auto; */
 }
+
+/*Style for text caret on aboutMEow page*/
+
+@keyframes blink {
+  0% {
+      opacity: 1;
+  }
+  50% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
+.text-caret {
+  width: 1px;
+  background-color: black;
+  position: absolute;
+  top: 73%;
+  bottom: 23%;
+  left: 3%;
+  transform: translateX(-50%);
+  animation: blink 1s step-start infinite;
+}
