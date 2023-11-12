@@ -1,0 +1,84 @@
+.scroll-button:active, .scroll-down-button:active, .scoll-up-button:active {
+    background-color: #b7c6fd;
+    transform: translateY(2px);
+  }
+
+  .scroll-container {
+    width: 200px;
+    height: 200px;
+  }
+  
+  /* Content styles */
+  .scroll-content {
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    overflow: hidden;
+  }
+  
+  /* Custom scrollbar styles (background/behind thumb */
+  .custom-scrollbar {
+    width: 15px;
+    background-color: transparent; /* Set background-color to transparent */
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%; /* Set a fixed height of 100% */
+    transition: background-color 0.2s ease; /* Add a transition for smooth resizing */
+  }
+
+  /* Set a fixed height for the scrollbar background */
+  .custom-scrollbar::before {
+    content: "";
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #99b1ff; 
+    
+  }
+  
+  .custom-scrollbar-thumb {
+    background-color: green;
+    border-color: var(--button-background);
+    cursor: pointer;
+    position: absolute;
+    left: 1%;
+    right: 0;
+    width: 100%;
+  }
+
+/* Scroll buttons styles */
+.scroll-button {
+    width: 15px;
+    height: 15px;
+    background-color: var(--button-background);
+    border-color: var(--button-background);
+    color: #000000;
+    font-size: 8px;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+  
+  .scroll-up-button {
+    top: 17.8%;
+    left: 92.8%;
+    padding-left: 1px;
+    padding-top: -7px;
+    
+  }
+  
+  .scroll-down-button {
+    bottom: 2.4%;
+    left: 92.8%;
+    padding-left: 1px;
+    padding-bottom: -7px;
+  
+  }

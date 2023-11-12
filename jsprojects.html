@@ -11,11 +11,12 @@
     <link rel="stylesheet" href="jsprojectsstyles.css">
     <script src="jsprojects-base.js"></script>
     <script src="jsprojects.js"></script>
+
 </head>
 
-<body class="clouds-background large-box-body" style="overflow-y: scroll;">
+<body class="clouds-background large-box-body" style="overflow-y: hidden;">
 
-    <div class="align-items-between">
+    <div class="d-flex flex-column justify-content-between">
         <div class="large-container">
             <div class="nav-container">
                 <!--Info Text Box-->
@@ -44,7 +45,9 @@
                                     <div class="dropdown-button"><u>M</u>enu</div>
                                     <div class="dropdown-content">
                                         <a href="index.html">Home</a>
+                                        <a href="about.html">aboutMEow</a>
                                         <a href="pawng.html">pawNG</a>
+                                        <a href="portfolio.html">Portfolio </a>
                                         <!-- <a href="#">Project 3</a> -->
                                     </div>
                                 </div>
@@ -52,8 +55,8 @@
                                     <div class="dropdown flex-column my-1 mx-1 p-0">
                                         <div class="dropdown-button"><u>F</u>ile</div>
                                         <div class="dropdown-content">
-                                            <a href="#">Project 1</a>
-                                            <a href="#">Project 2</a>
+                                            <a href="#">Stopwatch</a>
+                                            <a href="#">Fish Tank</a>
                                             <a href="#">Project 3</a>
                                         </div>
                                     </div>
@@ -110,77 +113,130 @@
                                         onclick="navLink('index.html')">x</button>
                                 </div>
                             </h5>
-                            <div class="d-flex pt-4 align-items-center justify-content-center">
-                                <div class="text-card p-1 align-items-center justify-content-center"
+                            <div class="d-flex pt-4 justify-content-center">
+                                <div class="pm-scroll-container text-card p-1 align-items-center justify-content-center"
                                     style="width: 39rem; height: 38.5rem; overflow-y: hidden; overflow-x: hidden;">
-                                    <!--P1: Stop Watch-->
-                                    <div class="p1-stopwatch-container flex-row justify-content-evenly align-items-evenly pt-3"
-                                        id="stopwatch">
-                                        <!--Project goes here!-->
-                                        <div class="smallWindow card flex-column">
-                                            <h5
-                                                class="topBar custom-windowTitle d-flex justify-content-between p-1 m-0">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="d-flex m-1 my-0">kafka.dev/jsprojects/stopWatch</div>
+                                    <!--NEW SCROLL CONTAINER FOR ALL PROJECTS IN PROGRESS-->
+                                    <div class="pm-scroll-content">
+                                        <!--P1: Stop Watch-->
+                                        <div class="p1-stopwatch-container pb-5 d-flex flex-row justify-content-evenly pt-3"
+                                            id="stopwatch">
+                                            <!--Project goes here!-->
+                                            <div class="smallWindow card">
+                                                <h5
+                                                    class="topBar custom-windowTitle d-flex justify-content-between p-1 m-0">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="d-flex m-1 my-0">kafka.dev/jsprojects/stopWatch
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex">
+                                                        <!--Click Close Button-->
+                                                        <button
+                                                            class="xButton d-flex my-0 mx-0 align-items-center justify-content-center">x</button>
+                                                    </div>
+                                                </h5>
+                                                <div class="window-headText pb-3 pt-2">
+                                                    <span id="minutes">00</span>:<span id="seconds">00</span>:<span
+                                                        id="tens">00</span>
                                                 </div>
-                                                <div class="d-flex">
-                                                    <!--Click Close Button-->
-                                                    <button
-                                                        class="xButton d-flex my-0 mx-0 align-items-center justify-content-center">x</button>
+                                                <div
+                                                    class="window-bodyText d-flex flex-row align-items-center justify-content-center">
+                                                    <button id="button-start" class="button-s-s-r mx-2">Start</button>
+                                                    <button id="button-stop" class="button-s-s-r mx-2">Stop</button>
+                                                    <button id="button-reset" class="button-s-s-r mx-2">Reset</button>
                                                 </div>
-                                            </h5>
-                                            <div class="window-headText pb-3 pt-2"> <span id="minutes">00</span>:<span
-                                                    id="seconds">00</span>:<span id="tens">00</span></div>
-                                            <div
-                                                class="window-bodyText d-flex flex-row align-items-center justify-content-center">
-                                                <button id="button-start" class="button-s-s-r mx-2">Start</button>
-                                                <button id="button-stop" class="button-s-s-r mx-2">Stop</button>
-                                                <button id="button-reset" class="button-s-s-r mx-2">Reset</button>
+                                            </div>
+                                            <div class="clockWindow card">
+                                                <h5
+                                                    class="topBar custom-windowTitle d-flex justify-content-between p-1 m-0">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="d-flex m-1 my-0">kafka.dev/jsprojects/time</div>
+                                                    </div>
+                                                    <div class="d-flex">
+                                                        <!--Click Close Button-->
+                                                        <button
+                                                            class="xButton d-flex my-0 mx-0 align-items-center justify-content-center">x</button>
+                                                    </div>
+                                                </h5>
+                                                <div id="digitalClockDisplay" class="clock"></div>
+                                                <div id="currentDateDisplay" class="date"></div>
+                                                <!--(for popup) Note: the lack of AM/PM is not on account of laziness or any particular positive feelings toward Quebec, but rather perference.-->
                                             </div>
                                         </div>
-                                        <div class="clockWindow card">
-                                            <h5
-                                                class="topBar custom-windowTitle d-flex justify-content-between p-1 m-0">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="d-flex m-1 my-0">kafka.dev/jsprojects/time</div>
+                                        <div class="pb-5 ps-1 d-flex flex-row justify-content-evenly">
+                                            <div class="p3-fishtank-card">
+                                                <h5
+                                                    class="topBar custom-windowTitle d-flex justify-content-between p-1 m-0">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="d-flex m-1 my-0">kafka.dev/jsprojects/fishtank</div>
+                                                    </div>
+                                                    <div class="d-flex">
+                                                        <!--Click Close Button-->
+                                                        <button
+                                                            class="xButton d-flex my-0 mx-0 align-items-center justify-content-center">x</button>
+                                                    </div>
+                                                </h5>
+                                                <div class="mx-2 my-1">
+                                                    <canvas id="p3-fishtank-canvas" width="297px"
+                                                        height="280px"></canvas>
                                                 </div>
-                                                <div class="d-flex">
-                                                    <!--Click Close Button-->
-                                                    <button
-                                                        class="xButton d-flex my-0 mx-0 align-items-center justify-content-center">x</button>
+                                            </div>
+                                            <div class="romanToIntWindow card">
+                                                <h5
+                                                    class="topBar custom-windowTitle d-flex justify-content-between p-1 m-0">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="d-flex m-1 my-0">kafka.dev/jsprojects/toInt</div>
+                                                    </div>
+                                                    <div class="d-flex">
+                                                        <!--Click Close Button-->
+                                                        <button
+                                                            class="xButton d-flex my-0 mx-0 align-items-center justify-content-center">x</button>
+                                                    </div>
+                                                </h5>
+                                                <label for="userRomanNumeral">Enter a roman numeral:</label>
+                                                <div class="d-flex justify-content-center">
+                                                    <input type="input-text" id="userRomanNumeral"
+                                                        placeholder="Type here..." style="width:8rem;">
                                                 </div>
-                                            </h5>
-                                            <div id="digitalClockDisplay" class="clock"></div>
-                                            <div id="currentDateDisplay" class="date"></div>
-                                            <!--(for popup) Note: the lack of AM/PM is not on account of laziness or any particular positive feelings toward Quebec, but rather perference.-->
+                                                <div class="roman-numeral-text pt-2">
+                                                    <p>Your Roman Numeral:</p>
+                                                    <div class="roman-numeral-text" id="returnedInteger"></div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="pb-5 d-flex flex-row justify-content-evenly">
+                                            <div class="p3-fishtank-card">
+                                                <h5
+                                                    class="topBar custom-windowTitle d-flex justify-content-between p-1 m-0">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="d-flex m-1 my-0">kafka.dev/jsprojects/fishtank</div>
+                                                    </div>
+                                                    <div class="d-flex">
+                                                        <!--Click Close Button-->
+                                                        <button
+                                                            class="xButton d-flex my-0 mx-0 align-items-center justify-content-center">x</button>
+                                                    </div>
+                                                </h5>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div
-                                        class="p3-fishtank-container d-flex flex-column">
-                                        <div class="p3-fishtank-card">
-                                            <h5
-                                                class="topBar custom-windowTitle d-flex justify-content-between p-1 m-0">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="d-flex m-1 my-0">kafka.dev/jsprojects/fishtank</div>
-                                                </div>
-                                                <div class="d-flex">
-                                                    <!--Click Close Button-->
-                                                    <button
-                                                        class="xButton d-flex my-0 mx-0 align-items-center justify-content-center">x</button>
-                                                </div>
-                                            </h5>
-                                            <div class="mx-2 my-1">
-                                                <canvas id="p3-fishtank-canvas" width="297px" height="280px"></canvas>
-                                            </div>
-                                        </div>
+                                    <!--SCROLL BAR THUMB AND BUTTONS GO UNDER ALL CONTENT-->
+                                    <div class="pm-custom-scrollbar projects-custom-scrollbar">
+                                        <button
+                                            class="pm-custom-scrollbar-thumb projects-custom-scrollbar-thumb"></button>
                                     </div>
                                 </div>
+                                <!--SCROLL BAR BUTTONS GO JUST OUTSIDE THE SCROLL CONTAINER, BUT STILL CONTAINER WRAPPED IN-->
+                                <button class="pm-scroll-button projects-scroll-up-button">▲</button>
+                                <button class="pm-scroll-button projects-scroll-down-button">▼</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </body>
 
 </html>

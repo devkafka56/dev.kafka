@@ -8,8 +8,9 @@
 /*Project Containers*/
 
 .p1-stopwatch-container {
-    position: absolute;
+    position: relative;
     width: 39rem;
+    padding-bottom: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -39,6 +40,47 @@
     padding-left: 5px;
     padding-top: 3px;
 }
+
+.romanToIntWindow {
+    border: 2px outset #5d82fc;
+    border-radius: 0px;
+    box-shadow: 7px 7px 7px rgba(5, 1, 28, 0.5);
+    background-color: #3060ff;
+    width: 12rem; 
+    height: 10rem;
+}
+
+#userRomanNumeral {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12px; 
+    color:rgb(0, 0, 0);
+    background-color: #99b1ff;
+    border: 2px inset var(--button-border);
+}
+
+input[type="input-text"]:focus {
+    outline: none;
+}
+
+label[for="userRomanNumeral"] {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 5px; /* Add some space below the label */
+}
+
+.roman-numeral-text {
+    font-size: 12px;
+    font-family: 'Courier New', Courier, monospace;
+    color: rgba(6, 1, 33, 0.848);
+    text-align: center;
+    padding-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+}
+
 
 /*Stop Watch Buttons*/
 .button-s-s-r {
@@ -74,6 +116,8 @@
     background-color: #3060ff;
     width: 12rem; 
     height: 5rem;
+    display: flex;
+    position: relative;
 }
 
 .clock-window-text {
@@ -112,7 +156,7 @@
     flex-direction: column;
     justify-content: left;
     align-items: left;
-    top: 10rem;
+    /* top: 10rem; */
 }
 
 .p3-fishtank-card {
@@ -122,7 +166,7 @@
     background-color: #3060ff;
     width: 20rem; 
     height: 20rem;
-    margin-left: 2.4rem;
+    /* margin-left: 2.4rem; */
 }
 
 #p3-fishtank-canvas {
@@ -202,3 +246,55 @@
     padding-bottom: -7px;
   
   }
+/*Scroll buttons for main project container*/
+.projects-custom-scrollbar {
+    width: 15px;
+    background-color: transparent; /* Set background-color to transparent */
+    position: absolute;
+    top: 10.1%;
+    right: 1.2%;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    height: 88%; /* Set a fixed height of 100% */
+  }
+  
+  /* Set a fixed height for the scrollbar background */
+  .projects-custom-scrollbar::before {
+    content: "";
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #99b1ff;
+  }
+  
+  .projects-custom-scrollbar-thumb {
+    background-color: var(--button-background);
+    border-color: var(--button-background);
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    min-height: 200px; /* Minimum height for the thumb */
+  }
+
+  .projects-scroll-up-button {
+    top: 7.8%;
+    left: 96.5%;
+    padding-left: 1px;
+    padding-top: -7px;
+    
+  }
+  
+  .projects-scroll-down-button {
+    bottom: 0.7%;
+    left: 96.5%;
+    padding-left: 1px;
+    padding-bottom: -7px;
+  
+  }
+
+  

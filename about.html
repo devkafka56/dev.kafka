@@ -13,72 +13,107 @@
 
 <body class="clouds-background">
     <div class="container p-5 d-flex flex-column align-items-left">
-        <div class="navWindow card flex-column" style="width: 28rem; height: 26rem;">
-            <div class="card-bodytext-center">
-                <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">
-                    <div class="d-flex align-items-center">
-                        <div class="d-flex m-1 my-0">kafka.dev/aboutMEow</div>
+        <div class="movable-card">
+            <div class="navWindow card flex-column" style="width: 28rem; height: 26rem;">
+                <div class="card-bodytext-center">
+                    <div class="topBar custom-windowTitle d-flex justify-content-between p-1">
+                        <div class="d-flex align-items-center">
+                            <div class="d-flex m-1 my-0">kafka.dev/aboutMEow</div>
+                        </div>
+                        <div class="d-flex">
+
+                            <!--Click Min Button-->
+                            <button data-popup-id="minAboutPopup"
+                                class="open-popup minButton d-flex my-0 mx-0 align-items-center justify-content-center">&#95;</button>
+
+                            <!--Click Max Button-->
+                            <button data-popup-id="maxAboutPopup"
+                                class="open-popup maxButton d-flex m-1 my-0 align-items-center justify-content-center">&square;</button>
+
+                            <!--Click Close Button-->
+                            <button data-popup-id="xAboutPopup"
+                                class="xButton d-flex my-0 mx-0 align-items-center justify-content-center"
+                                onclick="navLink('index.html')">x</button>
+                        </div>
                     </div>
-                    <div class="d-flex">
-
-                        <!--Click Min Button-->
-                        <button data-popup-id="minAboutPopup"
-                            class="open-popup minButton d-flex my-0 mx-0 align-items-center justify-content-center">&#95;</button>
-
-                        <!--Click Max Button-->
-                        <button data-popup-id="maxAboutPopup"
-                            class="open-popup maxButton d-flex m-1 my-0 align-items-center justify-content-center">&square;</button>
-
-                        <!--Click Close Button-->
-                        <button data-popup-id="xAboutPopup"
-                            class="xButton d-flex my-0 mx-0 align-items-center justify-content-center"
-                            onclick="navLink('index.html')">x</button>
-                    </div>
-                </h5>
-                <div class="d-flex flex-row pt-3 ps-2">
-                    <div class="d-flex flex-column">
-                        <div class="text-card scroll-container-about mb-3"
-                            style="width: 20.5rem; height: 14.5rem; position: relative;">
-                            <div class="scroll-content-about window-welcomeText">
-                                <p>Kafka says:</p>
-                                <p> This is more example text that comes first but that I wrote second. <i>This text is
-                                        italicized that kindly requests you avoid using the scrollbar when there is no
-                                        scrollable content so that you do not see the bugs as they are shy.</i> <i>This
-                                        text
-                                        is
-                                        italicized that kindly requests you avoid using the scrollbar when there is no
-                                        scrollable content so that you do not see the bugs as they are shy.</i><i>This
-                                        text
-                                        is
-                                        italicized that kindly requests you avoid using the scrollbar when there is no
-                                        scrollable content so that you do not see the bugs as they are shy.</i></p>
-                            </div>
-                            <div class="custom-scrollbar-about">
-                                <button class="custom-scrollbar-thumb-about"></button>
+                    <!--Drop down menu. Notes: create section 1 div id, and then put that in the "#"-->
+                    <div class="d-flex p-0">
+                        <div class="dropdown flex-column my-0 mx-1 ps-1 p-0">
+                            <div class="dropdown-button"><u>M</u>enu</div>
+                            <div class="dropdown-content">
+                                <a href="index.html">Home</a>
+                                <a href="pawng.html">pawNG</a>
+                                <a href="jsprojects.html">JS projects</a>
                             </div>
                         </div>
-                        <button class="scroll-button scroll-up-button-about">▲</button>
-                        <button class="scroll-button scroll-down-button-about">▼</button>
-                        <div class="d-flex text-card" style="width:20.5rem; height:6rem">
-                            <div class="text-caret"></div>
+                        <div class="d-flex p-0">
+                            <div class="dropdown flex-column my-0 mx-1 p-0">
+                                <div class="dropdown-button"><u>F</u>ile</div>
+                                <div class="dropdown-content">
+                                    <a href="#">History</a>
+                                    <a href="#">Save</a>
+                                    <a href="#">Block</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="d-flex flex-column ps-2 justify-content-between">
-                        <div class="text-card window-welcomeText d-flex justify-content-center" style="width: 6rem; height: 6rem">
-                            <img src="images/Kafka Chat Portrait 2.png" width="110px" height="110px">
+                    <div class="d-flex flex-row ps-2">
+                        <div class="d-flex flex-column">
+                            <div class="text-card scroll-container-about mb-3"
+                                style="width: 20.5rem; height: 14.5rem; position: relative;">
+                                <div class="scroll-content-about window-welcomeText">
+                                    <p>Kafka says:</p>
+                                    <p>As a human, I know it's only natural to envy those beings with more than one
+                                        life.
+                                        However, it was not until my sixth that I realized the cause of my crippling
+                                        existential dread might just be boredom. It was then that I decided that maybe I
+                                        could do something between second breakfast and my afternoon nap. I chose
+                                        <i>purr</i>gramming to spite those can openers who told me I was terrible at
+                                        pest
+                                        control,
+                                        and
+                                        that I would never be able to catch a bug.
+                                    </p>
+                                    <p>Kafka says:</p>
+                                    <p>As you may have noticed, this website is more or less a bug factory, but I can
+                                        <b>paw</b>fidently saw that for every bug you see, I have caught and
+                                        <s>eaten</s> disposed of at
+                                        least five.
+                                    </p>
+                                    <p>Kafka says:</p>
+                                    <p>My second goal, and this website's raison d'etre, is to serve as a stepping stone
+                                        so
+                                        that I can get a job, save money and eventually afford an electric can opener so
+                                        that I can finally be inde<b>paw</b>ndent.</p>
+                                </div>
+                                <div class="custom-scrollbar-about">
+                                    <button class="custom-scrollbar-thumb-about"></button>
+                                </div>
+                            </div>
+                            <button class="scroll-button scroll-up-button-about">▲</button>
+                            <button class="scroll-button scroll-down-button-about">▼</button>
+                            <div class="d-flex text-card" style="width:20.5rem; height:6rem">
+                                <div class="text-caret"></div>
+                            </div>
                         </div>
-                        <div class="text-card window-welcomeText d-flex justify-content-center" style="width: 6rem; height: 6rem">
-                            <img src="images/Anon Chat Portrait.png" width="110px" height="110px">
+                        <div class="d-flex flex-column ps-2 justify-content-between">
+                            <div class="text-card window-welcomeText d-flex justify-content-center"
+                                style="width: 6rem; height: 6rem">
+                                <img src="images/Kafka Chat Portrait 2.png" width="110px" height="110px">
+                            </div>
+                            <div class="text-card window-welcomeText d-flex justify-content-center"
+                                style="width: 6rem; height: 6rem">
+                                <img src="images/Anon Chat Portrait.png" width="110px" height="110px">
+                            </div>
                         </div>
                     </div>
                 </div>
+
+
+
+
             </div>
-
-
-
-
         </div>
-
     </div>
 </body>
 

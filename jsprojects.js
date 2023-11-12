@@ -233,7 +233,7 @@ addEventListener("DOMContentLoaded", (event) => {
 
     function fishLoop() {
         ctx.clearRect(0, 0, canvas.width, canvas.height) //clear canvas to make fish appear to move rather than dragging effect
-        
+
 
         for (let index = 0; index < fishList.length; index++) {
             const fish = fishList[index]
@@ -245,15 +245,57 @@ addEventListener("DOMContentLoaded", (event) => {
             //fish.y += fish.speed * fish.direction
             fish.x += fish.speed * fish.direction
 
-            
-            
+
+
 
             fish.drawFish()
         }
         raf = window.requestAnimationFrame(fishLoop)
     }
     fishLoop()
-});
+
+    //P4 Roman Numeral to Integer
+
+    document.getElementById("userRomanNumeral").addEventListener("input", function () {
+        var userRomanNumeral = this.value.toUpperCase()
+        console.log(romanToInt(userRomanNumeral))
+        let returnInt = document.getElementById("returnedInteger")
+        if (isNaN(romanToInt(userRomanNumeral))) {
+            returnInt.innerHTML = '<i>That is not a Roman numeral. Try again.</i>';
+        } else {
+            returnInt.innerHTML = romanToInt(userRomanNumeral);
+        }
+    })
+
+    function romanToInt(userRomanNumeral) {
+
+        const sym = {
+            'I': 1,
+            'V': 5,
+            'X': 10,
+            'L': 50,
+            'C': 100,
+            'D': 500,
+            'M': 1000
+        }
+
+        let result = 0
+
+        for (let i = 0; i < userRomanNumeral.length; i++) {
+            const cur = sym[userRomanNumeral[i]];
+            const next = sym[userRomanNumeral[i + 1]];
+            if (cur < next) {
+                result += next - cur;
+                i++;
+            } else {
+                result += cur;
+            }
+        }
+
+        return result
+    }
+
+})
 
 function getRandomColor() {
     let letters = '0123456789ABCDEF'

@@ -209,9 +209,9 @@ maxButton:active,
 minButton:active, .scroll-button:active, .scroll-down-button:active, .scoll-up-button:active {
   /* Add pressed effect styles here */
   background-color: #b7c6fd;
-  /* Example background color when pressed */
+
   transform: translateY(2px);
-  /* Example downward shift when pressed */
+
 }
 
 /*'98 Window Design*/
@@ -412,7 +412,6 @@ minButton:active, .scroll-button:active, .scroll-down-button:active, .scoll-up-b
   left: 71.8%;
   padding-left: 1px;
   padding-top: -7px;
-  
 }
 
 .scroll-down-button-about {
@@ -431,7 +430,7 @@ minButton:active, .scroll-button:active, .scroll-down-button:active, .scoll-up-b
   left: 0;
   right: 0;
   width: 100%;
-  min-height: 99px; 
+  min-height: 78px; 
   /* Minimum height for the thumb */
 }
 .custom-scrollbar-about {
@@ -524,4 +523,15 @@ minButton:active, .scroll-button:active, .scroll-down-button:active, .scoll-up-b
   left: 3%;
   transform: translateX(-50%);
   animation: blink 1s step-start infinite;
+}
+
+/*Movable Card Test*/
+
+.movable-card {
+  position: absolute;
+  width: 300px;
+  height: 200px;
+  background: #ffffff;
+  border: 1px solid #000;
+  /* Add other styling properties as needed */
 }
