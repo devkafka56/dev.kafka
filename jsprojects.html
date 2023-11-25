@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="jsprojectsstyles.css">
     <script src="jsprojects-base.js"></script>
     <script src="jsprojects.js"></script>
-
+    <link rel="stylesheet" href="scrollbar.css">
+    <script src="scrollbar.js"></script>
 </head>
 
 <body class="clouds-background large-box-body" style="overflow-y: hidden;">
@@ -29,11 +30,11 @@
                                 </div>
                                 <div class="d-flex">
                                     <!--Click Min Button-->
-                                    <button
-                                        class="minButton d-flex my-0 mx-0 align-items-center justify-content-center">&#95;</button>
+                                    <button data-popup-id="minNavPopup"
+                                        class="open-popup minButton d-flex my-0 mx-0 align-items-center justify-content-center">&#95;</button>
                                     <!--Click Max Button-->
-                                    <button
-                                        class="maxButton d-flex m-1 my-0 align-items-center justify-content-center">&square;</button>
+                                    <button data-popup-id="maxNavPopup"
+                                        class="open-popup maxButton d-flex m-1 my-0 align-items-center justify-content-center">&square;</button>
                                     <!--Click Close Button-->
                                     <button class="xButton d-flex my-0 mx-0 align-items-center justify-content-center"
                                         onclick="navLink('index.html')">x</button>
@@ -63,9 +64,10 @@
                                 </div>
                             </div>
                             <div class="d-flex pt-0 align-items-center justify-content-center">
-                                <div class="pm-scroll-container text-card p-1 align-items-center justify-content-center"
+                                <div data-scroll-group-id="scrollGroupInfo"
+                                    class="scroll-container text-card p-1 align-items-center justify-content-center"
                                     style="width: 19rem; height: 16rem; overflow-y: hidden; overflow-x: hidden;">
-                                    <div class="pm-scroll-content window-menu-text">
+                                    <div data-scroll-group-id="scrollGroupInfo" class="scroll-content window-menu-text">
                                         <p>The purpose of this page is to serve as a spot where all the projects I
                                             created
                                             while
@@ -81,12 +83,17 @@
                                         </p>
 
                                     </div>
-                                    <div class="pm-custom-scrollbar">
-                                        <button class="pm-custom-scrollbar-thumb"></button>
+                                </div>
+                                <div class="d-flex flex-column justify-content-center">
+                                    <div data-scroll-group-id="scrollGroupInfo" class="custom-scrollbar">
+                                        <button data-scroll-group-id="scrollGroupInfo"
+                                            class="scroll-button scroll-up-button">▲</button>
+                                        <button data-scroll-group-id="scrollGroupInfo"
+                                            class="custom-scrollbar-thumb"></button>
+                                        <button data-scroll-group-id="scrollGroupInfo"
+                                            class="scroll-button scroll-down-button">▼</button>
                                     </div>
                                 </div>
-                                <button class="pm-scroll-button pm-scroll-up-button">▲</button>
-                                <button class="pm-scroll-button pm-scroll-down-button">▼</button>
                             </div>
                         </div>
                     </div>
@@ -103,21 +110,22 @@
                                 </div>
                                 <div class="d-flex">
                                     <!--Click Min Button-->
-                                    <button
-                                        class="minButton d-flex my-0 mx-0 align-items-center justify-content-center">&#95;</button>
+                                    <button data-popup-id="minInfoPopup"
+                                        class="open-popup minButton d-flex my-0 mx-0 align-items-center justify-content-center">&#95;</button>
                                     <!--Click Max Button-->
-                                    <button
-                                        class="maxButton d-flex m-1 my-0 align-items-center justify-content-center">&square;</button>
+                                    <button data-popup-id="maxInfoPopup"
+                                        class="open-popup maxButton d-flex m-1 my-0 align-items-center justify-content-center">&square;</button>
                                     <!--Click Close Button-->
                                     <button class="xButton d-flex my-0 mx-0 align-items-center justify-content-center"
                                         onclick="navLink('index.html')">x</button>
                                 </div>
                             </h5>
                             <div class="d-flex pt-4 justify-content-center">
-                                <div class="pm-scroll-container text-card p-1 align-items-center justify-content-center"
+                                <div data-scroll-group-id="scrollGroupProjects"
+                                    class="scroll-container text-card p-1 align-items-center justify-content-center"
                                     style="width: 39rem; height: 38.5rem; overflow-y: hidden; overflow-x: hidden;">
                                     <!--NEW SCROLL CONTAINER FOR ALL PROJECTS IN PROGRESS-->
-                                    <div class="pm-scroll-content">
+                                    <div data-scroll-group-id="scrollGroupProjects" class="scroll-content">
                                         <!--P1: Stop Watch-->
                                         <div class="p1-stopwatch-container pb-5 d-flex flex-row justify-content-evenly pt-3"
                                             id="stopwatch">
@@ -163,7 +171,7 @@
                                                 <!--(for popup) Note: the lack of AM/PM is not on account of laziness or any particular positive feelings toward Quebec, but rather perference.-->
                                             </div>
                                         </div>
-                                        <div class="pb-5 ps-1 d-flex flex-row justify-content-evenly">
+                                        <div class="pb-5 ps-3 d-flex flex-row justify-content-around">
                                             <div class="p3-fishtank-card">
                                                 <h5
                                                     class="topBar custom-windowTitle d-flex justify-content-between p-1 m-0">
@@ -181,28 +189,30 @@
                                                         height="280px"></canvas>
                                                 </div>
                                             </div>
-                                            <div class="romanToIntWindow card">
-                                                <h5
-                                                    class="topBar custom-windowTitle d-flex justify-content-between p-1 m-0">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="d-flex m-1 my-0">kafka.dev/jsprojects/toInt</div>
+                                            <div class="d-flex pe-0">
+                                                <div class="romanToIntWindow card">
+                                                    <h5
+                                                        class="topBar custom-windowTitle d-flex justify-content-between p-1 m-0">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="d-flex m-1 my-0">kafka.dev/jsprojects/toInt
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex">
+                                                            <!--Click Close Button-->
+                                                            <button
+                                                                class="xButton d-flex my-0 mx-0 align-items-center justify-content-center">x</button>
+                                                        </div>
+                                                    </h5>
+                                                    <label for="userRomanNumeral">Enter a roman numeral:</label>
+                                                    <div class="d-flex justify-content-center">
+                                                        <input type="input-text" id="userRomanNumeral"
+                                                            placeholder="Type here..." style="width:8rem;">
                                                     </div>
-                                                    <div class="d-flex">
-                                                        <!--Click Close Button-->
-                                                        <button
-                                                            class="xButton d-flex my-0 mx-0 align-items-center justify-content-center">x</button>
+                                                    <div class="roman-numeral-text pt-2">
+                                                        <p>Your Roman Numeral:</p>
+                                                        <div class="roman-numeral-text" id="returnedInteger"></div>
                                                     </div>
-                                                </h5>
-                                                <label for="userRomanNumeral">Enter a roman numeral:</label>
-                                                <div class="d-flex justify-content-center">
-                                                    <input type="input-text" id="userRomanNumeral"
-                                                        placeholder="Type here..." style="width:8rem;">
                                                 </div>
-                                                <div class="roman-numeral-text pt-2">
-                                                    <p>Your Roman Numeral:</p>
-                                                    <div class="roman-numeral-text" id="returnedInteger"></div>
-                                                </div>
-
                                             </div>
                                         </div>
                                         <div class="pb-5 d-flex flex-row justify-content-evenly">
@@ -221,21 +231,77 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!--SCROLL BAR THUMB AND BUTTONS GO UNDER ALL CONTENT-->
-                                    <div class="pm-custom-scrollbar projects-custom-scrollbar">
-                                        <button
-                                            class="pm-custom-scrollbar-thumb projects-custom-scrollbar-thumb"></button>
+                                </div>
+                                <div class="d-flex flex-column justify-content-center">
+                                    <div data-scroll-group-id="scrollGroupProjects" class="custom-scrollbar">
+                                        <button data-scroll-group-id="scrollGroupProjects"
+                                            class="scroll-button scroll-up-button">▲</button>
+                                        <button data-scroll-group-id="scrollGroupProjects"
+                                            class="custom-scrollbar-thumb"></button>
+                                        <button data-scroll-group-id="scrollGroupProjects"
+                                            class="scroll-button scroll-down-button">▼</button>
                                     </div>
                                 </div>
-                                <!--SCROLL BAR BUTTONS GO JUST OUTSIDE THE SCROLL CONTAINER, BUT STILL CONTAINER WRAPPED IN-->
-                                <button class="pm-scroll-button projects-scroll-up-button">▲</button>
-                                <button class="pm-scroll-button projects-scroll-down-button">▼</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!--Pop-ups: Info Window-->
+        <div class="popup close-popup" id="maxNavPopup" data-popup-id="maxNavPopup">
+            <div class="popup-content">
+                <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">
+                    kafka.dev/info/alert
+                    <button data-popup-id="maxNavPopup"
+                        class="close close-popup  d-flex m-0 my-0 align-items-center justify-content-center"
+                        id="closemaxNavPopupButton">&times;</button>
+                </h5>
+                <p class="window-bodyText">If you don't think the Hacker News website could be improved, you're probably
+                    neurodivergent.</p>
+            </div>
+        </div>
+        <div class="popup close-popup" id="minNavPopup" data-popup-id="minNavPopup">
+            <div class="popup-content">
+                <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">
+                    kafka.dev/info/alert
+                    <button data-popup-id="minNavPopup"
+                        class="close close-popup  d-flex m-0 my-0 align-items-center justify-content-center"
+                        id="closeminNavPopupButton">&times;</button>
+                </h5>
+                <p class="window-bodyText">VS Code should include a feature where you can highlight portions of a
+                    document and have them appear in a different color to better find and access code one is
+                    currently working on.</p>
+            </div>
+        </div>
+        <!--Pop-ups: Projects Window-->
+        <div class="popup close-popup" id="maxInfoPopup" data-popup-id="maxInfoPopup">
+            <div class="popup-content">
+                <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">
+                    kafka.dev/projects/alert
+                    <button data-popup-id="maxInfoPopup"
+                        class="close close-popup  d-flex m-0 my-0 align-items-center justify-content-center"
+                        id="closemaxInfoPopupButton">&times;</button>
+                </h5>
+                <p class="window-bodyText">If you don't think the Hacker News website could be improved, you're probably
+                    neurodivergent.</p>
+            </div>
+        </div>
+        <div class="popup close-popup" id="minInfoPopup" data-popup-id="minInfoPopup">
+            <div class="popup-content">
+                <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">
+                    kafka.dev/projects/alert
+                    <button data-popup-id="minInfoPopup"
+                        class="close close-popup  d-flex m-0 my-0 align-items-center justify-content-center"
+                        id="closeminInfoPopupButton">&times;</button>
+                </h5>
+                <p class="window-bodyText">This will be my last pop-up, not out of laziness, but because it's getting
+                    schticky and I'm not very funny. If you see anymore pop-ups, know that this one was my last. If
+                    you've read this and see other popups, the previous sentence will <i>seem</i> true even if it's
+                    not.</p>
+            </div>
+        </div>
+        <!--Pop-ups for projects? Jk, jk... unless...-->
     </div>
 </body>
 

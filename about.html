@@ -9,6 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>kafka.dev/aboutMEow</title>
     <script src="about.js"></script>
+    <link rel="stylesheet" href="scrollbar.css">
+    <script src="scrollbar.js"></script>
 </head>
 
 <body class="clouds-background">
@@ -59,9 +61,9 @@
                     </div>
                     <div class="d-flex flex-row ps-2">
                         <div class="d-flex flex-column">
-                            <div class="text-card scroll-container-about mb-3"
-                                style="width: 20.5rem; height: 14.5rem; position: relative;">
-                                <div class="scroll-content-about window-welcomeText">
+                            <div data-scroll-group-id="scrollGroupAbout" class="scroll-container text-card mb-3"
+                                style="width: 19.5rem; height: 14.5rem; position: relative;">
+                                <div data-scroll-group-id="scrollGroupAbout" class="scroll-content window-welcomeText">
                                     <p>Kafka says:</p>
                                     <p>As a human, I know it's only natural to envy those beings with more than one
                                         life.
@@ -86,17 +88,21 @@
                                         that I can get a job, save money and eventually afford an electric can opener so
                                         that I can finally be inde<b>paw</b>ndent.</p>
                                 </div>
-                                <div class="custom-scrollbar-about">
-                                    <button class="custom-scrollbar-thumb-about"></button>
-                                </div>
                             </div>
-                            <button class="scroll-button scroll-up-button-about">▲</button>
-                            <button class="scroll-button scroll-down-button-about">▼</button>
-                            <div class="d-flex text-card" style="width:20.5rem; height:6rem">
+                            <div class="d-flex text-card" style="width:19.5rem; height:6rem">
                                 <div class="text-caret"></div>
                             </div>
                         </div>
-                        <div class="d-flex flex-column ps-2 justify-content-between">
+                        <div class="d-flex flex-column pt-3">
+                            <div data-scroll-group-id="scrollGroupAbout" class="custom-scrollbar">
+                                <button data-scroll-group-id="scrollGroupAbout"
+                                    class="scroll-button scroll-up-button">▲</button>
+                                <button data-scroll-group-id="scrollGroupAbout" class="custom-scrollbar-thumb"></button>
+                                <button data-scroll-group-id="scrollGroupAbout"
+                                    class="scroll-button scroll-down-button">▼</button>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column ps-1 justify-content-between">
                             <div class="text-card window-welcomeText d-flex justify-content-center"
                                 style="width: 6rem; height: 6rem">
                                 <img src="images/Kafka Chat Portrait 2.png" width="110px" height="110px">
@@ -108,10 +114,31 @@
                         </div>
                     </div>
                 </div>
-
-
-
-
+            </div>
+        </div>
+        <!--Pop-ups-->
+        <div class="popup close-popup" id="minAboutPopup" data-popup-id="minAboutPopup">
+            <div class="popup-content">
+                <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">
+                    kafka.dev/about/alert
+                    <button data-popup-id="minAboutPopup"
+                        class="close close-popup d-flex m-0 my-0 align-items-center justify-content-center"
+                        id="closeminAboutPopupButton">&times;</button>
+                </h5>
+                <p class="window-bodyText">If you haven't noticed already, this box can be moved around the page.</p>
+            </div>
+        </div>
+        <div class="popup close-popup" id="maxAboutPopup" data-popup-id="maxAboutPopup">
+            <div class="popup-content">
+                <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">
+                    kafka.dev/about/alert
+                    <button data-popup-id="maxAboutPopup"
+                        class="close close-popup  d-flex m-0 my-0 align-items-center justify-content-center"
+                        id="closemaxAboutPopupButton">&times;</button>
+                </h5>
+                <p class="window-bodyText">Unlike most cats, I don't particularily enjoy eating plants. I do, however,
+                    enjoy biting the corners of books when no one is paying attention to me. Most of the books where I
+                    live have tiny holes in them from my teeth. I have no regrets.</p>
             </div>
         </div>
     </div>

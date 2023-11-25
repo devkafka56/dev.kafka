@@ -9,6 +9,7 @@
     <title>kafka.dev/portfolio</title>
     <link rel="stylesheet" href="styles.css">
     <script src="portfolio.js"></script>
+    <script src="script.js"></script>
 </head>
 
 <body>
@@ -24,12 +25,12 @@
                         <div class="d-flex">
 
                             <!--Click Min Button-->
-                            <button id="minButton"
-                                class="minButton d-flex my-0 mx-0 align-items-center justify-content-center">&#95;</button>
+                            <button data-popup-id="minPortfolioPopup"
+                                class="open-popup minButton d-flex my-0 mx-0 align-items-center justify-content-center">&#95;</button>
 
                             <!--Click Max Button-->
-                            <button id="maxButton"
-                                class="maxButton d-flex m-1 my-0 align-items-center justify-content-center">&square;</button>
+                            <button data-popup-id="maxPortfolioPopup"
+                                class="open-popup maxButton d-flex m-1 my-0 align-items-center justify-content-center">&square;</button>
 
                             <!--x Button on the Portfolio Box Window-->
                             <button id="xPortfolioButton2"
@@ -49,8 +50,29 @@
                 </div>
             </div>
         </div>
+        <!--Pop-ups-->
+        <div class="popup close-popup" id="minPortfolioPopup" data-popup-id="minPortfolioPopup">
+            <div class="popup-content">
+                <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">
+                    kafka.dev/portfolio/alert
+                    <button data-popup-id="minPortfolioPopup"
+                        class="close close-popup d-flex m-0 my-0 align-items-center justify-content-center"
+                        id="closeminPortfolioButton">&times;</button>
+                </h5>
+                <p class="window-bodyText">(if you know you know (for the boomers(and probably half of gen x (and maybe some of the <s>old</s>wise millennials))))</p>
+            </div>
+        </div>
+        <div class="popup close-popup" id="maxPortfolioPopup" data-popup-id="maxPortfolioPopup">
+            <div class="popup-content">
+                <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">
+                    kafka.dev/portfolio/alert
+                    <button data-popup-id="maxPortfolioPopup"
+                        class="close close-popup  d-flex m-0 my-0 align-items-center justify-content-center"
+                        id="closemaxPortfolioButton">&times;</button>
+                </h5>
+                <p class="window-bodyText">IYKYK</p>
+            </div>
+        </div>
     </div>
-
 </body>
-
 </html>

@@ -5,75 +5,78 @@ addEventListener("DOMContentLoaded", (event) => {
         let scrollID = scrollContainer.dataset.scrollGroupId
         const scrollContent = document.querySelector(`[data-scroll-group-id='${scrollID}'].scroll-content`)
         const scrollbarThumb = document.querySelector(`[data-scroll-group-id='${scrollID}'].custom-scrollbar-thumb`)
-        const customScrollBarArea = document.querySelector(`[data-scroll-group-id='${scrollID}'].custom-scrollbar`)
-  
+        const customScrollBar = document.querySelector(`[data-scroll-group-id='${scrollID}'].custom-scrollbar`)
         const scrollUpButton = document.querySelector(`[data-scroll-group-id='${scrollID}'].scroll-up-button`)
         const scrollDownButton = document.querySelector(`[data-scroll-group-id='${scrollID}'].scroll-down-button`)
 
         // Constants for scroll step and button height
-        const numberOfScrollSteps = 10
-        const buttonHeight = scrollUpButton.offsetHeight
-        const scrollStep =  scrollContent.scrollHeight / numberOfScrollSteps
-        scrollbarThumb.style.top = "0%"
-        scrollbarThumb.style.height = '10%'
-        scrollbarThumb.style.display = 'block'
-        const scrollBarThumbHeightInPercent = (scrollbarThumb.clientHeight / scrollContainer.clientHeight) * 100 // Percentage of the scrollContainer that the thumb takes up.
+        const buttonHeight = scrollUpButton.offsetHeight 
+        const scrollContainerHeight = scrollContainer.offsetHeight
+        const hiddenContentHeight = scrollContainer.scrollHeight - scrollContainerHeight
+        const percentHidden = (hiddenContentHeight / scrollContainer.scrollHeight)
+        const thumbPercentage = 1 - percentHidden
+        customScrollBar.setAttribute("style", `height:${scrollContainerHeight - 1 - (2 * buttonHeight)}px;`)
+        const thumbHeight = thumbPercentage * customScrollBar.offsetHeight
+        scrollbarThumb.setAttribute("style", `height:${thumbHeight}px;`)
+        scrollUpButton.setAttribute("style", `top:-${buttonHeight}px;`)
+        scrollDownButton.setAttribute("style", `bottom:-${buttonHeight}px;`)
 
+        const numberOfScrollSteps = 10
+        const scrollStep = scrollContent.scrollHeight / numberOfScrollSteps
+
+        scrollbarThumb.style.top = "0%"
 
         // Add click event listeners to scroll buttons
         scrollUpButton.addEventListener("click", () => {
-            scrollContent.scrollTop -= scrollStep
+            scrollContainer.scrollTop -= scrollStep
         })
-
         scrollDownButton.addEventListener("click", () => {
-            scrollContent.scrollTop += scrollStep
-            console.log("Hello. This is the scroll down button!")
-        })
-
-        // Update the scrollbar thumb position when scrolling
-        scrollContent.addEventListener("scroll", () => {
-            console.log(`scrollContainer Height: ${scrollContainer.clientHeight}`)
-            console.log(`scrollContent scrollHeight: ${scrollContainer.scrollHeight}`)
-            console.log(`scrollContent scrollTop: ${scrollContainer.scrollTop}`)
-            
-            const scrollPercentage = ((scrollContainer.scrollTop / scrollContainer.scrollHeight)) * 100 // We are scrolled this % of the total scroll content
-            const maxTopPercent = 100 - scrollBarThumbHeightInPercent
-
-            console.log(`thumb %: ${scrollBarThumbHeightInPercent}`)
-            console.log(`scrollPercentage: ${scrollPercentage}`)
-            console.log(`maxTopPercent: ${maxTopPercent}`)
-
-            scrollbarThumb.style.top = `${scrollPercentage}%`
-
+            scrollContainer.scrollTop += scrollStep
         })
 
         // Handle scrollbar thumb dragging
         let isDragging = false
         let startY, startThumbPosition
 
+        // Update the scrollbar thumb position when scrolling
+        scrollContainer.addEventListener("scroll", () => {
+            const percentScrolled = (scrollContainer.scrollTop / scrollContainer.scrollHeight)
+            const thumbTop = percentScrolled * customScrollBar.offsetHeight
+            if (!isDragging) {
+            scrollbarThumb.style.top = `${thumbTop}px`}
+        })
+
+
+
         scrollbarThumb.addEventListener("mousedown", (e) => {
             e.preventDefault()
             isDragging = true
             startY = e.clientY
-            startThumbPosition = parseFloat(scrollbarThumb.style.top) || 0
+            startThumbPosition = scrollbarThumb.offsetTop
         })
 
         window.addEventListener("mousemove", (e) => {
             if (isDragging) {
                 const deltaY = e.clientY - startY
-                const newThumbPosition = startThumbPosition + (deltaY / scrollContainer.clientHeight) * 100
+                let newThumbTop = startThumbPosition + deltaY
+                const maxThumbTop = scrollContainer.clientHeight - (scrollbarThumb.clientHeight + (buttonHeight*2))
+                if (newThumbTop < 0) { newThumbTop = 0 }
+                if (newThumbTop > maxThumbTop) {newThumbTop = maxThumbTop}
+                const percentDragged = newThumbTop / (maxThumbTop)
+                const newScrollTop = percentDragged * hiddenContentHeight
+                scrollContainer.scrollTop = newScrollTop
+                scrollbarThumb.style.top = `${newThumbTop}px`
 
-                // Calculate the maximum and minimum positions for the thumb
-                const minThumbPosition = 0; // The minimum position is always 0 (top of the scrollbar)
-                const maxThumbPosition = 80 - (buttonHeight / scrollContainer.clientHeight) * 80
 
-                const clampedPosition = Math.min(Math.max(newThumbPosition, minThumbPosition), maxThumbPosition)
-                scrollbarThumb.style.top = `${clampedPosition}%`;
+                console.log(`this is startY ${startY}`)
+                console.log(`this is deltaY ${deltaY}`)
+                console.log(`this is newThumbTop ${newThumbTop}`)
+                console.log(`this is percentDragged ${percentDragged}`)
+                console.log(`this is newScrollTop ${newScrollTop}`)
 
-                const newScrollPosition = (clampedPosition / 100) * (scrollContent.clientHeight - scrollContainer.clientHeight)
-                console.log(`Contents are being moved to ${newScrollPosition} from ${scrollContainer.scrollTop}`)
-                scrollContainer.scrollTop = newScrollPosition
+
             }
+
         })
 
         window.addEventListener("mouseup", () => {

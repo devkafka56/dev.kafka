@@ -1,32 +1,29 @@
+.scroll-container {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
 .scroll-button:active, .scroll-down-button:active, .scoll-up-button:active {
     background-color: #b7c6fd;
     transform: translateY(2px);
   }
 
-  .scroll-container {
-    width: 200px;
-    height: 200px;
-  }
-  
+ 
   /* Content styles */
   .scroll-content {
     width: 100%;
-    height: auto;
     padding: 10px;
-    overflow: hidden;
   }
   
   /* Custom scrollbar styles (background/behind thumb */
   .custom-scrollbar {
     width: 15px;
     background-color: transparent; /* Set background-color to transparent */
-    position: absolute;
-    top: 0;
-    right: 0;
-    display: block;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%; /* Set a fixed height of 100% */
+    /* display: inline-block; */
+    position: relative;
+    background-color: #838fb9;
     transition: background-color 0.2s ease; /* Add a transition for smooth resizing */
   }
 
@@ -35,21 +32,21 @@
     content: "";
     height: 100%;
     width: 100%;
-    position: absolute;
     top: 0;
     left: 0;
-    background-color: #99b1ff; 
+    background-color: #99b1ff;
+    position: absolute;
     
   }
   
   .custom-scrollbar-thumb {
-    background-color: green;
+    background-color: var(--button-background);
     border-color: var(--button-background);
     cursor: pointer;
-    position: absolute;
     left: 1%;
     right: 0;
     width: 100%;
+    position: relative; /*was absolute in previous versions*/
   }
 
 /* Scroll buttons styles */
@@ -62,23 +59,23 @@
     font-size: 8px;
     font-family: Arial, sans-serif;
     cursor: pointer;
-    position: absolute;
     left: 0;
     right: 0;
+    /* margin-top: 1px;  */
+
   }
   
   .scroll-up-button {
-    top: 17.8%;
-    left: 92.8%;
     padding-left: 1px;
     padding-top: -7px;
+    position: absolute;
+    margin-top: 1px;
     
   }
   
   .scroll-down-button {
-    bottom: 2.4%;
-    left: 92.8%;
     padding-left: 1px;
-    padding-bottom: -7px;
+    padding-top: -7px;
+    position: absolute;
   
   }

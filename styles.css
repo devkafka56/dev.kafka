@@ -2,7 +2,6 @@
 
 .main-scroll-container {
   overflow-y: auto;
-  /* Enable vertical scrolling when content overflows */
   overflow-x: hidden;
 }
 
@@ -206,7 +205,7 @@ canvas {
 .okButton:active,
 .xButton:active,
 maxButton:active,
-minButton:active, .scroll-button:active, .scroll-down-button:active, .scoll-up-button:active {
+minButton:active {
   /* Add pressed effect styles here */
   background-color: #b7c6fd;
 
@@ -271,9 +270,11 @@ minButton:active, .scroll-button:active, .scroll-down-button:active, .scoll-up-b
   font-size: 13px;
   font-family: sans-serif;
   border: 2px inset #5d82fc;
+  /* border-left: 2px inset #5d82fc; */
+  /* border-left: 2px inset #5d82fc; */
+  border-right: 0px inset #5d82fc;
 
 }
-
 
 
 /*This is for the text in the white box*/
@@ -316,152 +317,6 @@ minButton:active, .scroll-button:active, .scroll-down-button:active, .scoll-up-b
   margin-left: 3rem; /* Make room for nav container */
   overflow-y: scroll;
 }
-
-/*Scrollbars*/
-
-/*Target the container with the scrollbar*/
-
-.scroll-container {
-  width: 200px;
-  height: 200px;
-  overflow: hidden;
-  position: relative;
-}
-
-/* Content styles */
-.scroll-content {
-  width: 100%;
-  height: auto;
-  padding: 10px;
-  overflow: hidden;
-  position: absolute;
-}
-
-/* Custom scrollbar styles (background/behind thumb */
-
-.custom-scrollbar {
-  width: 15px;
-  background-color: transparent; /* Set background-color to transparent */
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%; /* Set a fixed height of 100% */
-  transition: background-color 0.2s ease; /* Add a transition for smooth resizing */
-}
-
-/* Set a fixed height for the scrollbar background */
-.custom-scrollbar::before {
-  content: "";
-  height: 150%;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: #99b1ff; /* Match the background color */
-
-  transition: background-color 0.2s ease; /* Add a transition for smooth resizing */
-}
-
-.custom-scrollbar-thumb {
-  background-color: var(--button-background);
-  border-color: var(--button-background);
-  cursor: pointer;
-  position: absolute;
-  left: 0;
-  right: 0;
-  width: 100%;
-  min-height: 200px; /* Minimum height for the thumb */
-}
-
-/* Scroll buttons styles */
-.scroll-button {
-  width: 15px;
-  height: 15px;
-  background-color: var(--button-background);
-  border-color: var(--button-background);
-  color: #000000;
-  font-size: 8px;
-  font-family: Arial, sans-serif;
-  cursor: pointer;
-  position: absolute;
-  left: 0;
-  right: 0;
-}
-
-.scroll-up-button {
-  top: 12.95%;
-  left: 92.8%;
-  padding-left: 1px;
-  padding-top: -7px;
-  
-}
-
-.scroll-down-button {
-  bottom: 1.4%;
-  left: 92.8%;
-  padding-left: 1px;
-  padding-bottom: -7px;
-
-}
-
-.scroll-up-button-about {
-  top: 12.75%;
-  left: 71.8%;
-  padding-left: 1px;
-  padding-top: -7px;
-}
-
-.scroll-down-button-about {
-  bottom: 32.3%;
-  left: 71.8%;
-  padding-left: 1px;
-  padding-bottom: -7px;
-
-}
-
-.custom-scrollbar-thumb-about {
-  background-color: var(--button-background);
-  border-color: var(--button-background);
-  cursor: pointer;
-  position: absolute;
-  left: 0;
-  right: 0;
-  width: 100%;
-  min-height: 78px; 
-  /* Minimum height for the thumb */
-}
-.custom-scrollbar-about {
-  width: 15px;
-  background-color: transparent; /* Set background-color to transparent */
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%; /* Set a fixed height of 100% */
-  transition: background-color 0.2s ease; /* Add a transition for smooth resizing */
-}
-
-.scroll-container-about {
-  width: 200px;
-  height: auto;
-  overflow: hidden;
-  position: relative;
-} 
-
-/* Content styles */
-.scroll-content-about {
-  width: 100%;
-  height: auto;
-  padding-right: 20px;
-  overflow: hidden;
-  position: absolute;
-}
-
 
 /*Pop Up Styles*/
 
