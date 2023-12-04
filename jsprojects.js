@@ -258,17 +258,16 @@ addEventListener("DOMContentLoaded", (event) => {
 
     document.getElementById("userRomanNumeral").addEventListener("input", function () {
         var userRomanNumeral = this.value.toUpperCase()
-        console.log(romanToInt(userRomanNumeral))
         let returnInt = document.getElementById("returnedInteger")
-        if (isNaN(romanToInt(userRomanNumeral))) {
+        let convertInput = userRomanNumeral.replace(/[,\s]/g, '')
+        if (isNaN(romanToInt(convertInput))) {
             returnInt.innerHTML = '<i>That is not a Roman numeral. Try again.</i>';
         } else {
-            returnInt.innerHTML = romanToInt(userRomanNumeral);
+            returnInt.innerHTML = romanToInt(convertInput);
         }
     })
 
     function romanToInt(userRomanNumeral) {
-
         const sym = {
             'I': 1,
             'V': 5,
@@ -278,9 +277,7 @@ addEventListener("DOMContentLoaded", (event) => {
             'D': 500,
             'M': 1000
         }
-
         let result = 0
-
         for (let i = 0; i < userRomanNumeral.length; i++) {
             const cur = sym[userRomanNumeral[i]];
             const next = sym[userRomanNumeral[i + 1]];
@@ -291,7 +288,6 @@ addEventListener("DOMContentLoaded", (event) => {
                 result += cur;
             }
         }
-
         return result
     }
 

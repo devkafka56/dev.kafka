@@ -1244,4 +1244,35 @@ function Promise_all(promises) {
      }
   });
 
-  
+/*CHAPTER 12 - Exercises (Project: A Programming Language (Egg))*/
+
+//12.1 Arrays (define arrays in Egg)
+topScope.array = (...values) => [...values];
+
+topScope.length = array => array.length;
+
+topScope.element = (array, i) => array[i];
+
+//12.3 Comments (make # in Egg == // in JS)
+  //searches for any blank spaces, and expressions between # and \n removing the # and \n and in between.
+function skipSpace(string) {
+    let comment = string.match(/^(\s|#.*)*/);
+    return string.slice(comment[0].length)
+  }
+
+//12.4 Fixing Scope 
+
+specialForms.set = (args, scope) => {
+    if (args.length != 2 || args[0].type != "word") {
+     throw new SyntaxError("Incorrect use of set");
+    }   
+    let varName = args[0].name
+    let value = evaluate(args[1], scope) 
+    for (let i = scope; i; i = Object.getPrototypeOf(i)) {
+       if (Object.prototype.hasOwnProperty.call(i, varName)) {
+         i[varName] = value
+         return value
+       }
+     }
+    throw new ReferenceError(`Setting undefined variable ${varName}`)      
+   };

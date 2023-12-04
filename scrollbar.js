@@ -68,12 +68,6 @@ addEventListener("DOMContentLoaded", (event) => {
                 scrollbarThumb.style.top = `${newThumbTop}px`
 
 
-                console.log(`this is startY ${startY}`)
-                console.log(`this is deltaY ${deltaY}`)
-                console.log(`this is newThumbTop ${newThumbTop}`)
-                console.log(`this is percentDragged ${percentDragged}`)
-                console.log(`this is newScrollTop ${newScrollTop}`)
-
 
             }
 

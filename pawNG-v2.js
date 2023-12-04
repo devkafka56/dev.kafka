@@ -6,7 +6,15 @@ let leftPaddle
 let rightPaddle
 let ball1
 let gameBoundary
+let leftScore = 0
+let rightScore = 0
+let isGameLoopRunning = false 
 const SHOW_BOUNDING_BOXES = true
+const DOWN = Math.PI / 2
+const UP = 3 * Math.PI / 2
+const pointsToWin = 5
+const halfCanvasWidth = canvas.width / 2
+const halfCanvasHeight = canvas.height / 2
 
 // Buttons & Controls 
 addEventListener("DOMContentLoaded", (event) => {
@@ -17,9 +25,7 @@ addEventListener("DOMContentLoaded", (event) => {
     // document.getElementById("playButton").onclick = playGame
 
     // Controls 
-
     document.addEventListener("keydown", (e) => {
-        console.log(`this is e.key :3 ${e.key}`)
         if (e.key === "ArrowUp") {
             leftPaddle.moveUp()
         } else if (e.key === "ArrowDown") {
@@ -32,11 +38,6 @@ addEventListener("DOMContentLoaded", (event) => {
     })
 })
 
-// Physics (The mechanisms working behind the scenes to set up the possibilities for how objects can function and interact with one another, generally the possibilities and rules for the pawNG world)
-const DOWN = Math.PI / 2
-const UP = 3 * Math.PI / 2
-
-// *Sets Position of Objects, incl function to change that position by adding velocity to the x and y coordinates 
 class Position {
     constructor(x, y) {
         this.x = x
@@ -49,7 +50,7 @@ class Position {
     }
 }
 
-// *Stores Velocity of Objects, incl functions to determine velocity, speed and direction. 
+
 class Velocity {
     constructor(speed, directionInRad) {
         this.speed = speed
@@ -76,12 +77,9 @@ class Velocity {
         if (yChange) {
             this.vy *= -1
         }
-
     }
-
 }
 
-// *Objects with this class are able to move using the Position and Velocity classes (giving the four passable parameters), includes the displace method set in Position within the move function to allow the Object to move. 
 class MoveThing {
     constructor(position, velocity) {
         this.position = position
@@ -93,7 +91,7 @@ class MoveThing {
     }
 }
 
-// *Sets the colour and start position of Objects that appear on the canvas. Objects within this class can either be static or eventually move with the MoveThing class. 
+
 class Shape {
     constructor(color) {
         this.color = color
@@ -108,7 +106,7 @@ class Shape {
     }
 }
 
-// *Allows for the creation of Objects that will appear in the game loop. Connects MoveThing and Shapeby passing tge position that's stored in MoveThing to the instance of Shape. 
+
 class GameObject {
     constructor(shape, moveThing) {
         this.shape = shape
@@ -131,14 +129,9 @@ class GameObject {
 }
 
 function registerCollision(object1, object2, collisionCallBack) {
-    //check if gameObject1 and gameObject2 are touching 
-    //call the 
-    //how do we check that go1 and go2 are touching? that has to happen before the collisionCallBack :3
-
     let boundingBox1 = object1 instanceof GameObject ? object1.shape.getBoundingBox() : object1
     let boundingBox2 = object2 instanceof GameObject ? object2.shape.getBoundingBox() : object2
-    //boundingBox1.drawBoundingBox()
-    //boundingBox2.drawBoundingBox()
+
     if (boundingBox1.inBounds(boundingBox2) || boundingBox2.inBounds(boundingBox1)) {
         collisionCallBack(true, object1, object2)
     } else {
@@ -146,16 +139,7 @@ function registerCollision(object1, object2, collisionCallBack) {
     }
 }
 
-// Paint
-
 // This is the class for all lines that appear on the screen, like the arena line, and the underline of the word "SCORE". 
-class Line {
-    constructor() {
-
-    }
-
-
-}
 
 class BoundingBox {
     constructor(maxX, maxY, minX, minY) {
@@ -171,17 +155,10 @@ class BoundingBox {
             ctx.fillRect(this.minX, this.minY, this.maxX - this.minX, this.maxY - this.minY)
         }
 
-
     }
 
     inBounds(boundingBox) {
 
-
-        // if any two perpendicular lines (out of 4) are in between the bounding box lines then there is a collision.
-
-        // Having an x collision is when the min y or max y lines are in between the max and min of the bounding box.
-
-        // Check min line ( if the lines is less than the max and greater than the min)
         return (((this.minY < boundingBox.maxY && this.minY > boundingBox.minY) ||
             (this.maxY < boundingBox.maxY && this.maxY > boundingBox.minY)) &&
             ((this.minX < boundingBox.maxX && this.minX > boundingBox.minX) ||
@@ -190,7 +167,6 @@ class BoundingBox {
     }
 }
 
-// *Used to create Objects that are rectangles or squares, gives color, width and height. 
 class RectThing extends Shape {
     constructor(color, width, height) {
         super(color)
@@ -213,10 +189,8 @@ class RectThing extends Shape {
         return new BoundingBox(maxX, maxY, minX, minY)
 
     }
-
 }
 
-// * Same as RectThing, but makes a circle :3. 
 class CircleThing extends Shape {
     constructor(color, radius) {
         super(color)
@@ -239,12 +213,8 @@ class CircleThing extends Shape {
         let minY = startPos.y - this.radius
 
         return new BoundingBox(maxX, maxY, minX, minY)
-
     }
-
 }
-
-// Game Objects
 
 class Paddle extends GameObject {
     constructor(color, x, y, speed, directionInRad) {
@@ -252,7 +222,6 @@ class Paddle extends GameObject {
     }
 
     moveUp() {
-        console.log('Move up')
         this.moveThing.velocity.directionInRad = UP
         this.moveThing.velocity.setSpeed(5)
     }
@@ -260,43 +229,74 @@ class Paddle extends GameObject {
     moveDown() {
         this.moveThing.velocity.directionInRad = DOWN
         this.moveThing.velocity.setSpeed(5)
-
     }
 
     stop() {
         this.moveThing.velocity.setSpeed(0)
     }
-
 }
 
-// Class for the ball. 
-// **FOLLOW UP: Since we have a whole class for ball, maybe we should make a CHAOS mode which includes faster paddles and more balls?**
+function paddleBot(paddle, ball) {
+  console.log(ball.moveThing.velocity.directionInRad == UP)
+    
+   // const randomNum = Math.floor(Math.random() * 10 )
+
+   //if (randomNum !== 0) {
+        if (ball.moveThing.velocity.directionInRad == UP) {
+            paddle.moveUp()
+        } else if (ball.moveThing.position.y < halfCanvasHeight) {
+            paddle.moveDown()
+        }
+
+   // }
+}
+
 
 class Ball extends GameObject {
     constructor(color, radius, x, y, speed, directionInRad) {
         super(new CircleThing(color, radius), new MoveThing(new Position(x, y), new Velocity(speed, directionInRad)))
-    }
+    } 
 }
 
-// Game Set-Up 
-
 function startGame() {
+    leftScore = 0
+    rightScore = 0
+    resetGame()
+    if (!isGameLoopRunning) {gameLoop()}
+}
+
+function resetGame() {
     leftPaddle = new Paddle("white", 1, canvas.height / 2, 0, 0)
-    rightPaddle = new Paddle("white", canvas.width - 5, canvas.height / 2 - 20, 0, 0) // variables for canvas width and height in middle of canvas
-    ball1 = new Ball("red", 5, canvas.width / 2, canvas.height / 2, 6, 3.2)
-    ball2 = new Ball("green", 5, canvas.width / 2, canvas.height / 2, 6, 3.3)
-    ball3 = new Ball("yellow", 5, canvas.width / 2, canvas.height / 2, 6, 3.4)
+    rightPaddle = new Paddle("white", canvas.width - 5, canvas.height / 2 - 20, 0, 0)
+    ball1 = new Ball("red", 5, halfCanvasWidth, canvas.height / 2, 6, 3.2)
+    gameBoundary = new BoundingBox(canvas.width + 5, canvas.height, -5, 0)
 
-
-    gameBoundary = new BoundingBox(canvas.width, canvas.height, 0, 0)
-
-
-    gameLoop()
 }
 
 function drawArena() {
     ctx.fillStyle = "rgba(8, 2, 40, 0.2)"
     ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+    function centerDash() {
+        ctx.beginPath(),
+        ctx.strokeStyle = "white"
+        ctx.setLineDash([5, 15])
+        ctx.moveTo(halfCanvasWidth, 0)
+        ctx.lineTo(halfCanvasWidth, canvas.height)
+        ctx.stroke()
+        ctx.setLineDash([])
+    }
+    centerDash()
+
+    function drawScore() {
+        ctx.font = "20px Courier New"
+        ctx.fillStyle = "white"
+        ctx.fillText(leftScore, 260, 30)
+        ctx.fillText(rightScore, 330, 30)
+
+    }
+
+   drawScore()
 }
 
 // Game Play
@@ -304,56 +304,44 @@ function drawArena() {
 function ballBounce(isColliding, ball) {
     if (isColliding) {
         ball.moveThing.velocity
-        ball.changeDirection(true,false)
-
+        ball.changeDirection(true, false)
     }
+}
+
+function score() {
+    if ((leftScore >= pointsToWin) || (rightScore >= pointsToWin)) {startGame()}
+        resetGame()    
 }
 
 function leavingBoundary(isColliding, ball) {
     if (!isColliding) {
-        console.log("is outside bounds")
+        if (ball.moveThing.position.x < 0) {
+            rightScore += 1
+        }
 
-        let changeX = (ball.moveThing.position.x <= 0 )
-        changeX  = ball.moveThing.position.x >= canvas.width //test
+        if (ball.moveThing.position.x > canvas.width) {
+            leftScore += 1
+        }
 
-        ball.changeDirection(changeX,(ball.moveThing.position.y <= 0 || ball.moveThing.position.y >= canvas.height))
-
+        score()
     }
 }
 
+
 function gameLoop() {
+    isGameLoopRunning = true 
 
     drawArena()
-
     leftPaddle.draw()
     rightPaddle.draw()
     ball1.draw()
-    ball2.draw()
-    ball3.draw()
-    ball2.moveThing.move()
-    ball3.moveThing.move()
     ball1.moveThing.move()
-
     leftPaddle.moveThing.move()
     rightPaddle.moveThing.move()
-
+    paddleBot(rightPaddle, ball1)
     registerCollision(ball1, leftPaddle, ballBounce)
     registerCollision(ball1, rightPaddle, ballBounce)
-
-    registerCollision(ball2, leftPaddle, ballBounce)
-    registerCollision(ball2, rightPaddle, ballBounce)
-
-    registerCollision(ball3, leftPaddle, ballBounce)
-    registerCollision(ball3, rightPaddle, ballBounce)
-
-
-
-    
     registerCollision(ball1, gameBoundary, leavingBoundary)
-    registerCollision(ball2, gameBoundary, leavingBoundary)
-    registerCollision(ball3, gameBoundary, leavingBoundary)
-
-
 
     raf = window.requestAnimationFrame(gameLoop)
 }
