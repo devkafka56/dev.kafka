@@ -390,3 +390,20 @@ minButton:active {
   border: 1px solid #000;
   /* Add other styling properties as needed */
 }
+
+/*Table Styles*/
+
+/* th,
+td {
+  color: white; 
+  font-family:'Courier New', Courier, monospace;
+  border: 1px solid; 
+}  */
+
+a {
+  color: black;
+}
+
+a:hover {
+  color: white;
+}

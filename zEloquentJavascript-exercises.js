@@ -1276,3 +1276,45 @@ specialForms.set = (args, scope) => {
      }
     throw new ReferenceError(`Setting undefined variable ${varName}`)      
    };
+
+//Chapter 13 did not have exercises. 
+
+/*CHAPTER 14 - Exercises*/
+
+//14.1 Build A Table (on JSProjects page as Mountain Table)
+
+//14.2 Element By Tag Name 
+function byTagName(node, tagName, ret = []) {
+    if (node.nodeType == Node.ELEMENT_NODE) {
+     for (let child of node.childNodes) {
+       let lowercase = child.nodeName.toLowerCase()
+        if (lowercase == tagName) {
+        ret.push(lowercase)
+        }
+         if (lowercase !== tagName) {
+          node = child
+          byTagName(node, tagName, ret)
+        }
+     }
+    return ret 
+    } 
+  }
+
+//14.3 The Cat's Hat
+let cat = document.querySelector("#cat");
+let hat = document.querySelector("#hat");
+
+let angle = 0;
+let lastTime = null;
+function animate(time) {
+  if (lastTime != null) angle += (time - lastTime) * 0.001;
+  lastTime = time;
+  cat.style.top = (Math.sin(angle) * 40 + 40) + "px";
+  cat.style.left = (Math.cos(angle) * 200 + 230) + "px";
+
+  hat.style.top = (Math.sin(angle) * 40 + -5) + "px";
+  hat.style.left = (Math.cos(angle) * 200 + 240) + "px";
+
+  requestAnimationFrame(animate);
+}
+requestAnimationFrame(animate);

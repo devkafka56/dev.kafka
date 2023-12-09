@@ -4,37 +4,35 @@ addEventListener("DOMContentLoaded", (event) => {
     let tens = 0o0 //stores milliseconds
     let seconds = 0o0 //stores seconds
     let minutes = 0o0 //stores minutes
-    let appendTens = document.getElementById("tens") //selects html element, assigns let to it, used to display milliseconds
-    let appendSeconds = document.getElementById("seconds") //above, but seconds 
-    let appendMinutes = document.getElementById("minutes") //above, but minutes
-    let buttonStart = document.getElementById("button-start") // above, but selects html element for start button. 
-    let buttonStop = document.getElementById("button-stop") // above, but for stop button
-    let buttonReset = document.getElementById("button-reset")//above, but for reset button 
+    let appendTens = document.getElementById("tens")
+    let appendSeconds = document.getElementById("seconds")
+    let appendMinutes = document.getElementById("minutes")
+    let buttonStart = document.getElementById("button-start")
+    let buttonStop = document.getElementById("button-stop")
+    let buttonReset = document.getElementById("button-reset")
     let Interval
 
-    //Start Button Function 
-
     buttonStart.onclick = function () {
-        clearInterval(Interval) //clears any previous intervals on timer 
-        Interval = setInterval(startTimer, 10) //starts timer at 10 milliseconds (setInterval expects second argument in milliseconds)
+        clearInterval(Interval)
+        Interval = setInterval(startTimer, 10)
     }
 
     buttonStop.onclick = function () {
-        clearInterval(Interval) //while the setInterval function is running, this stops/pauses it. 
+        clearInterval(Interval)
     }
 
     buttonReset.onclick = function () {
-        clearInterval(Interval) //clears the interval completely 
+        clearInterval(Interval)
         tens = "00"
         seconds = "00"
         minutes = "00"
-        appendTens.innerHTML = tens //corresponds to the html whcih displays the milliseconds updating it.
-        appendSeconds.innerHTML = seconds //above but seconds 
-        appendMinutes.innerHTML = minutes //above but minutes 
+        appendTens.innerHTML = tens
+        appendSeconds.innerHTML = seconds
+        appendMinutes.innerHTML = minutes
     }
 
     function startTimer() {
-        tens++ //begins by adding time in 10 milliseconds 
+        tens++
 
         if (tens <= 9) {
             appendTens.innerHTML = 0 + tens
@@ -91,7 +89,7 @@ addEventListener("DOMContentLoaded", (event) => {
         document.getElementById("digitalClockDisplay").textContent = time
 
 
-        setTimeout(displayTime, 1000) //displays the time and updates it every second 
+        setTimeout(displayTime, 1000)
     }
 
     function displayDate() {
@@ -114,7 +112,6 @@ addEventListener("DOMContentLoaded", (event) => {
     }
 
     //P3 Fish Tank
-
     const canvas = document.getElementById("p3-fishtank-canvas")
     const ctx = canvas.getContext("2d")
 
@@ -291,6 +288,8 @@ addEventListener("DOMContentLoaded", (event) => {
         return result
     }
 
+    displayMountains()
+
 })
 
 function getRandomColor() {
@@ -302,3 +301,47 @@ function getRandomColor() {
     return color
 }
 
+function displayMountains() {
+    const MOUNTAINS = [
+        { name: "Kilimanjaro", height: 5895, place: "Tanzania" },
+        { name: "Everest", height: 8848, place: "Nepal" },
+        { name: "Mount Fuji", height: 3776, place: "Japan" },
+        { name: "Vaalserberg", height: 323, place: "Netherlands" },
+        { name: "Denali", height: 6168, place: "United States" },
+        { name: "Popocatepetl", height: 5465, place: "Mexico" },
+        { name: "Vinson", height: 4892, place: "Antarctica" },
+        { name: "Logan", height: 5959, place: "Canada" },
+        { name: "Kosciuszko", height: 2228, place: "Australia" },
+        { name: "Damavand", height: 5609, place: "Iran" }
+    ];
+
+    let headingNode = document.getElementById("mountains").appendChild(document.createElement("tr"))
+    for (let key of Object.keys(MOUNTAINS[1])) {
+        let headings = headingNode.appendChild(document.createElement("th"))
+        headings.setAttribute("id", "headings")
+        headings.appendChild(document.createTextNode(`${key}`.toUpperCase()))
+    }
+
+    for (let i = 0; i < MOUNTAINS.length; i++) {
+        let rows = document.getElementById("mountains").appendChild(document.createElement("tr"))
+        let currentValues = Object.values(MOUNTAINS[i])
+        let currentKeys = Object.keys(MOUNTAINS[i])
+        for (let k = 0; k < currentValues.length; k++) {
+            let textNode = rows.appendChild(document.createElement("td"))
+            textNode.appendChild(document.createTextNode(`${currentValues[k]}`))
+            textNode.setAttribute("id", `${currentKeys[k]}`)
+        }
+    }
+
+    function eachStyle(e, styleType, kind) {
+        e.style[styleType] = kind
+    }
+    document.getElementById("mountains").style.color = 'white'
+    document.getElementById("mountains").style.fontFamily = 'Courier New,Courier,monospace'
+    document.querySelectorAll('#height').forEach((e) => eachStyle(e, 'textAlign', 'right'))
+    document.querySelectorAll('#headings').forEach((e) => {eachStyle(e, 'textAlign', 'center')})
+    document.getElementById("height").style.width = '80px'
+    let selectors = ['#height', '#name', '#place', '#headings']
+    selectors.forEach(selector => { document.querySelectorAll(selector).forEach(e => { eachStyle(e, 'border', 'solid thin #FFFFFF') }) })
+
+}

@@ -8,20 +8,36 @@ let ball1
 let gameBoundary
 let leftScore = 0
 let rightScore = 0
-let isGameLoopRunning = false 
+let isGameLoopRunning = false
 const SHOW_BOUNDING_BOXES = true
 const DOWN = Math.PI / 2
 const UP = 3 * Math.PI / 2
 const pointsToWin = 5
 const halfCanvasWidth = canvas.width / 2
 const halfCanvasHeight = canvas.height / 2
+// const RADIANS = {
+//     'UP': 3 * Math.PI / 2,
+//     'DOWN': Math.PI / 2,
+//     'RIGHT': 2 * Math.PI, 
+//     'LEFT': Math.PI,
+//     'UP-RIGHT': Math.PI / 3,
+//     'UP-RIGHT-2': 1 * Math.PI / 6,
+//     'DOWN-RIGHT': 11 * Math.PI / 6,
+//     'DOWN-RIGHT-2': 10 * Math.PI / 6,
+//     'UP-LEFT': 2 * Math.PI / 3,
+//     'UP-LEFT-2': 5 * Math.PI / 6,
+//     'DOWN-LEFT': 7 * Math.PI / 6
+//     'DOWN-LEFT-2': 4 * Math.PI / 3,
+// }
+const RADIANS = [3 * Math.PI / 2, Math.PI / 2, 2 * Math.PI, Math.PI, Math.PI / 3, 11 * Math.PI / 6, 2 * Math.PI / 3, 7 * Math.PI / 6, 1 * Math.PI / 6, 10 * Math.PI / 6, 5 * Math.PI / 6, 4 * Math.PI / 3]
+
 
 // Buttons & Controls 
-addEventListener("DOMContentLoaded", (event) => {
+addEventListener("DOMContentLoaded", (e) => {
 
     // Buttons
     document.getElementById("resetButton").onclick = startGame
-    // document.getElementById("pauseButton").onclick = pauseGame
+    document.getElementById("pauseButton").onclick = pauseGame
     // document.getElementById("playButton").onclick = playGame
 
     // Controls 
@@ -68,15 +84,32 @@ class Velocity {
         this.setVelocity()
     }
 
+    saveSpeed() {
+        this.savedSpeed = this.speed
+        this.speed = this.setSpeed(0)
+    }
+
+    returnSpeed() {
+        this.speed = this.savedSpeed 
+        this.setSpeed(this.speed)
+    }
+
     changeDirection(xChange, yChange) {
-        // does not work!
         if (xChange) {
             this.vx *= -1
         }
-
         if (yChange) {
             this.vy *= -1
         }
+    }
+
+    changeAngle() {
+        let radiansIndex = Math.floor(Math.random() * (RADIANS.length - 2)) + 2   
+       
+        let num = 1 + Math.random() * 2
+        //let num = RADIANS[radiansIndex]
+        this.directionInRad += num
+        this.setVelocity()   
     }
 }
 
@@ -89,6 +122,7 @@ class MoveThing {
     move() {
         this.position.displace(this.velocity)
     }
+    
 }
 
 
@@ -117,8 +151,21 @@ class GameObject {
         this.moveThing.velocity.changeDirection(xChange, yChange)
     }
 
+    changeAngle() {
+        this.moveThing.velocity.changeAngle()
+    }
+
     setSpeed(speed) {
         this.moveThing.speed = speed
+    }
+
+    saveSpeed() {
+        this.savedSpeed = this.moveThing.velocity.speed
+        this.moveThing.velocity.speed = this.setSpeed(0)
+    }
+
+    returnSpeed() {
+        this.moveThing.velocity.speed = this.saveSpeed()
     }
 
     draw() {
@@ -187,7 +234,6 @@ class RectThing extends Shape {
         let minY = startPos.y
 
         return new BoundingBox(maxX, maxY, minX, minY)
-
     }
 }
 
@@ -224,53 +270,60 @@ class Paddle extends GameObject {
     moveUp() {
         this.moveThing.velocity.directionInRad = UP
         this.moveThing.velocity.setSpeed(5)
+        if (this.moveThing.position.y < 0) {
+            this.stop()
+        }
+
     }
 
     moveDown() {
         this.moveThing.velocity.directionInRad = DOWN
         this.moveThing.velocity.setSpeed(5)
+        if (this.moveThing.position.y > 260) {
+            this.stop()
+        }
     }
 
     stop() {
         this.moveThing.velocity.setSpeed(0)
     }
+
 }
 
 function paddleBot(paddle, ball) {
-  console.log(ball.moveThing.velocity.directionInRad == UP)
-    
-   // const randomNum = Math.floor(Math.random() * 10 )
+    if (ball.moveThing.position.y > paddle.moveThing.position.y) {
+        paddle.moveDown()
+    }
 
-   //if (randomNum !== 0) {
-        if (ball.moveThing.velocity.directionInRad == UP) {
-            paddle.moveUp()
-        } else if (ball.moveThing.position.y < halfCanvasHeight) {
-            paddle.moveDown()
-        }
-
-   // }
+    if (ball.moveThing.position.y < paddle.moveThing.position.y) {
+        paddle.moveUp()
+    }
 }
 
 
 class Ball extends GameObject {
-    constructor(color, radius, x, y, speed, directionInRad) {
+    constructor(color, radius, x, y, speed, directionInRad) {   
         super(new CircleThing(color, radius), new MoveThing(new Position(x, y), new Velocity(speed, directionInRad)))
-    } 
+    }
+
 }
 
 function startGame() {
     leftScore = 0
     rightScore = 0
     resetGame()
-    if (!isGameLoopRunning) {gameLoop()}
+    if (!isGameLoopRunning) { gameLoop() }
 }
 
 function resetGame() {
     leftPaddle = new Paddle("white", 1, canvas.height / 2, 0, 0)
     rightPaddle = new Paddle("white", canvas.width - 5, canvas.height / 2 - 20, 0, 0)
-    ball1 = new Ball("red", 5, halfCanvasWidth, canvas.height / 2, 6, 3.2)
-    gameBoundary = new BoundingBox(canvas.width + 5, canvas.height, -5, 0)
+    ball1 = new Ball("red", 5, halfCanvasWidth, canvas.height / 2, 3, 2.5)
+    gameBoundary = new BoundingBox(canvas.width, canvas.height, 0, 5)
+}
 
+function pauseGame() {
+    ball1.saveSpeed()
 }
 
 function drawArena() {
@@ -279,7 +332,7 @@ function drawArena() {
 
     function centerDash() {
         ctx.beginPath(),
-        ctx.strokeStyle = "white"
+            ctx.strokeStyle = "white"
         ctx.setLineDash([5, 15])
         ctx.moveTo(halfCanvasWidth, 0)
         ctx.lineTo(halfCanvasWidth, canvas.height)
@@ -296,40 +349,59 @@ function drawArena() {
 
     }
 
-   drawScore()
+    drawScore()
 }
 
 // Game Play
 
 function ballBounce(isColliding, ball) {
     if (isColliding) {
-        ball.moveThing.velocity
+        console.log("ballBounce active")
         ball.changeDirection(true, false)
+        ball.changeAngle()
     }
 }
 
 function score() {
-    if ((leftScore >= pointsToWin) || (rightScore >= pointsToWin)) {startGame()}
-        resetGame()    
+    if ((leftScore >= pointsToWin) || (rightScore >= pointsToWin)) { startGame() }
+    resetGame()
 }
 
 function leavingBoundary(isColliding, ball) {
     if (!isColliding) {
         if (ball.moveThing.position.x < 0) {
             rightScore += 1
+            score()
         }
 
         if (ball.moveThing.position.x > canvas.width) {
             leftScore += 1
+            score()
+        }
+        
+        if (ball.moveThing.position.y > canvas.height || ball.moveThing.position.y > canvas.width) {
+            console.log("leavingBoundary (greater than height) Bounce active")
+            ball.changeDirection(false, true)
+            ball.changeAngle()
+            //registerCollision(ball, gameBoundary, ballBounce)
+
         }
 
-        score()
+        if (ball.moveThing.position.y < 0) {
+            console.log("leavingBoundary (less than height) Bounce active")
+            ball.changeDirection(false, true)
+            ball.changeAngle()
+            //registerCollision(ball, gameBoundary, ballBounce)
+        }
+
     }
+
+   
 }
 
 
 function gameLoop() {
-    isGameLoopRunning = true 
+    isGameLoopRunning = true
 
     drawArena()
     leftPaddle.draw()
