@@ -343,5 +343,6 @@ function displayMountains() {
     document.getElementById("height").style.width = '80px'
     let selectors = ['#height', '#name', '#place', '#headings']
     selectors.forEach(selector => { document.querySelectorAll(selector).forEach(e => { eachStyle(e, 'border', 'solid thin #FFFFFF') }) })
+    document.getElementById("mountains").style.backgroundColor = "#080039e0"
 
 }
