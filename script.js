@@ -7,7 +7,7 @@ addEventListener("DOMContentLoaded", (event) => {
 
   let pawNGButton = document.getElementById("pawNGButton");
   if (pawNGButton) {
-    pawNGButton.onclick = function () { navLink("pawNG.html") }
+    pawNGButton.onclick = function () { navLink("pawng.html") }
   }
 
   let portfolioButton = document.getElementById("portfolioButton");
