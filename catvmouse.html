@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kafka.dev/catVmouse</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
+    <!-- <link rel="stylesheet" href="scrollbar.css"> -->
+    <!-- <script src="scrollbar.js"></script> -->
+</head>
+
+<body class="clouds-background">
+    <div class="container p-5 d-flex flex-column align-items-center" style="position: fixed">
+
+        <div class="navWindow d-flex flex-column text-center">
+            <div class="topBar d-flex justify-content-between align-items-center">
+                <span class="leftBarText">kafka.dev/catVmouse</span>
+                <div class="d-flex">
+                    <button class="minButton d-flex m-1 align-items-center justify-content-center">&#95;</button>
+                    <button class="maxButton d-flex m-1 align-items-center justify-content-center">&square;</button>
+                    <button class="xButton d-flex m-1 align-items-center justify-content-center"
+                        onclick="navLink('index.html')">x</button>
+                </div>
+            </div>
+            <div class="d-flex p-0">
+                <div class="dropdown flex-column my-0 mx-1 ps-1 p-0">
+                    <div class="dropdown-button"><u>M</u>enu</div>
+                    <div class="dropdown-content">
+                        <a href="index.html">Home</a>
+                        <a href="pawng.html">pawNG</a>
+                        <a href="portfolio.html">Pawtfolio</a>
+                        <a href="jsprojects.html">JS pawjects</a>
+                    </div>
+                </div>
+                <div class="d-flex p-0">
+                    <div class="dropdown flex-column my-0 mx-1 p-0">
+                        <div class="dropdown-button"><u>F</u>ile</div>
+                        <div class="dropdown-content">
+                            <a href="#">History</a>
+                            <a href="#">Save</a>
+                            <a href="#">Block</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <canvas id="catVmouseCanvas" width="600" height="400" tabindex="0"></canvas>
+        </div>
+        <script src="catvmouse.js"></script>
+    </div>
+
+</body>
+
+</html>

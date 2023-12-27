@@ -1,20 +1,4 @@
 addEventListener("DOMContentLoaded", (event) => {
-  //assigned anonymous function directly to event handler
-  let aboutButton = document.getElementById("aboutButton");
-  if (aboutButton) {
-    aboutButton.onclick = function () { navLink("about.html") }
-  }
-
-  let pawNGButton = document.getElementById("pawNGButton");
-  if (pawNGButton) {
-    pawNGButton.onclick = function () { navLink("pawng.html") }
-  }
-
-  let portfolioButton = document.getElementById("portfolioButton");
-  if (portfolioButton) {
-    portfolioButton.onclick = function () { navLink("portfolio.html") }
-  }
-
   //Popup Stuff
   registerPopup("open-popup", function (event) {
     showPopup(event, true)

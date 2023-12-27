@@ -336,13 +336,16 @@ function displayMountains() {
     function eachStyle(e, styleType, kind) {
         e.style[styleType] = kind
     }
-    document.getElementById("mountains").style.color = 'white'
+    document.getElementById("mountains").style.color = 'black'
     document.getElementById("mountains").style.fontFamily = 'Courier New,Courier,monospace'
+    document.getElementById("mountains").style.fontSize = '12px'
     document.querySelectorAll('#height').forEach((e) => eachStyle(e, 'textAlign', 'right'))
     document.querySelectorAll('#headings').forEach((e) => {eachStyle(e, 'textAlign', 'center')})
     document.getElementById("height").style.width = '80px'
     let selectors = ['#height', '#name', '#place', '#headings']
-    selectors.forEach(selector => { document.querySelectorAll(selector).forEach(e => { eachStyle(e, 'border', 'solid thin #FFFFFF') }) })
-    document.getElementById("mountains").style.backgroundColor = "#080039e0"
+    selectors.forEach(selector => { document.querySelectorAll(selector).forEach(e => { eachStyle(e, 'border', 'outset 2px #91abff') }) })
+    document.getElementById("mountains").style.backgroundColor = "#99b1ff"
+    document.getElementById("mountains").style.border = "solid 2px #300ef1"
+    //document.getElementById("mountains").style.borderColor = "#300ef1"
 
 }

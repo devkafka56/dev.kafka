@@ -66,9 +66,6 @@ addEventListener("DOMContentLoaded", (event) => {
                 const newScrollTop = percentDragged * hiddenContentHeight
                 scrollContainer.scrollTop = newScrollTop
                 scrollbarThumb.style.top = `${newThumbTop}px`
-
-
-
             }
 
         })
