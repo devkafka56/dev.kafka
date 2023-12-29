@@ -34,7 +34,7 @@ class BoundingBox {
         this.top = top
         this.right = right
         this.bottom = bottom
-        this.colour = "rgba(9, 176, 63, 0.5)"
+        this.colour = "rgba(9, 176, 63, 0.4)"
     }
 
     draw() {
@@ -80,11 +80,7 @@ class BoundingBox {
         // it's only a collision if two directions have a collision
         let isCollision = left || right || top || bottom
 
-        return isCollision ? { "left": left, "right": right, "top": top, "bottom": bottom } : false
-
-
-
-
+        return isCollision ? { "left": left && al, "right": right && ar, "top": top && at, "bottom": bottom && ab } : false
 
     }
 
@@ -95,17 +91,17 @@ class BoundingBox {
 //Game Engine 
 
 var simpleLevelPlan = `
-#####...................................
-#.......o.............................o.
-#....................................___
-#.....................o..............#..
+........................................
+........o.............................o.
+.....................................___
+.........--...........o..............#..
 #.@.................----..........___#..
 #____.............................#.....
 #...#+++++_____................o..#.....
 #...#+++++#...#...................#.....
 #...#_____#...#...............____#.....
-#.................zz..........#.........
-#.........................--..#.........
+#..................zzz........#.........
+#.............................#.........
 #........._---_-..............#.........
 #.........#...#+++++++#--.....#.........
 #---......#...#_______#.......#.........
@@ -159,9 +155,9 @@ class State {
         for (let i = 0; i < this.actors.length; i++) {
             let current = this.actors[i]
             if (current == "cat") { continue }
-            current.draw(time)
+            current.draw(time, this)
         }
-        this.cat.draw(time)
+        this.cat.draw(time, this)
     }
 
     move(time) {
@@ -184,7 +180,7 @@ class State {
 
         let totalTreats = actors.filter(a => a.type == "treat")
         totalTreats.forEach((a) => { if (a.display == "false") { collectedTreats.push(a) } })
-        //if (totalTreats.length == collectedTreats.length) state.status = "won"
+        if (totalTreats.length == collectedTreats.length) state.status = "won"
 
     }
 }
@@ -206,15 +202,19 @@ class Cat {
     constructor(pos) {
         this.pos = pos
         this.speed = new Vec(0, 0)
-        this.isOnTheMat = false
         this.direction = 1
-
         this.height = 36
         this.width = 31
         this.size = new Vec(31, 36)
 
-        this.wet = false 
+        //movement flags
+        this.isOnTheMat = false
+        this.wet = false
         this.jumping = false
+
+        //colouring 
+        this.legsTailColour = "#2b1c14"
+        this.bodyColour = "blanchedAlmond"
         //animation
         this.walking = false
         this.float = 0.01
@@ -233,7 +233,7 @@ class Cat {
         return new Cat(pos.plus(new Vec(blockWidth - 4, blockHeight - 14.5)))
     }
 
-    draw(time) {
+    draw(time, state) {
         const yToGround = 13
         const xToGround = 10
         const yToBody = 9
@@ -248,7 +248,7 @@ class Cat {
         }
 
         //legs
-        ctx.strokeStyle = "#2b1c14"
+        ctx.strokeStyle = this.legsTailColour
         ctx.lineWidth = 3
         ctx.lineCap = "round"
         //front right 
@@ -330,7 +330,7 @@ class Cat {
         ctx.moveTo(5, -5)
         ctx.lineTo(7, -13)
         ctx.lineTo(9, -7)
-        ctx.fillStyle = "#2b1c14"
+        ctx.fillStyle = this.legsTailColour
         ctx.fill()
         ctx.closePath()
 
@@ -338,7 +338,7 @@ class Cat {
         ctx.beginPath()
         ctx.ellipse(0, 0, 12, 9, 0, 0, 2 * Math.PI)
         ctx.closePath()
-        ctx.fillStyle = "blanchedAlmond"
+        ctx.fillStyle = this.bodyColour
         ctx.fill()
 
         //front ear
@@ -346,7 +346,7 @@ class Cat {
         ctx.moveTo(2, -5)
         ctx.lineTo(4, -13)
         ctx.lineTo(6, -7)
-        ctx.fillStyle = "#2b1c14"
+        ctx.fillStyle = this.legsTailColour
         ctx.fill()
         ctx.closePath()
 
@@ -359,7 +359,7 @@ class Cat {
 
         ctx.restore()
         this.boundingBox.draw()
-        this.bounce()
+        //this.bounce()
     }
 
     bounce() {
@@ -373,7 +373,11 @@ class Cat {
 
     move(time, state) {
         if (this.jumping) {
-            this.speed.y = 7
+            this.speed.y = 8
+            //prevent double jump
+            if (!this.isOnTheMat) {
+                this.speed.y -= 7
+            }
         }
 
         if (!this.jumping) {
@@ -389,18 +393,20 @@ class Cat {
 
         if (this.wet) {
             if (!this.isOnTheMat) {
-            let sink = () => state.status = "lost"
-            setTimeout(sink, 200)
+                let newlegsTailColour = "rgba(11, 50, 66, 0.6)"
+                let newBodyColour = "rgba(18, 83, 109, 0.3)"
+                this.legsTailColour = newlegsTailColour
+                this.bodyColour = newBodyColour
+                let sink = () => state.status = "lost"
+                if (this.legsTailColour == newlegsTailColour) {
+                    setTimeout(sink, 1000)
+                }
             }
-            
         }
+
         this.wet = false
         this.isOnTheMat = false
         this.jumping = false
-
-       
-
-
     }
 
     moveLeft() {
@@ -485,10 +491,14 @@ class Water {
     collide(state, collisions) {
 
         if (this.ch == "+") {
-            state.cat.wet = true 
-        } else {
-            state.status = "lost"
+            //let sink = () => state.status = "lost"
+            //setTimeout(sink, 500)
+            state.cat.wet = true
         }
+
+        // else {
+        //     state.status = "lost"
+        // }
     }
 }
 
@@ -517,13 +527,18 @@ class Wall {
     }
 
     collide(state, collisions) {
-
-        if (collisions.left) {
+        if (collisions.top) {
+            state.cat.direction = state.cat.direction
+            state.cat.pos.y = state.cat.pos.y
+        } else if (collisions.bottom) {
+            state.cat.direction = state.cat.direction
+            state.cat.pos.y = state.cat.pos.y
+        } else if (collisions.left) {
             state.cat.direction = state.cat.direction * -1
-            state.cat.pos.x = this.pos.x + 40
+            state.cat.pos.x = this.pos.x + 30
         } else if (collisions.right) {
             state.cat.direction = state.cat.direction * -1
-            state.cat.pos.x = this.pos.x - 40
+            state.cat.pos.x = this.pos.x - 30
         }
 
     }
@@ -575,8 +590,10 @@ class Floor {
 
     collide(state, collisions) {
         if (collisions.bottom) {
-
             state.cat.isOnTheMat = true
+            state.cat.pos.y = this.pos.y - 13
+        } else if (collisions.top) {
+            state.cat.pos.y = state.cat.pos.y + 5
         }
     }
 }
@@ -667,24 +684,24 @@ function gameIntro() {
 
 
 let level = new Level(simpleLevelPlan)
-let state1 = new State(level, level.startActors)
+let state = new State(level, level.startActors)
 canvas.addEventListener('keydown', (e) => {
     if (e.key === "ArrowRight") {
-        state1.cat.moveRight()
+        state.cat.moveRight()
     }
     if (e.key === "ArrowLeft") {
-        state1.cat.moveLeft()
+        state.cat.moveLeft()
     }
     if (e.key === "ArrowUp") {
-        state1.cat.jump()
+        state.cat.jump()
     }
 })
 canvas.addEventListener('keyup', (e) => {
     if (e.key === "ArrowRight") {
-        state1.cat.stop()
+        state.cat.stop()
     }
     if (e.key === "ArrowLeft") {
-        state1.cat.stop()
+        state.cat.stop()
     }
 
 
@@ -693,13 +710,17 @@ function gameLoop(time) {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-    state1.draw(time)
-    state1.update()
-    state1.move(time)
+    state.draw(time)
+    state.update()
+    state.move(time)
 
-    if (state1.status == "lost") {
+    if (state.status == "lost") {
         level = new Level(simpleLevelPlan)
-        state1 = new State(level, level.startActors)
+        state = new State(level, level.startActors)
+    }
+
+    if (state.status === "won") {
+        state.cat.won()
     }
 
     raf = window.requestAnimationFrame(gameLoop)
