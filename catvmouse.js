@@ -4,7 +4,7 @@ const cHeight = canvas.height
 const cWidth = canvas.width
 const blockHeight = 20
 const blockWidth = 15
-const showBoundingBoxes = true
+const showBoundingBoxes = false
 const bottom = "bottom"
 
 let raf
@@ -52,51 +52,39 @@ class BoundingBox {
     }
 
     touches(boundingBox) {
-        let catBox = this
-        let leftRightAligned = !((catBox.right < boundingBox.left) && (catBox.left < boundingBox.left)) || ((boundingBox.right < catBox.left) && (boundingBox.left < catBox.left))
-        let topBottomAligned = !((catBox.right < boundingBox.left) && (catBox.left < boundingBox.left)) || ((boundingBox.right < catBox.left) && (boundingBox.left < catBox.left))
+        let a = this
+        let b = boundingBox
 
-        let bottom = (catBox.bottom >= boundingBox.top && catBox.bottom <= boundingBox.bottom) && !leftRightAligned
+        // Check collisions for all "a" lines. (T, R, B, L)
+        let at = a.top >= b.top && a.top <= b.bottom
+        let ar = a.right >= b.left && a.right <= b.right
+        let ab = a.bottom >= b.top && a.bottom <= b.bottom
+        let al = a.left >= b.left && a.left <= b.right
+
+        // Check collisions for all "b" lines. (T, R, B, L)
+        let bt = b.top >= a.top && b.top <= a.bottom
+        let br = b.right >= a.left && b.right <= a.right
+        let bb = b.bottom >= a.top && b.bottom <= a.bottom
+        let bl = b.left >= a.left && b.left <= a.right
+
+        // Relative to "a" where is the collision.
+        // i.e. if a "b" right side is touching "a" left side than that's an "a" left collision
+        let anyTopOrBottom = (at || ab || bt || bb)
+        let anyLeftOrRight = (ar || al || br || bl)
+
+        let left = (al || br) && anyTopOrBottom
+        let right = (ar || bl) && anyTopOrBottom
+        let top = (at || bb) && anyLeftOrRight
+        let bottom = (ab || bt) && anyLeftOrRight
+
+        // it's only a collision if two directions have a collision
+        let isCollision = left || right || top || bottom
+
+        return isCollision ? { "left": left, "right": right, "top": top, "bottom": bottom } : false
 
 
-        let top = ((catBox.top >= boundingBox.top && catBox.top <= boundingBox.bottom) &&
-            ((catBox.left >= boundingBox.left && catBox.left <= boundingBox.right) ||
-                (catBox.right >= boundingBox.left && catBox.left <= boundingBox.right)))
 
 
-        let left = ((catBox.left >= boundingBox.left && catBox.left <= boundingBox.right) &&
-            ((catBox.top >= boundingBox.top && catBox.top <= boundingBox.bottom) ||
-                (catBox.bottom >= boundingBox.top && catBox.bottom <= boundingBox.bottom)))
-
-        let right = (((catBox.right >= boundingBox.left && catBox.right <= boundingBox.right) &&
-            ((catBox.top >= boundingBox.top && catBox.top <= boundingBox.bottom) ||
-                (catBox.bottom >= boundingBox.top && catBox.bottom <= boundingBox.bottom))) ||
-
-            ((boundingBox.left <= catBox.right && boundingBox.left >= catBox.left) &&
-                ((boundingBox.bottom >= catBox.bottom && boundingBox.bottom <= catBox.top) ||
-                    (boundingBox.right >= catBox.left && boundingBox.left <= catBox.right))))
-
-
-        // if (bottom) {
-        //      bottom
-        // }
-
-        // if (top) {
-        //     return top
-        // }
-
-        // if (left) {
-        //     return left
-        // }
-
-        // if (right) {
-        //     return right
-        // }
-
-        let collision = right || left || top || bottom
-        return collision ? { "bottom": bottom, "top": top, "left": left, "right": right } : null
-
-        //let example = { "bottom": bottom, "top": top, "left": left, "right": right }
 
     }
 
@@ -107,26 +95,26 @@ class BoundingBox {
 //Game Engine 
 
 var simpleLevelPlan = `
-........................................
-........................................
-........................................
-........................................
-........................................
-...@..o.................................
-.#_____.................................
-......_..o..............................
-......_.................................
-......#_____............................
-........................................
-........................................
-........................................
-........................................
-........................................
-........................................
-........................................
-........................................
-........................................
-........................................`
+#####...................................
+#.......o.............................o.
+#....................................___
+#.....................o..............#..
+#.@.................----..........___#..
+#____.............................#.....
+#...#+++++_____................o..#.....
+#...#+++++#...#...................#.....
+#...#_____#...#...............____#.....
+#.................zz..........#.........
+#.........................--..#.........
+#........._---_-..............#.........
+#.........#...#+++++++#--.....#.........
+#---......#...#_______#.......#.........
+#.==......#...........#.o...__#.........
+#....o....#...........#--...#...........
+#...o.o---#...........#+++++#...........
+#..o.o.o..#...........#_____#...........
+#.o.o.o.o.#.............................
+#_________#.............................`
 
 class Level {
     constructor(plan) {
@@ -177,7 +165,7 @@ class State {
     }
 
     move(time) {
-        this.actors.filter(actor => "move" in actor).forEach(actor => actor.move(time))
+        this.actors.filter(actor => "move" in actor).forEach(actor => actor.move(time, this))
     }
 
     update() {
@@ -185,6 +173,7 @@ class State {
         let actors = this.actors
         let cat = this.cat
         let catBox = cat.boundingBox
+        let collectedTreats = []
         actors.filter(actor => "collide" in actor).forEach((actor) => {
             let actorBox = actor.boundingBox
             let collisions = catBox.touches(actorBox)
@@ -192,6 +181,10 @@ class State {
                 actor.collide(state, collisions)
             }
         })
+
+        let totalTreats = actors.filter(a => a.type == "treat")
+        totalTreats.forEach((a) => { if (a.display == "false") { collectedTreats.push(a) } })
+        //if (totalTreats.length == collectedTreats.length) state.status = "won"
 
     }
 }
@@ -219,6 +212,9 @@ class Cat {
         this.height = 36
         this.width = 31
         this.size = new Vec(31, 36)
+
+        this.wet = false 
+        this.jumping = false
         //animation
         this.walking = false
         this.float = 0.01
@@ -230,7 +226,7 @@ class Cat {
     get type() { return "cat" }
 
     get boundingBox() {
-        return new BoundingBox(this.pos.x - 14, this.pos.y - 14, this.pos.x + 17, this.pos.y + 14)
+        return new BoundingBox(this.pos.x - 14, this.pos.y - 14, this.pos.x + 14, this.pos.y + 14)
     }
 
     static create(pos) {
@@ -375,40 +371,63 @@ class Cat {
         }
     }
 
-    // gravity() {
+    move(time, state) {
+        if (this.jumping) {
+            this.speed.y = 7
+        }
 
-    // }
+        if (!this.jumping) {
+            this.speed.y -= 0.5
+        }
 
-    move(time) {
+        if (this.isOnTheMat) {
+            this.speed.y = Math.max(this.speed.y, 0)
+        }
 
         this.pos.x += this.speed.x * this.direction
+        this.pos.y -= this.speed.y
 
-        if (!this.isOnTheMat) {
-            this.speed.y = 1
-            this.pos.y += this.speed.y + 1 * 1
-
-
+        if (this.wet) {
+            if (!this.isOnTheMat) {
+            let sink = () => state.status = "lost"
+            setTimeout(sink, 200)
+            }
+            
         }
+        this.wet = false
         this.isOnTheMat = false
+        this.jumping = false
+
+       
+
 
     }
 
     moveLeft() {
         this.walking = true
-        this.speed.x = 1
+        this.speed.x = 3
         this.direction = -1
+        if (this.isOnTheMat) {
+            this.speed.x = 1
+        }
     }
 
     moveRight() {
         this.walking = true
-        this.speed.x = 1
+        this.speed.x = 3
         this.direction = 1
+        if (this.isOnTheMat) {
+            this.speed.x = 1
+        }
+    }
+
+    jump() {
+        this.jumping = true
     }
 
     stop() {
         this.walking = false
         this.speed.x = 0
-
     }
 }
 
@@ -463,9 +482,13 @@ class Water {
 
     }
 
-    collide(state) {
-        let sink = () => state.status = "lost"
-        setTimeout(sink, 500)
+    collide(state, collisions) {
+
+        if (this.ch == "+") {
+            state.cat.wet = true 
+        } else {
+            state.status = "lost"
+        }
     }
 }
 
@@ -495,9 +518,14 @@ class Wall {
 
     collide(state, collisions) {
 
-        state.cat.stop()
-        console.log(JSON.stringify(collisions))
-        state.cat.pos.x = this.pos.x + 20 * 2
+        if (collisions.left) {
+            state.cat.direction = state.cat.direction * -1
+            state.cat.pos.x = this.pos.x + 40
+        } else if (collisions.right) {
+            state.cat.direction = state.cat.direction * -1
+            state.cat.pos.x = this.pos.x - 40
+        }
+
     }
 }
 
@@ -546,9 +574,10 @@ class Floor {
     }
 
     collide(state, collisions) {
-        state.cat.speed.y = 0
-        console.log(JSON.stringify(collisions))
-        state.cat.isOnTheMat = true
+        if (collisions.bottom) {
+
+            state.cat.isOnTheMat = true
+        }
     }
 }
 
@@ -599,9 +628,10 @@ class Treat {
     }
 
     collide(state, collisions) {
-        console.log(JSON.stringify(collisions))
+        //console.log(JSON.stringify(collisions))
         this.display = false
     }
+
 }
 
 var levelChars = {
@@ -635,58 +665,41 @@ function gameIntro() {
     })
 }
 
-// function runLevel(level, time) {
-
-//     //let state = State.start(level)
-
-//     canvas.addEventListener('keydown', (e) => {
-//         if (e.key === "ArrowRight") {
-//             state.cat.moveRight()
-//         }
-//         if (e.key === "ArrowLeft") {
-//             state.cat.moveLeft()
-//         }
-//     })
-//     canvas.addEventListener('keyup', () => {
-//         state.cat.stop()
-//     })
-
-//     state.move()
-//     state.draw(time)
-//     state.update()
-
-//     if (state.status == "lost") {
-//         //state.lost()
-//     }
-// }
-
-//const treatActors = state.level.startActors.filter(actor => actor.type === "treat")
-//treatActors.forEach(a => a.move())
 
 let level = new Level(simpleLevelPlan)
-let state = new State(level, level.startActors)
+let state1 = new State(level, level.startActors)
 canvas.addEventListener('keydown', (e) => {
     if (e.key === "ArrowRight") {
-        state.cat.moveRight()
+        state1.cat.moveRight()
     }
     if (e.key === "ArrowLeft") {
-        state.cat.moveLeft()
+        state1.cat.moveLeft()
+    }
+    if (e.key === "ArrowUp") {
+        state1.cat.jump()
     }
 })
-canvas.addEventListener('keyup', () => {
-    state.cat.stop()
+canvas.addEventListener('keyup', (e) => {
+    if (e.key === "ArrowRight") {
+        state1.cat.stop()
+    }
+    if (e.key === "ArrowLeft") {
+        state1.cat.stop()
+    }
+
+
 })
 function gameLoop(time) {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-    state.draw(time)
-    state.update()
-    state.move(time)
+    state1.draw(time)
+    state1.update()
+    state1.move(time)
 
-    if (state.status == "lost") {
+    if (state1.status == "lost") {
         level = new Level(simpleLevelPlan)
-        state = new State(level, level.startActors)
+        state1 = new State(level, level.startActors)
     }
 
     raf = window.requestAnimationFrame(gameLoop)
