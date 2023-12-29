@@ -4,7 +4,7 @@ const cHeight = canvas.height
 const cWidth = canvas.width
 const blockHeight = 20
 const blockWidth = 15
-const showBoundingBoxes = true
+const showBoundingBoxes = false
 
 let raf
 
@@ -47,14 +47,21 @@ class BoundingBox {
     }
 
     overlap(boundingBox) {
-        let isOverlap = (
-            ((this.bottom < boundingBox.top && this.bottom > boundingBox.bottom) ||
-                (this.top < boundingBox.top && this.top > boundingBox.bottom)) &&
-            ((this.right < boundingBox.left && this.right > boundingBox.right) ||
-                (this.left < boundingBox.left && this.left > boundingBox.right))
-        )
+        let collisionBottom = Boolean(this.bottom <= boundingBox.top && this.bottom >= boundingBox.bottom)
+        let collisionTop = Boolean(this.top <= boundingBox.top && this.top >= boundingBox.bottom)
+        let collisionRight = Boolean(this.right <= boundingBox.left && this.right >= boundingBox.right)
+        let collisionLeft = Boolean(this.left <= boundingBox.left && this.left >= boundingBox.right)
 
-        return isOverlap
+        let collisionBottom2 = Boolean(boundingBox.bottom <= this.top && boundingBox.bottom >= this.bottom)
+        let collisionTop2 = Boolean(boundingBox.top <= this.top && boundingBox.top >= this.bottom)
+        let collisionRight2 = Boolean(boundingBox.right <= this.left && boundingBox.right >= this.right)
+        let collisionLeft2 = Boolean(boundingBox.left <= this.left && boundingBox.left >= this.right)
+
+
+
+        let collision = ((collisionBottom || collisionTop) && (collisionRight || collisionLeft)) || ((collisionBottom2 || collisionTop2) && (collisionRight2 || collisionLeft2))
+
+        return collision ? { "collisionBottom": collisionBottom, "collisionTop": collisionTop, "collisionLeft": collisionLeft, "collisionRight": collisionRight, "collisionBottom2": collisionBottom2, "collisionTop2": collisionTop2, "collisionLeft2": collisionLeft2, "collisionRight2": collisionRight2 } : null
 
     }
 
@@ -141,9 +148,7 @@ class State {
     }
 
     move(time) {
-        this.actors.filter(actor => "move" in actor).forEach(actor => actor.move())
-        const cat = this.cat
-        cat.move(time)
+        this.actors.filter(actor => "move" in actor).forEach(actor => actor.move(time))
     }
 
     update() {
@@ -151,13 +156,21 @@ class State {
         let actors = this.actors
         let cat = this.cat
         let catBox = cat.boundingBox
-        for (let i = 0; i < actors.length; i++) {
-            let actor = actors[i]
+        actors.filter(actor => "collide" in actor).forEach((actor) => {
             let actorBox = actor.boundingBox
-            if (catBox.overlap(actorBox) || actorBox.overlap(catBox)) {
-                actor.collide(state)
+            let collisions = catBox.overlap(actorBox)
+            if (collisions) {
+                actor.collide(state, collisions)
             }
-        }
+        })
+        // for (let i = 0; i < actors.length; i++) {
+        //     let actor = actors[i]
+        //     let actorBox = actor.boundingBox
+        //     let collisions = catBox.overlap(actorBox)
+        //     if (actor != cat && collisions) {
+        //         actor.collide(state,collisions)
+        //     }
+        // }
     }
 }
 
@@ -178,7 +191,8 @@ class Cat {
     constructor(pos) {
         this.pos = pos
         this.speed = 0
-        this.speedY = 10
+        this.speedY = 1
+        this.isOnTheMat = false
         this.direction = 1
         this.moving = false
         this.float = 0.01
@@ -187,6 +201,7 @@ class Cat {
         this.height = 36
         this.width = 31
         this.size = new Vec(31, 36)
+
 
     }
 
@@ -340,7 +355,12 @@ class Cat {
 
     move(time) {
         this.pos.x += this.speed * this.direction
-        this.pos.y += this.speedY + 9.8 * time
+        if (!this.isOnTheMat) {
+            this.pos.y += this.speedY + 1 * 1
+
+        }
+        this.isOnTheMat = false
+        
 
     }
 
@@ -406,7 +426,6 @@ class Water {
     move() {
         if (this.ch == "=") {
             this.pos.x += this.speed
-            this.boundingBox.move(this.speed, 0)
             if (this.pos.x >= this.maxPos.x + this.axis || this.pos.x <= this.maxPos.x) {
                 this.speed *= -1
             }
@@ -415,7 +434,8 @@ class Water {
     }
 
     collide(state) {
-        state.status = "lost"
+        let test = () => state.status = "lost"
+        setTimeout(test, 1000)
     }
 }
 
@@ -443,7 +463,7 @@ class Wall {
         this.boundingBox.draw()
     }
 
-    collide(state) {
+    collide(state, collisions) {
         state.cat.stop()
         state.cat.pos.x = this.pos.x + blockWidth * 2
     }
@@ -487,16 +507,17 @@ class Floor {
     move() {
         if (this.ch == "z") {
             this.pos.x += this.speed
-            this.boundingBox.move(this.speed, 0)
             if (this.pos.x >= this.maxPos.x + this.axis || this.pos.x <= this.maxPos.x) {
                 this.speed *= -1
             }
         }
     }
 
-    collide(state) {
-        //state.cat.stop()
-        //state.cat.pos.y = this.pos.y
+    collide(state, collisions) {
+        console.log(`collisions: ${JSON.stringify(collisions)}`)
+        state.cat.speedY = 0
+        state.cat.isOnTheMat = true
+
     }
 }
 
@@ -539,7 +560,6 @@ class Treat {
 
     move() {
         this.pos.y += this.speed
-        this.boundingBox.move(0, this.speed)
         if (this.pos.y >= this.maxPos.y + this.wobble) {
             this.speed = -Math.abs(this.speed)
         } else if (this.pos.y <= this.maxPos.y) {
@@ -627,9 +647,10 @@ canvas.addEventListener('keyup', () => {
 function gameLoop(time) {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    state.move(time)
+
     state.draw(time)
     state.update()
+    state.move(time)
 
     if (state.status == "lost") {
         level = new Level(simpleLevelPlan)
