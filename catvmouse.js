@@ -4,8 +4,9 @@ const cHeight = canvas.height
 const cWidth = canvas.width
 const blockHeight = 20
 const blockWidth = 15
+const scaleHeight = 40
+const scaleWidth = 30
 const showBoundingBoxes = false
-const bottom = "bottom"
 
 let raf
 
@@ -86,31 +87,123 @@ class BoundingBox {
 
 }
 
-// canvas.addEventListener('mousemove', showMousePos)
+class CanvasDisplay {
+    constructor(level) {
+        this.level = level
+        this.canvas = canvas
+        this.canvasWidth = Math.min(canvas.width, level.width * scale)
+        this.canvasHeight = Math.min(canvas.height, level.height * scale)
+        this.ctx = ctx
 
-//Game Engine 
+        this.viewport = {
+            left: 0,
+            top: 0,
+            width: this.canvas.width / scale,
+            height: this.canvas.height / scale
+        }
+    }
+
+    clear() {
+        this.canvas.remove()
+    }
+
+    syncState(state) {
+        this.updateViewport(state)
+        this.clearDisplay(state.status)
+        this.drawBackground(state.level)
+        this.drawActors(state.actors)
+    }
+
+    clearDisplay(status) {
+        if (status == "won") {
+            this.ctx.fillStyle = "rgb(68, 191, 255)";
+        } else if (status == "lost") {
+            this.ctx.fillStyle = "rgb(44, 136, 214)";
+        } else {
+            this.ctx.fillStyle = "rgb(52, 166, 251)";
+        }
+        this.ctx.fillRect(0, 0,
+            this.canvas.width, this.canvas.height)
+    }
+
+    drawBackground(level) {
+        let { left, top, width, height } = this.viewport
+        let xStart = Math.floor(left)
+        let xEnd = Math.ceil(left + width)
+        let yStart = Math.floor(top)
+        let yEnd = Math.ceil(top + height)
+
+        for (let y = yStart; y < yEnd; y++) {
+            for (let x = xStart; x < xEnd; x++) {
+                let tile = level.rows[y][x]
+                if (tile == "empty") continue
+                let screenX = (x - left) * scale
+                let screenY = (y - top) * scale
+                this.cx.drawImage(otherSprites,
+                    tileX, 0, scale, scale,
+                    screenX, screenY, scale, scale);
+            }
+        }
+    }
+
+    drawActors(actors) {
+
+    }
+
+    updateViewport(state) {
+        const cat = state.cat
+        const marginX = this.viewport.width / 3
+        const marginY = this.viewport.height / 3
+
+        this.viewport.left = Math.max(0, Math.min(cat.pos.x - marginX, this.level.width - this.viewport.width))
+        this.viewport.top = Math.max(0, Math.min(cat.pos.y - marginY, this.level.height - this.viewport.height))
+    }
+
+}
 
 var simpleLevelPlan = `
-........................................
-........o.............................o.
-.....................................___
-.........--...........o..............#..
-#.@.................----..........___#..
-#____.............................#.....
-#...#+++++_____................o..#.....
-#...#+++++#...#...................#.....
-#...#_____#...#...............____#.....
-#..................zzz........#.........
-#.............................#.........
-#........._---_-..............#.........
-#.........#...#+++++++#--.....#.........
-#---......#...#_______#.......#.........
-#.==......#...........#.o...__#.........
-#....o....#...........#--...#...........
+#.......................................
+#.........o.............................
+#.......---..........................___
+#.....................o.....v...........
+#.@...............------...........o....
+#____.............................._....
+#...#+++++_____....................#....
+#...#_____#...#....................#....
+#...............................___#....
+#..................zzz..................
+#.......................................
+#.........#---_-........................
+#.........#...#+++++++_--.......___.....
+#---......#...#_______#.........#.......
+#.==......#...........#.....____#.......
+#....o....#...........#xx...#...........
 #...o.o---#...........#+++++#...........
 #..o.o.o..#...........#_____#...........
 #.o.o.o.o.#.............................
 #_________#.............................`
+
+var secondLevelPlan = `
+...............................v........
+#................_____...............*..
+#.@..#___........#...#..................
+#____#..#....____#...#............._____
+........#____#.......#....zzz...........
+.....................#..................
+...................o.#..................
+.....o...............#.........._+++++++
+..................----..........#_______
+.zz.....................................
+.....................o.......zzz........
+............zzz.........................
+........................_____...........
+........................................
+........................................
+........................................
+........................................
+........................................
+........................................
+........................................`
 
 class Level {
     constructor(plan) {
@@ -155,9 +248,9 @@ class State {
         for (let i = 0; i < this.actors.length; i++) {
             let current = this.actors[i]
             if (current == "cat") { continue }
-            current.draw(time, this)
+            current.draw(time)
         }
-        this.cat.draw(time, this)
+        this.cat.draw(time)
     }
 
     move(time) {
@@ -179,9 +272,12 @@ class State {
         })
 
         let totalTreats = actors.filter(a => a.type == "treat")
-        totalTreats.forEach((a) => { if (a.display == "false") { collectedTreats.push(a) } })
+        for (let i = 0; i < totalTreats.length; i++) {
+            if (totalTreats[i].display == false) {
+                collectedTreats.push(totalTreats[i])
+            }
+        }
         if (totalTreats.length == collectedTreats.length) state.status = "won"
-
     }
 }
 
@@ -233,13 +329,13 @@ class Cat {
         return new Cat(pos.plus(new Vec(blockWidth - 4, blockHeight - 14.5)))
     }
 
-    draw(time, state) {
+    draw(time) {
         const yToGround = 13
         const xToGround = 10
         const yToBody = 9
         const toBody = 6
-        const legSpeed = 500
-        const legRate = 300
+        const legSpeed = 200
+        const legRate = 100
 
         ctx.save()
         ctx.translate(this.pos.x, this.pos.y)
@@ -404,6 +500,10 @@ class Cat {
             }
         }
 
+        if (this.pos.y + 10 > canvas.height) {
+            state.status = "lost"
+        }
+
         this.wet = false
         this.isOnTheMat = false
         this.jumping = false
@@ -435,6 +535,12 @@ class Cat {
         this.walking = false
         this.speed.x = 0
     }
+
+    won(state) {
+        state.status = "won"
+        this.legsTailColour = "rgba(204, 173, 0, 0.6)"
+        this.bodyColour = "rgba(255, 228, 77, 0.6)"
+    }
 }
 
 class Water {
@@ -442,8 +548,9 @@ class Water {
         this.pos = pos
         this.height = height
         this.ch = ch
-        this.speed = 0.5
+        this.speed = new Vec(0.5, 0.3)
         this.axis = 70
+        this.drip = 50
         this.maxPos = new Vec(this.pos.x, this.pos.y)
     }
 
@@ -463,9 +570,6 @@ class Water {
         }
         else if (ch == "+") {
             return new Water(pos, blockHeight, ch)
-        } else if (ch == "X") {
-            return new Water(pos, blockHeight / 2, ch)
-
         }
     }
 
@@ -480,9 +584,14 @@ class Water {
 
     move() {
         if (this.ch == "=") {
-            this.pos.x += this.speed
+            this.pos.x += this.speed.x
             if (this.pos.x >= this.maxPos.x + this.axis || this.pos.x <= this.maxPos.x) {
-                this.speed *= -1
+                this.speed.x *= -1
+            }
+        } else if (this.ch == "v") {
+            this.pos.y += this.speed.y
+            if (this.pos.y >= this.maxPos.y + this.drip || this.pos.y <= this.maxPos.y) {
+                this.speed.y *= -1
             }
         }
 
@@ -491,14 +600,15 @@ class Water {
     collide(state, collisions) {
 
         if (this.ch == "+") {
-            //let sink = () => state.status = "lost"
-            //setTimeout(sink, 500)
             state.cat.wet = true
+        } else if (this.ch == "=") {
+            state.cat.wet = true
+            state.status = "lost"
+        } else if (this.ch == "v") {
+            state.cat.wet = true
+            state.status = "lost"
         }
 
-        // else {
-        //     state.status = "lost"
-        // }
     }
 }
 
@@ -567,6 +677,10 @@ class Floor {
             return new Floor(pos, blockHeight, ch)
         } else if (ch == "z") {
             return new Floor(pos, blockHeight / 2, ch)
+        } else if (ch == "x") {
+            pos.y += 10
+            return new Floor(pos, blockHeight / 2, ch)
+
         }
     }
 
@@ -652,7 +766,7 @@ class Treat {
 }
 
 var levelChars = {
-    ".": "space", "#": Wall, "+": Water, "_": Floor,
+    ".": "space", "#": Wall, "+": Water, "_": Floor, "x": Floor,
     "@": Cat, "o": Treat, "*": Treat,
     "=": Water, "|": Water, "v": Water, "-": Floor, "z": Floor
 }
@@ -683,7 +797,7 @@ function gameIntro() {
 }
 
 
-let level = new Level(simpleLevelPlan)
+let level = new Level(secondLevelPlan)
 let state = new State(level, level.startActors)
 canvas.addEventListener('keydown', (e) => {
     if (e.key === "ArrowRight") {
@@ -713,14 +827,16 @@ function gameLoop(time) {
     state.draw(time)
     state.update()
     state.move(time)
-
+    
     if (state.status == "lost") {
         level = new Level(simpleLevelPlan)
         state = new State(level, level.startActors)
     }
 
-    if (state.status === "won") {
-        state.cat.won()
+    if (state.status == "won") {
+        state.cat.won(state)
+        level = new Level(secondLevelPlan)
+        state = new State(level, level.startActors)
     }
 
     raf = window.requestAnimationFrame(gameLoop)
