@@ -1,13 +1,11 @@
 const canvas = document.getElementById("catVmouseCanvas")
 const ctx = canvas.getContext("2d")
-const cHeight = canvas.height
-const cWidth = canvas.width
 const blockHeight = 20
 const blockWidth = 15
-const scaleHeight = 40
-const scaleWidth = 30
-const showBoundingBoxes = false
+const scale = 2
+const showBoundingBoxes = true
 
+// let canvasBox = new BoundingBox(0, 0, canvas.width, canvas.height)
 let raf
 
 
@@ -82,81 +80,6 @@ class BoundingBox {
         let isCollision = left || right || top || bottom
 
         return isCollision ? { "left": left && al, "right": right && ar, "top": top && at, "bottom": bottom && ab } : false
-
-    }
-
-}
-
-class CanvasDisplay {
-    constructor(level) {
-        this.level = level
-        this.canvas = canvas
-        this.canvasWidth = Math.min(canvas.width, level.width * scale)
-        this.canvasHeight = Math.min(canvas.height, level.height * scale)
-        this.ctx = ctx
-
-        this.viewport = {
-            left: 0,
-            top: 0,
-            width: this.canvas.width / scale,
-            height: this.canvas.height / scale
-        }
-    }
-
-    clear() {
-        this.canvas.remove()
-    }
-
-    syncState(state) {
-        this.updateViewport(state)
-        this.clearDisplay(state.status)
-        this.drawBackground(state.level)
-        this.drawActors(state.actors)
-    }
-
-    clearDisplay(status) {
-        if (status == "won") {
-            this.ctx.fillStyle = "rgb(68, 191, 255)";
-        } else if (status == "lost") {
-            this.ctx.fillStyle = "rgb(44, 136, 214)";
-        } else {
-            this.ctx.fillStyle = "rgb(52, 166, 251)";
-        }
-        this.ctx.fillRect(0, 0,
-            this.canvas.width, this.canvas.height)
-    }
-
-    drawBackground(level) {
-        let { left, top, width, height } = this.viewport
-        let xStart = Math.floor(left)
-        let xEnd = Math.ceil(left + width)
-        let yStart = Math.floor(top)
-        let yEnd = Math.ceil(top + height)
-
-        for (let y = yStart; y < yEnd; y++) {
-            for (let x = xStart; x < xEnd; x++) {
-                let tile = level.rows[y][x]
-                if (tile == "empty") continue
-                let screenX = (x - left) * scale
-                let screenY = (y - top) * scale
-                this.cx.drawImage(otherSprites,
-                    tileX, 0, scale, scale,
-                    screenX, screenY, scale, scale);
-            }
-        }
-    }
-
-    drawActors(actors) {
-
-    }
-
-    updateViewport(state) {
-        const cat = state.cat
-        const marginX = this.viewport.width / 3
-        const marginY = this.viewport.height / 3
-
-        this.viewport.left = Math.max(0, Math.min(cat.pos.x - marginX, this.level.width - this.viewport.width))
-        this.viewport.top = Math.max(0, Math.min(cat.pos.y - marginY, this.level.height - this.viewport.height))
     }
 
 }
@@ -165,13 +88,13 @@ var simpleLevelPlan = `
 #.......................................
 #.........o.............................
 #.......---..........................___
-#.....................o.....v...........
-#.@...............------...........o....
+......................o.....v...........
+..@...............------...........o....
 #____.............................._....
 #...#+++++_____....................#....
 #...#_____#...#....................#....
 #...............................___#....
-#..................zzz..................
+#..............-------..................
 #.......................................
 #.........#---_-........................
 #.........#...#+++++++_--.......___.....
@@ -183,7 +106,8 @@ var simpleLevelPlan = `
 #.o.o.o.o.#.............................
 #_________#.............................`
 
-var secondLevelPlan = `
+
+var levelTwo = `
 ...............................v........
 #................_____...............*..
 #.@..#___........#...#..................
@@ -204,6 +128,51 @@ var secondLevelPlan = `
 ........................................
 ........................................
 ........................................`
+
+var levelThree = `
+...............................v........
+#................_____...............*..
+#.@..#___........#...#..................
+#____#..#....____#...#............._____
+........#____#.......#....zzz...........
+.....................#..................
+...................o.#..................
+.....o...............#.........._+++++++
+..................----..........#_______
+.zz.....................................
+.....................o.......zzz........
+............zzz.........................
+........................_____...........
+........................................
+........................................
+........................................
+........................................
+........................................
+........................................
+........................................`
+
+var levelFour = `
+...............................v........
+#................_____...............*..
+#.@..#___........#...#..................
+#____#..#....____#...#............._____
+........#____#.......#....zzz...........
+.....................#..................
+...................o.#..................
+.....o...............#.........._+++++++
+..................----..........#_______
+.zz.....................................
+.....................o.......zzz........
+............zzz.........................
+........................_____...........
+........................................
+........................................
+........................................
+........................................
+........................................
+........................................
+........................................`
+
 
 class Level {
     constructor(plan) {
@@ -232,22 +201,77 @@ class State {
         this.level = level
         this.actors = actors
         this.status = "playing"
+
     }
 
     static start(level) {
         return new State(level, level.startActors)
     }
 
+    get boundingBox() {
+        return new BoundingBox(0, 0, canvas.width, canvas.height)
+    }
+
     get cat() {
         return this.actors.find(a => a.type == "cat")
     }
 
+    viewport() {
+
+        let catPosX = this.cat.pos.x * scale
+        let catPosY = this.cat.pos.y * scale
+
+        let offsetX = canvas.width / 2 - catPosX
+        let offsetY = canvas.height / 2 - catPosY
+
+        if (this.cat.pos.x < 0) {
+            offsetX = canvas.width / 2
+            offsetY = canvas.height / 2
+        }
+
+        if (Math.abs(offsetX) > 5 || Math.abs(offsetY) > 5) {
+            ctx.setTransform(scale, 0, 0, scale, offsetX, offsetY)
+        } else {
+            ctx.setTransform(scale, 0, 0, scale, 0, 0);
+        }
+
+        // let currentTransformation = ctx.getTransform()
+        // let catPosX = (this.cat.pos.x * currentTransformation.a) + currentTransformation.e
+        // let catOffcenterX = catPosX - canvas.width / 2
+        // let catPosY = (this.cat.pos.y * scale) + currentTransformation.f
+        // let catOffcenterY = catPosY - canvas.height / 2
+        // //prevent scaling more than once 
+        // if (currentTransformation.a != scale) {
+        //     ctx.scale(scale, scale)
+        // }
+        // //change viewport based on cat's x position
+        // if (Math.abs(catOffcenterX) > 5) {
+        //     if (catOffcenterX > 0) {
+        //         ctx.translate(-2, 0)
+        //     } else {
+        //         ctx.translate(2, 0)
+        //     }
+        // }
+        // //change viewport based on cat's y position
+        // if (Math.abs(catOffcenterY) > 5) {
+        //     if (catOffcenterY > 0) {
+        //         ctx.translate(0, -2)
+        //     } else {
+        //         ctx.translate(0, 2)
+
+        //     }
+        // }
+
+    }
+
     draw(time) {
+        this.viewport()
         ctx.fillStyle = "thistle"
         ctx.fillRect(0, 0, canvas.width, canvas.height)
+
         for (let i = 0; i < this.actors.length; i++) {
             let current = this.actors[i]
-            if (current == "cat") { continue }
+            if (current.type == "cat") { continue }
             current.draw(time)
         }
         this.cat.draw(time)
@@ -271,6 +295,12 @@ class State {
             }
         })
 
+        // let boundaryCollision = this.boundingBox.touches(catBox)
+        // if (boundaryCollision) {
+        //     console.log(boundaryCollision)
+        //     this.cat.trespass(boundaryCollision)
+        // }
+
         let totalTreats = actors.filter(a => a.type == "treat")
         for (let i = 0; i < totalTreats.length; i++) {
             if (totalTreats[i].display == false) {
@@ -279,6 +309,8 @@ class State {
         }
         if (totalTreats.length == collectedTreats.length) state.status = "won"
     }
+
+
 }
 
 class Vec {
@@ -299,9 +331,9 @@ class Cat {
         this.pos = pos
         this.speed = new Vec(0, 0)
         this.direction = 1
-        this.height = 36
-        this.width = 31
-        this.size = new Vec(31, 36)
+        this.height = blockWidth + blockHeight
+        this.width = blockWidth * 2
+        this.size = new Vec(blockWidth * 2, blockWidth + blockHeight)
 
         //movement flags
         this.isOnTheMat = false
@@ -322,18 +354,18 @@ class Cat {
     get type() { return "cat" }
 
     get boundingBox() {
-        return new BoundingBox(this.pos.x - 14, this.pos.y - 14, this.pos.x + 14, this.pos.y + 14)
+        return new BoundingBox(this.pos.x - blockWidth + 4, this.pos.y - blockWidth + 3, this.pos.x + blockWidth - 4, this.pos.y + blockWidth - 2)
     }
 
     static create(pos) {
-        return new Cat(pos.plus(new Vec(blockWidth - 4, blockHeight - 14.5)))
+        return new Cat(pos.plus(new Vec(blockWidth, blockHeight)))
     }
 
     draw(time) {
-        const yToGround = 13
-        const xToGround = 10
-        const yToBody = 9
-        const toBody = 6
+        const yToGround = blockWidth - 3
+        const xToGround = blockWidth / 2
+        const yToBody = blockWidth - 10
+        const toBody = blockWidth - 12
         const legSpeed = 200
         const legRate = 100
 
@@ -410,12 +442,12 @@ class Cat {
         ctx.closePath()
         //tail 
         ctx.beginPath()
-        ctx.moveTo(-12, 0)
+        ctx.moveTo(-10, 0)
         if (time % 1000 < 500) {
-            ctx.quadraticCurveTo(-12, -20, -19, -17)
+            ctx.quadraticCurveTo(-(blockWidth - 3), -blockHeight, -(blockHeight - 1), -(blockHeight - 3))
         }
         else {
-            ctx.quadraticCurveTo(-15, -20, -5, -18)
+            ctx.quadraticCurveTo(-blockWidth, -blockHeight, -(blockWidth - (blockHeight / 2)), -(blockHeight - 2))
         }
         ctx.lineWidth = 6
         ctx.stroke()
@@ -423,32 +455,32 @@ class Cat {
 
         //back ear
         ctx.beginPath()
-        ctx.moveTo(5, -5)
-        ctx.lineTo(7, -13)
-        ctx.lineTo(9, -7)
+        ctx.moveTo(1,-5) //(5, -5)
+        ctx.lineTo(5, -12) // 7, -13
+        ctx.lineTo(6, -7) //9, -7
         ctx.fillStyle = this.legsTailColour
         ctx.fill()
         ctx.closePath()
 
         //body
         ctx.beginPath()
-        ctx.ellipse(0, 0, 12, 9, 0, 0, 2 * Math.PI)
+        ctx.ellipse(0, 0, 10, 8, 0, 0, 2 * Math.PI)
         ctx.closePath()
         ctx.fillStyle = this.bodyColour
         ctx.fill()
 
         //front ear
         ctx.beginPath()
-        ctx.moveTo(2, -5)
-        ctx.lineTo(4, -13)
-        ctx.lineTo(6, -7)
+        ctx.moveTo(0, -5)
+        ctx.lineTo(3, -12) //y makes top part pointy
+        ctx.lineTo(5, -7)
         ctx.fillStyle = this.legsTailColour
         ctx.fill()
         ctx.closePath()
 
         //eye 
         ctx.beginPath()
-        ctx.arc(7, -2, 1, 0, Math.PI * 2)
+        ctx.arc(6, -2, 1, 0, Math.PI * 2)
         ctx.closePath()
         ctx.fillStyle = "steelBlue"
         ctx.fill()
@@ -536,6 +568,10 @@ class Cat {
         this.speed.x = 0
     }
 
+    trespass(boundaryCollision) {
+        //console.log("hello")
+    }
+
     won(state) {
         state.status = "won"
         this.legsTailColour = "rgba(204, 173, 0, 0.6)"
@@ -550,7 +586,7 @@ class Water {
         this.ch = ch
         this.speed = new Vec(0.5, 0.3)
         this.axis = 70
-        this.drip = 50
+        this.drip = 70
         this.maxPos = new Vec(this.pos.x, this.pos.y)
     }
 
@@ -776,6 +812,16 @@ var movingChars = {
     "=": Water, "|": Water, "v": Water, "-": Floor
 }
 
+const levels = {
+    "0": simpleLevelPlan,
+
+    "1": levelTwo,
+
+    "2": levelThree,
+
+    "3": levelFour
+}
+
 //Game Opening: You are a cat. You live a simple life. Until one day a mouse moved in. You ignored her antics until one day she crossed the line by stealing your favourite toy, a plush pickle stuffed with cat nip. You are now determined to recover the lost toy at all costs. After all, it was a gift from your grandmother. 
 
 function gameIntro() {
@@ -797,8 +843,9 @@ function gameIntro() {
 }
 
 
-let level = new Level(secondLevelPlan)
+let level = new Level(simpleLevelPlan)
 let state = new State(level, level.startActors)
+
 canvas.addEventListener('keydown', (e) => {
     if (e.key === "ArrowRight") {
         state.cat.moveRight()
@@ -820,14 +867,17 @@ canvas.addEventListener('keyup', (e) => {
 
 
 })
-function gameLoop(time) {
 
+function gameLoop(time) {
+    
     ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.fillStyle = "skyBlue" //"thistle"
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
 
     state.draw(time)
     state.update()
     state.move(time)
-    
+
     if (state.status == "lost") {
         level = new Level(simpleLevelPlan)
         state = new State(level, level.startActors)
@@ -835,11 +885,13 @@ function gameLoop(time) {
 
     if (state.status == "won") {
         state.cat.won(state)
-        level = new Level(secondLevelPlan)
-        state = new State(level, level.startActors)
+        // level = new Level(levels[levelCount])
+        // state = new State(level, level.startActors)
+        // levelCount++
     }
 
     raf = window.requestAnimationFrame(gameLoop)
+
 }
 
 gameLoop()
