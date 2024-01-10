@@ -315,3 +315,23 @@ var blankkLevelPlan = `
         //     }
         // }
 // }
+
+// treats(collectedTreats, actors) {
+//         let totalTreats = actors.filter(a => a.type == "treat")
+//         for (let i = 0; i < totalTreats.length; i++) {
+//             if (totalTreats[i].display == false) {
+//                 collectedTreats.push(totalTreats[i])
+//             }
+//         }
+//         if (totalTreats.length == collectedTreats.length) {
+//             state.status = "won"
+//             console.log(`in treats function in state: ${totalTreats.length}`)
+//             return totalTreats.length
+//         }
+//     }
+
+// fetch('http://localhost:3000')
+// .then(function(response) { return response.json(); })
+// .then(function(json) {
+//   alert(json.highscore)
+// });

@@ -1,9 +1,10 @@
+
 const canvas = document.getElementById("catVmouseCanvas")
 const ctx = canvas.getContext("2d")
 const blockHeight = 20
 const blockWidth = 15
 const scale = 2
-const showBoundingBoxes = true
+const showBoundingBoxes = false
 
 // let canvasBox = new BoundingBox(0, 0, canvas.width, canvas.height)
 let raf
@@ -84,41 +85,85 @@ class BoundingBox {
 
 }
 
-var simpleLevelPlan = `
-#.......................................
-#.........o.............................
-#.......---..........................___
-......................o.....v...........
-..@...............------...........o....
-#____.............................._....
-#...#+++++_____....................#....
-#...#_____#...#....................#....
-#...............................___#....
-#..............-------..................
-#.......................................
-#.........#---_-........................
-#.........#...#+++++++_--.......___.....
-#---......#...#_______#.........#.......
-#.==......#...........#.....____#.......
-#....o....#...........#xx...#...........
-#...o.o---#...........#+++++#...........
-#..o.o.o..#...........#_____#...........
-#.o.o.o.o.#.............................
-#_________#.............................`
+var levelZero = `
+........................................
+........................................
+........................................
+........................................
+.....z........................o.........
+........................................
+..@.....................................
+________________________________________
+........................................
+........................................
+........................................
+........................................
+........................................
+........................................
+........................................
+........................................
+........................................
+........................................
+........................................
+........................................`
 
+// var levelZero = `
+// #.................................|.....
+// #.....v.........o....................o..
+// #...................................---.
+// #..............---......................
+// #.@...................---...............
+// _____++++__.............v....---........
+// #...#____#..........................---.
+// #..............................o........
+// #.......................................
+// #.............................---.......
+// #...........o...........................
+// #..........---......................---.
+// #...........#...........................
+// #...........#....---..........---.......
+// #...........#..o....................o...
+// #--...o.....#........---...........---..
+// #.v..o.o.---#.---................|......
+// #...o.o.o...#...............--..........
+// #.o..o.o..o.#+++++++++++++++++++++++++++
+// #___________#___________________________`
+
+
+var levelOne = `
+...............................v........
+#............o..........o...............
+#.@.....___..........._____.............
+#______#..#.....______#...#.............
+..........#_..._#.........#.............
+..__.................#..................
+.....................#..................
+.....................#..................
+........................................
+........................................
+........................................
+........................................
+........................................
+........................................
+........................................
+........................................
+........................................
+........................................
+........................................
+........................................`
 
 var levelTwo = `
 ...............................v........
-#................_____...............*..
-#.@..#___........#...#..................
-#____#..#....____#...#............._____
-........#____#.......#....zzz...........
+................._____..................
+......o..........#...#..................
+..@.....#....____#...#............._____
+.______.#____#.......#....zzz...........
 .....................#..................
-...................o.#..................
-.....o...............#.........._+++++++
+.....................#..................
+.....................#.........._+++++++
 ..................----..........#_______
 .zz.....................................
-.....................o.......zzz........
+.............................zzz........
 ............zzz.........................
 ........................_____...........
 ........................................
@@ -131,16 +176,16 @@ var levelTwo = `
 
 var levelThree = `
 ...............................v........
-#................_____...............*..
-#.@..#___........#...#..................
-#____#..#....____#...#............._____
+#................_____..................
+#.@.......o......#...#..................
+#________________#...#............._____
 ........#____#.......#....zzz...........
 .....................#..................
-...................o.#..................
-.....o...............#.........._+++++++
+.....................#..................
+.....................#.........._+++++++
 ..................----..........#_______
 .zz.....................................
-.....................o.......zzz........
+.............................zzz........
 ............zzz.........................
 ........................_____...........
 ........................................
@@ -153,16 +198,16 @@ var levelThree = `
 
 var levelFour = `
 ...............................v........
-#................_____...............*..
-#.@..#___........#...#..................
-#____#..#....____#...#............._____
-........#____#.......#....zzz...........
-.....................#..................
-...................o.#..................
-.....o...............#.........._+++++++
+#.......................................
+#.@.....................................
+#____...............................____
+....._____............o.................
+.........._____________.................
+........................................
+................................_+++++++
 ..................----..........#_______
 .zz.....................................
-.....................o.......zzz........
+.............................zzz........
 ............zzz.........................
 ........................_____...........
 ........................................
@@ -201,7 +246,6 @@ class State {
         this.level = level
         this.actors = actors
         this.status = "playing"
-
     }
 
     static start(level) {
@@ -235,33 +279,6 @@ class State {
             ctx.setTransform(scale, 0, 0, scale, 0, 0);
         }
 
-        // let currentTransformation = ctx.getTransform()
-        // let catPosX = (this.cat.pos.x * currentTransformation.a) + currentTransformation.e
-        // let catOffcenterX = catPosX - canvas.width / 2
-        // let catPosY = (this.cat.pos.y * scale) + currentTransformation.f
-        // let catOffcenterY = catPosY - canvas.height / 2
-        // //prevent scaling more than once 
-        // if (currentTransformation.a != scale) {
-        //     ctx.scale(scale, scale)
-        // }
-        // //change viewport based on cat's x position
-        // if (Math.abs(catOffcenterX) > 5) {
-        //     if (catOffcenterX > 0) {
-        //         ctx.translate(-2, 0)
-        //     } else {
-        //         ctx.translate(2, 0)
-        //     }
-        // }
-        // //change viewport based on cat's y position
-        // if (Math.abs(catOffcenterY) > 5) {
-        //     if (catOffcenterY > 0) {
-        //         ctx.translate(0, -2)
-        //     } else {
-        //         ctx.translate(0, 2)
-
-        //     }
-        // }
-
     }
 
     draw(time) {
@@ -277,8 +294,8 @@ class State {
         this.cat.draw(time)
     }
 
-    move(time) {
-        this.actors.filter(actor => "move" in actor).forEach(actor => actor.move(time, this))
+    move(time, state) {
+        this.actors.filter(actor => "move" in actor).forEach(actor => actor.move(time, state))
     }
 
     update() {
@@ -295,11 +312,19 @@ class State {
             }
         })
 
-        // let boundaryCollision = this.boundingBox.touches(catBox)
-        // if (boundaryCollision) {
-        //     console.log(boundaryCollision)
-        //     this.cat.trespass(boundaryCollision)
-        // }
+        for (let i = 0; i < actors.length; i++) {
+            let currentActor = actors[i]
+            let currentBox = currentActor.boundingBox
+            for (let k = 1; k < actors.length; k++) {
+                let nextActor = actors[k]
+                let nextBox = nextActor.boundingBox
+                let touches = currentBox.touches(nextBox)
+                if (currentActor.ch == nextActor.ch) continue
+                if (touches && "touch" in currentActor) {
+                    currentActor.touch(state, touches)
+                }
+            }
+        }
 
         let totalTreats = actors.filter(a => a.type == "treat")
         for (let i = 0; i < totalTreats.length; i++) {
@@ -307,9 +332,34 @@ class State {
                 collectedTreats.push(totalTreats[i])
             }
         }
-        if (totalTreats.length == collectedTreats.length) state.status = "won"
+        if (totalTreats.length == collectedTreats.length) {
+            state.status = "won"
+            console.log(`in treats function in state: ${totalTreats.length}`)
+            return totalTreats.length
+        }
     }
 
+    resetCat() {
+        let state = this 
+        let actors = this.actors 
+        let floorActors = actors.filter(actor => actor.type == "floor")
+        let cat = this.cat
+        floorActors.forEach(actor => {
+            if ((actor.pos.y != cat.pos.y) && (actor.pos.y < cat.pos.y)) {
+                if ((actor.pos.x < cat.pos.x) && (actor.pos.x > blockWidth) ) {
+                    //console.log(`actor pos - y: ${actor.pos.y}, actor pos - x: ${actor.pos.x}\n cat pos - y: ${cat.pos.y}, cat pos - x: ${cat.pos.x}\n`)
+                    cat.pos.x = actor.pos.x 
+                    cat.pos.y = actor.pos.y - 10
+                    cat.wet = false
+                    cat.legsTailColour = "#2b1c14"
+                    cat.bodyColour = "blanchedAlmond"
+                    cat.lives -= 3
+                    state.status = "playing"
+                    return cat.lives 
+                }
+            }
+        })
+    }
 
 }
 
@@ -331,9 +381,8 @@ class Cat {
         this.pos = pos
         this.speed = new Vec(0, 0)
         this.direction = 1
-        this.height = blockWidth + blockHeight
-        this.width = blockWidth * 2
-        this.size = new Vec(blockWidth * 2, blockWidth + blockHeight)
+
+        this.lives = 9
 
         //movement flags
         this.isOnTheMat = false
@@ -354,7 +403,7 @@ class Cat {
     get type() { return "cat" }
 
     get boundingBox() {
-        return new BoundingBox(this.pos.x - blockWidth + 4, this.pos.y - blockWidth + 3, this.pos.x + blockWidth - 4, this.pos.y + blockWidth - 2)
+        return new BoundingBox(this.pos.x - blockWidth + 6, this.pos.y - blockWidth + 8, this.pos.x + blockWidth - 6, this.pos.y + blockWidth - 2)
     }
 
     static create(pos) {
@@ -363,8 +412,8 @@ class Cat {
 
     draw(time) {
         const yToGround = blockWidth - 3
-        const xToGround = blockWidth / 2
-        const yToBody = blockWidth - 10
+        const xToGround = blockWidth - 9
+        const yToBody = blockWidth - 7
         const toBody = blockWidth - 12
         const legSpeed = 200
         const legRate = 100
@@ -377,7 +426,7 @@ class Cat {
 
         //legs
         ctx.strokeStyle = this.legsTailColour
-        ctx.lineWidth = 3
+        ctx.lineWidth = 2.5
         ctx.lineCap = "round"
         //front right 
         ctx.beginPath()
@@ -442,52 +491,52 @@ class Cat {
         ctx.closePath()
         //tail 
         ctx.beginPath()
-        ctx.moveTo(-10, 0)
+        ctx.moveTo(-7, 0)
         if (time % 1000 < 500) {
-            ctx.quadraticCurveTo(-(blockWidth - 3), -blockHeight, -(blockHeight - 1), -(blockHeight - 3))
+            //control x and y, and then end x y
+            ctx.quadraticCurveTo(-6, -12, -11, -12)
         }
         else {
-            ctx.quadraticCurveTo(-blockWidth, -blockHeight, -(blockWidth - (blockHeight / 2)), -(blockHeight - 2))
+            ctx.quadraticCurveTo(-9, -12, -3, -12)
         }
-        ctx.lineWidth = 6
+        ctx.lineWidth = 5.5
         ctx.stroke()
         ctx.closePath()
 
         //back ear
         ctx.beginPath()
-        ctx.moveTo(1,-5) //(5, -5)
-        ctx.lineTo(5, -12) // 7, -13
-        ctx.lineTo(6, -7) //9, -7
+        ctx.moveTo(4, -2) //(5, -5)
+        ctx.lineTo(5, -7) // 7, -13
+        ctx.lineTo(6, -2) //9, -7
         ctx.fillStyle = this.legsTailColour
         ctx.fill()
         ctx.closePath()
 
         //body
         ctx.beginPath()
-        ctx.ellipse(0, 0, 10, 8, 0, 0, 2 * Math.PI)
+        ctx.ellipse(0, 2, 8, 6, 0, 0, 2 * Math.PI)
         ctx.closePath()
         ctx.fillStyle = this.bodyColour
         ctx.fill()
 
         //front ear
         ctx.beginPath()
-        ctx.moveTo(0, -5)
-        ctx.lineTo(3, -12) //y makes top part pointy
-        ctx.lineTo(5, -7)
+        ctx.moveTo(2, -1)
+        ctx.lineTo(3, -7) //y makes top part pointy
+        ctx.lineTo(5, -3)
         ctx.fillStyle = this.legsTailColour
         ctx.fill()
         ctx.closePath()
 
         //eye 
         ctx.beginPath()
-        ctx.arc(6, -2, 1, 0, Math.PI * 2)
+        ctx.arc(5.5, 1, 0.8, 0, Math.PI * 2)
         ctx.closePath()
         ctx.fillStyle = "steelBlue"
         ctx.fill()
 
         ctx.restore()
         this.boundingBox.draw()
-        //this.bounce()
     }
 
     bounce() {
@@ -521,16 +570,22 @@ class Cat {
 
         if (this.wet) {
             if (!this.isOnTheMat) {
-                let newlegsTailColour = "rgba(11, 50, 66, 0.6)"
-                let newBodyColour = "rgba(18, 83, 109, 0.3)"
+                let newBodyColour = "rgba(18, 83, 109, 0.9)"
+                let newlegsTailColour = "rgba(11, 50, 66, 0.3)"
                 this.legsTailColour = newlegsTailColour
                 this.bodyColour = newBodyColour
-                let sink = () => state.status = "lost"
+
+
                 if (this.legsTailColour == newlegsTailColour) {
+                    let sink = function () {
+                        state.status = "lost"
+                    }
                     setTimeout(sink, 1000)
                 }
             }
         }
+
+        console.log(`this.lives outside sink: ${this.lives}`)
 
         if (this.pos.y + 10 > canvas.height) {
             state.status = "lost"
@@ -568,15 +623,16 @@ class Cat {
         this.speed.x = 0
     }
 
-    trespass(boundaryCollision) {
-        //console.log("hello")
+    levelUp(state) {
+        state.status = "won"
+        this.bodyColour = "rgba(255, 228, 77, 0.9 )"
+        this.legsTailColour = "rgba(204, 173, 0, 0.6)"
     }
 
-    won(state) {
-        state.status = "won"
-        this.legsTailColour = "rgba(204, 173, 0, 0.6)"
-        this.bodyColour = "rgba(255, 228, 77, 0.6)"
+    won() {
+
     }
+
 }
 
 class Water {
@@ -584,9 +640,7 @@ class Water {
         this.pos = pos
         this.height = height
         this.ch = ch
-        this.speed = new Vec(0.5, 0.3)
-        this.axis = 70
-        this.drip = 70
+        this.speed = new Vec(0.5, 0.4)
         this.maxPos = new Vec(this.pos.x, this.pos.y)
     }
 
@@ -621,20 +675,21 @@ class Water {
     move() {
         if (this.ch == "=") {
             this.pos.x += this.speed.x
-            if (this.pos.x >= this.maxPos.x + this.axis || this.pos.x <= this.maxPos.x) {
-                this.speed.x *= -1
-            }
         } else if (this.ch == "v") {
             this.pos.y += this.speed.y
-            if (this.pos.y >= this.maxPos.y + this.drip || this.pos.y <= this.maxPos.y) {
+        } else if (this.ch == "|") {
+            this.pos.y += this.speed.y
+            if (this.pos.y < 0) {
                 this.speed.y *= -1
             }
+            if (this.pos.y > canvas.height) {
+                console.log("y is greater than canvas height")
+                this.speed.y = Math.abs(this.speed.y)
+            }
         }
-
     }
 
     collide(state, collisions) {
-
         if (this.ch == "+") {
             state.cat.wet = true
         } else if (this.ch == "=") {
@@ -643,8 +698,35 @@ class Water {
         } else if (this.ch == "v") {
             state.cat.wet = true
             state.status = "lost"
+        } else if (this.ch == "|") {
+            state.cat.wet = true
+            state.status = "lost"
+        }
+    }
+
+    touch(state, touches) {
+        //console.log(JSON.stringify(touches))
+        if (this.ch == "v") {
+            if (touches.bottom && (touches.left && touches.right)) {
+                this.pos.y = this.maxPos.y - 10
+            }
         }
 
+        if (this.ch == "=") {
+            if (touches.right) {
+                this.speed.x *= -1
+            } else if (touches.left) {
+                this.speed.x = Math.abs(this.speed.x)
+            }
+        }
+
+        if (this.ch == "|") {
+            if (touches.top && (touches.left && touches.right)) {
+                this.speed.y *= -1
+            } else if (touches.bottom && (touches.left && touches.right)) {
+                this.speed.y = -this.speed.y
+            }
+        }
     }
 }
 
@@ -673,20 +755,20 @@ class Wall {
     }
 
     collide(state, collisions) {
-        if (collisions.top) {
-            state.cat.direction = state.cat.direction
-            state.cat.pos.y = state.cat.pos.y
-        } else if (collisions.bottom) {
-            state.cat.direction = state.cat.direction
-            state.cat.pos.y = state.cat.pos.y
-        } else if (collisions.left) {
+        // if (collisions.top) {
+        //     state.cat.direction = state.cat.direction
+        //     state.cat.pos.y = state.cat.pos.y
+        // } else if (collisions.bottom) {
+        //     state.cat.direction = state.cat.direction
+        //     state.cat.pos.y = state.cat.pos.y
+        // } else 
+        if (collisions.left) {
             state.cat.direction = state.cat.direction * -1
             state.cat.pos.x = this.pos.x + 30
         } else if (collisions.right) {
             state.cat.direction = state.cat.direction * -1
             state.cat.pos.x = this.pos.x - 30
         }
-
     }
 }
 
@@ -731,8 +813,8 @@ class Floor {
 
     move() {
         if (this.ch == "z") {
-            this.pos.x += this.speed
-            if (this.pos.x >= this.maxPos.x + this.axis || this.pos.x <= this.maxPos.x) {
+            this.pos.x -= this.speed
+            if (this.pos.x >= this.maxPos.x - this.axis || this.pos.x <= this.maxPos.x) {
                 this.speed *= -1
             }
         }
@@ -766,7 +848,7 @@ class Treat {
 
 
     static create(pos, ch) {
-        let basePos = pos.plus(new Vec(0.2, 0.1))
+        let basePos = pos.plus(new Vec(blockWidth / 2, 0))
         if (ch == "o") {
             return new Treat(basePos, 4)
         } else if (ch == "*") {
@@ -812,16 +894,6 @@ var movingChars = {
     "=": Water, "|": Water, "v": Water, "-": Floor
 }
 
-const levels = {
-    "0": simpleLevelPlan,
-
-    "1": levelTwo,
-
-    "2": levelThree,
-
-    "3": levelFour
-}
-
 //Game Opening: You are a cat. You live a simple life. Until one day a mouse moved in. You ignored her antics until one day she crossed the line by stealing your favourite toy, a plush pickle stuffed with cat nip. You are now determined to recover the lost toy at all costs. After all, it was a gift from your grandmother. 
 
 function gameIntro() {
@@ -842,56 +914,95 @@ function gameIntro() {
     })
 }
 
+function controls(state) {
+    canvas.addEventListener('keydown', (e) => {
+        if (e.key === "ArrowRight") {
+            state.cat.moveRight()
+        }
+        if (e.key === "ArrowLeft") {
+            state.cat.moveLeft()
+        }
+        if (e.key === "ArrowUp") {
+            state.cat.jump()
+        }
+    })
+    canvas.addEventListener('keyup', (e) => {
+        if (e.key === "ArrowRight") {
+            state.cat.stop()
+        }
+        if (e.key === "ArrowLeft") {
+            state.cat.stop()
+        }
+    })
+}
 
-let level = new Level(simpleLevelPlan)
+var levels = {
+    "0": levelZero,
+
+    "1": levelOne,
+
+    "2": levelTwo,
+
+    "3": levelThree,
+
+    "4": levelFour,
+}
+
+// let allLevels = Object.keys(levels).length / if (currentLevel == allLevels) {state.status == "won"} //change the current "won" to levelUp instead, or something similar. 
+//let numberOfTreats = allTreats.flat()
+
+let currentLevel = 0
+let levelUpCall = false
+let level = new Level(levelZero)
 let state = new State(level, level.startActors)
-
-canvas.addEventListener('keydown', (e) => {
-    if (e.key === "ArrowRight") {
-        state.cat.moveRight()
-    }
-    if (e.key === "ArrowLeft") {
-        state.cat.moveLeft()
-    }
-    if (e.key === "ArrowUp") {
-        state.cat.jump()
-    }
-})
-canvas.addEventListener('keyup', (e) => {
-    if (e.key === "ArrowRight") {
-        state.cat.stop()
-    }
-    if (e.key === "ArrowLeft") {
-        state.cat.stop()
-    }
-
-
-})
+let allTreats = []
 
 function gameLoop(time) {
-    
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-    ctx.fillStyle = "skyBlue" //"thistle"
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-    state.draw(time)
-    state.update()
-    state.move(time)
+    if (currentLevel <= 4) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        ctx.fillStyle = "thistle" //"skyBlue" 
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-    if (state.status == "lost") {
-        level = new Level(simpleLevelPlan)
-        state = new State(level, level.startActors)
+        controls(state)
+        state.draw(time)
+        state.update()
+        state.move(time, state)
+
+        if (state.status == "lost") {
+            if (state.cat.lives <= 9) {
+                state.resetCat()
+            } else if (state.cat.lives <= 0) {
+                level = new Level(levels[0])
+                state = new State(level, level.startActors, "playing")
+            }
+            //create game over screen for when all lives are lost with mouse laughing or something? 
+        }
+
+        if (state.status == "won") {
+            state.cat.levelUp(state)
+            setTimeout(() => levelUpCall = true, 1000)
+            if (levelUpCall) {
+                let catTreats = state.actors.filter(a => a.type == "treat")
+                allTreats.push(catTreats)
+                currentLevel = currentLevel + 1
+                level = new Level(levels[currentLevel])
+                state = new State(level, level.startActors, "playing")
+            }
+        }
+        levelUpCall = false
     }
 
-    if (state.status == "won") {
-        state.cat.won(state)
-        // level = new Level(levels[levelCount])
-        // state = new State(level, level.startActors)
-        // levelCount++
+    if (currentLevel == 5) {
+        ctx.fillStyle = "blueViolet"
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
+        //add image of celebrating cat w/pickle 
+        //during game display image with cat's portrait including number of lives and treats collected. Can go in the cat's draw function 
     }
 
     raf = window.requestAnimationFrame(gameLoop)
-
 }
 
 gameLoop()
+
+
