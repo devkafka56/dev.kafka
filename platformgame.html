@@ -6,7 +6,7 @@
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>kafka.dev/catVmouse</title>
+    <title>kafka.dev/aplatformgame</title>
     <link rel="stylesheet" href="styles.css">
     <script src="script.js"></script>
     <!-- <link rel="stylesheet" href="scrollbar.css"> -->
@@ -18,7 +18,7 @@
 
         <div class="navWindow d-flex flex-column text-center">
             <div class="topBar d-flex justify-content-between align-items-center">
-                <span class="leftBarText">kafka.dev/catVmouse</span>
+                <span class="leftBarText">kafka.dev/aplatformgame</span>
                 <div class="d-flex">
                     <button class="minButton d-flex m-1 align-items-center justify-content-center">&#95;</button>
                     <button class="maxButton d-flex m-1 align-items-center justify-content-center">&square;</button>
@@ -31,7 +31,6 @@
                     <div class="dropdown-button"><u>M</u>enu</div>
                     <div class="dropdown-content">
                         <a href="index.html">Home</a>
-                        <a href="pawng.html">pawNG</a>
                         <a href="portfolio.html">Pawtfolio</a>
                         <a href="jsprojects.html">JS pawjects</a>
                     </div>
@@ -40,16 +39,29 @@
                     <div class="dropdown flex-column my-0 mx-1 p-0">
                         <div class="dropdown-button"><u>F</u>ile</div>
                         <div class="dropdown-content">
-                            <a href="#">History</a>
-                            <a href="#">Save</a>
-                            <a href="#">Block</a>
+                            <a href="#" data-popup-id="how-to-popup" class="open-popup">How to</a>
+                            <a href="#" id="restart-game">Restart</a>
+                            <a href="#" id="pause-game">Paws</a>
+                            <a href="#" id="play-game">Play</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <canvas id="catVmouseCanvas" width="600" height="400" tabindex="0" autofocus></canvas>
+            <canvas id="catVmouseCanvas" width="600" height="400" tabindex="0"></canvas>
         </div>
-        <script src="catvmouse.js"></script>
+        <script src="platformgame.js"></script>
+
+        <div class="popup close-popup" id="how-to-popup" data-popup-id="how-to-popup">
+            <div class="popup-content">
+                <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">
+                    kafka.dev/aplatformgame/alert
+                    <button data-popup-id="how-to-popup"
+                        class="close close-popup d-flex m-0 my-0 align-items-center justify-content-center"
+                        id="closehow-to-popupButton">&times;</button>
+                </h5>
+                <p class="window-bodyText">Use the <b>left</b> and <b>right</b> arrow keys to move. Use the <b>up</b> arrow key to jump.<br />Use the <b>p</b> key to pause and play.</p>
+            </div>
+        </div>
     </div>
 
 </body>
