@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kafka.dev/guestbook</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
+</head>
+
+<body>
+    <div class="container p-4 d-flex justify-content-left">
+        <!--Welcome Text Box-->
+        <div class="d-flex flex-column p-3 align-items-right">
+            <div class="navWindow card flex-column" style="width: 20rem; height: 22rem;">
+                <div class="card-bodytext-center">
+                    <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">
+                        <div class="d-flex align-items-center">
+                            <div class="d-flex m-1 my-0">kafka.dev/guestbook</div>
+                        </div>
+                        <div class="d-flex">
+
+                            <!--Click Min Button-->
+                            <button data-popup-id="minGuestbookPopup"
+                                class="open-popup minButton d-flex my-0 mx-0 align-items-center justify-content-center">&#95;</button>
+
+                            <!--Click Max Button-->
+                            <button data-popup-id="maxGuestbookPopup"
+                                class="open-popup maxButton d-flex m-1 my-0 align-items-center justify-content-center">&square;</button>
+
+                            <!--x Button on the Guestbook Box Window-->
+                            <button id="xGuestbookButton2"
+                                class="xButton d-flex align-items-center justify-content-center"
+                                onclick="navLink('index.html')">x</button>
+                    </h5>
+                    <div class="d-flex pt-3 align-items-center justify-content-center">
+                        <div class="text-card p-1 align-items-center justify-content-center"
+                            style="width: 19rem; height: 18rem; overflow-y: scroll;">
+                            <div class="window-welcomeText">
+                                <img src="images/gifs/under-construction.gif" width="25px" height="25px">
+                                <p><u>WARNING:</u> THIS PAGE IS UNDER CONSTRUCTION.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--Pop-ups-->
+        <div class="popup close-popup" id="minGuestbookPopup" data-popup-id="minGuestbookPopup">
+            <div class="popup-content">
+                <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">
+                    kafka.dev/guestbook/alert
+                    <button data-popup-id="minGuestbookPopup"
+                        class="close close-popup d-flex m-0 my-0 align-items-center justify-content-center"
+                        id="closeminGuestbookButton">&times;</button>
+                </h5>
+                <p class="window-bodyText">(if you know you know (for the boomers(and probably half of gen x (and maybe some of the <s>old</s>wise millennials))))</p>
+            </div>
+        </div>
+        <div class="popup close-popup" id="maxGuestbookPopup" data-popup-id="maxGuestbookPopup">
+            <div class="popup-content">
+                <h5 class="topBar custom-windowTitle d-flex justify-content-between p-1">
+                    kafka.dev/guestbook/alert
+                    <button data-popup-id="maxGuestbookPopup"
+                        class="close close-popup  d-flex m-0 my-0 align-items-center justify-content-center"
+                        id="closemaxGuestbookButton">&times;</button>
+                </h5>
+                <p class="window-bodyText">IYKYK</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

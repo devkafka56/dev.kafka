@@ -139,13 +139,9 @@ body {
 /* Canvas Styles */
 canvas {
   border: 2px solid #12055b;
-  /* Blue border with a width of 2 pixels */
   background-color: #F0F0F0;
-  /* Light gray background color */
   box-shadow: 0 0px 0px rgba(0, 0, 0, 0.8);
-  /* Retro shadow effect */
   border-radius: 0px;
-  /* Rounded corners */
 }
 
 /* '98 Window Design for pawNG*/

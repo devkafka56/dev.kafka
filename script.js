@@ -63,14 +63,11 @@ function showPopup(event, show) {
   let buttonElement = event.target
   let popupId = buttonElement.dataset.popupId
   let popupElement = document.getElementById(popupId)
+  console.log(`popup element: ${popupElement}`)
   if (popupElement) {
     popupElement.style.display = display
   }
 }
-
-
-
-
 
 
 
