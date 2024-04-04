@@ -14,12 +14,17 @@ let shadow = "#1ea0ae" //"#25c8da" //"#d0b5e3" //"#177e89" //"#084c61"
 
 let raf
 
-//
+//images
 const kafkaPortrait = new Image()
 kafkaPortrait.src = "images/game/Kafka-Portrait-2.png"
 const heart = new Image()
 heart.src = "images/game/big-heart.png"
 
+//Bring Window Into Focus on Load
+
+window.onload = function() {
+    canvas.focus();
+};
 
 //Testing Functions: 
 
