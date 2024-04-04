@@ -1,5 +1,9 @@
 /*Container that makes entire page scrollable*/
 
+*:focus {
+  outline: none; 
+}
+
 .main-scroll-container {
   overflow-y: auto;
   overflow-x: hidden;
