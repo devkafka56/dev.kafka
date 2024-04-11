@@ -22,9 +22,9 @@ heart.src = "images/game/big-heart.png"
 
 //Bring Window Into Focus on Load
 
-window.onload = function() {
-    canvas.focus();
-};
+// window.onload = function() {
+//     canvas.focus();
+// };
 
 //Testing Functions: 
 
