@@ -3,15 +3,14 @@ const ctx = canvas.getContext("2d")
 const blockHeight = 20
 const blockWidth = 15
 const scale = 2
+const backgroundColour = "#23173D" 
+const platformColour = "#69173D" 
+const waterColour = "#084a5e" 
+const treatColour = "#FFC857" 
+const catAppendage = "#54382A" 
+const catBody = "blanchedAlmond"
+let shadow = "#1ea0ae" 
 let showBoundingBoxes = false
-let backgroundColour = "#23173D" //"#2D173D" // "thistle"
-let platformColour = "#69173D" //"rosyBrown"
-let waterColour = "#084a5e" //"#092c77" //"#084c61" //"#0a5d76"  //"#05173D" //"skyBlue"
-let treatColour = "#FFC857" //"gold"
-let catAppendage = "#54382A" //"#402a1f" //"#2b1c14"
-let catBody = "blanchedAlmond"
-let shadow = "#1ea0ae" //"#25c8da" //"#d0b5e3" //"#177e89" //"#084c61"
-
 let raf
 
 //images
@@ -22,9 +21,9 @@ heart.src = "images/game/big-heart.png"
 
 //Bring Window Into Focus on Load
 
-// window.onload = function() {
-//     canvas.focus();
-// };
+window.onload = function() {
+    canvas.focus();
+};
 
 //Testing Functions: 
 
